@@ -1,0 +1,15 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball flags module ==
+
+The flags module is for:
+
+* bit twiddling
+
+=== mud_has_flag() ===
+
+This will determine if a set of flags has a particular flag set.
+
+=== mud_set_flag() ===
+
+This will conditionally set a flag in existing flags.

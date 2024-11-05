@@ -1,0 +1,52 @@
+                                                                                    2021-10-23 jj5
+
+= Facilities =
+
+Types of facilities:
+
+* api (for automated external access)
+* dev (tools for developers)
+* admin (tools for system administrators)
+* util (login, logout, etc)
+* content (content is the main game for your service content)
+* ... (you can introduce facility types if you wish)
+
+The robots.txt file should block search engines for everything except 'content'.
+
+Disallow: /api
+Disallow: /dev
+...
+
+The web controller should have some semantics attached to facility types:
+
+* dev only available in DEV builds
+* admin only available to users in the ADMIN role
+
+Facility implementation file path:
+
+$type = one of [ api, dev, admin, util, content, ... ]
+
+src / code / 6-facility / $type / $entity / $verb / $type_$entity_$verb.php
+
+or you can be deeper than simple $entity / $verb, as with e.g.
+
+src / code / 6-facility / $type / album / track-list / edit / $type_album_track_list_edit.php
+
+Your Mud Ball application will automatically find and load your facilities based on their
+location in your project based on the above naming convention.
+
+But you can have even simpler facilities with just a verb, e.g.
+
+src / code / 6-facility / util / login / util_login.php
+
+Verbs can be e.g.:
+
+* index
+* list
+* view
+* edit
+* add
+* delete
+* login
+* logout
+* ...

@@ -1,0 +1,20 @@
+                                                                                    2021-04-14 jj5
+
+= Mudball Data Access Layer =
+
+This module wraps access to our database with specific functions for each registered table.
+
+== Function naming convention =
+
+Some Hungarian notation is used for method names used in this module:
+
+add_row_* => insert data
+set_row_* => insert data or update if it already exists, sets a field for every function argument
+put_row_* => insert data or update if it already exists, sets fields only for non-null arguments
+del_row_* => delete data (if it exists)
+
+get_a_* => get a field
+get_row_* => get a row ( a key -> val map of row data )
+get_tab_* => get a table ( a list of rows, not necessarily all rows in a table )
+get_map_* => get a map ( key => row )
+get_list_* => get a list of scalar values ( not rows )

@@ -1,0 +1,43 @@
+<?php
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2021-03-19 jj5 - include dependencies...
+//
+
+require_once __DIR__ . '/../260-define/mud_define.php';
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2021-03-19 jj5 - module errors...
+//
+
+mud_define_error( 'MUD_ERR_ENSURE_REQUIREMENT_VIOLATED', 'requirement violated.' );
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2022-02-23 jj5 - include components...
+//
+
+require_once __DIR__ . '/class/MudModuleEnsure.php';
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2021-03-19 jj5 - functional interface...
+//
+
+// 2021-03-19 jj5 - not implemented, probably never will be...
+//
+// 2021-04-12 jj5 - actually I think maybe this should be implemented...
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 2024-02-07 jj5 - service locator...
+//
+//
+
+function mud_module_ensure() : MudModuleEnsure {
+
+  return mud_locator()->get_module( MudModuleEnsure::class );
+
+}

@@ -1,0 +1,15 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball password module ==
+
+The password module is for:
+
+* password validation
+
+=== mud_password_hash() ===
+
+This will hash a password securely.
+
+=== mud_password_verify() ===
+
+This will verify a password hash.

@@ -1,0 +1,8 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball enum module ==
+
+The enum module is for:
+
+* defining a base object from which mudball enumerations derive
+* defining some traits to help with enum data

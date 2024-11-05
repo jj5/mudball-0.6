@@ -1,0 +1,39 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball compression module ==
+
+The compression module is for:
+
+* binary data compression
+* JSON data redaction and compression
+
+=== mud_zlob_encode() ===
+
+This will compress any data, suitable for storing in BLOB database field.
+
+=== mud_zlob_decode() ===
+
+This will decompress any data compressed with mud_zlob_encode().
+
+=== mud_jzon_encode() ===
+
+This will redact secrets then encode data as JSON then compress it with maximum compression.
+
+=== mud_jzon_decode() ===
+
+This will decode data encoded with bom_jzon_encode().
+
+=== mud_json_gzip_encode() ===
+
+This will format JSON (in compact format) then compress it. Note that unlike mud_jzon_encode()
+this function will *not* redact secrets from its input. Probably best to use mud_jzon_encode() in
+most use cases.
+
+=== mud_json_gzip_decode_pretty() ===
+
+This will decode data encoded with mud_json_gzip_encode() with support for pretty printing its
+JSON content.
+
+=== mud_json_gzip_decode() ===
+
+This will decode data encoded with mud_json_gzip_encode().

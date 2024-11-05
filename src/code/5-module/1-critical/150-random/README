@@ -1,0 +1,16 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball random module ==
+
+The random module is for:
+
+* random number and token generation
+
+=== mud_new_token() ===
+
+This will generate a random case-sensitive ASCII token of the nominated length. The default
+length is 32 characters.
+
+=== mud_new_seed() ===
+
+This will generate a random 32-bit value which can be used to seed a random number generator.

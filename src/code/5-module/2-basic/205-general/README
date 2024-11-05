@@ -1,0 +1,32 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball general module ==
+
+The general module is for:
+
+* process initialization
+* inferring variable/column types
+* generic retry logic
+
+=== mud_init() ===
+
+Call mud_init() to setup your PHP environment before you run your main code. You should call
+mud_init() *after* you have loaded your own config file because you might want to set some of the
+debug constants in your config file before mud_init() sets them to default values.
+
+The mud_init() function will:
+
+# enable error reporting for all errors
+# configure I/O and other subsystems to use UTF-8
+# configure the locale // 2021-02-25 jj5 - hardcoded to en_AU.UTF8 presently
+# parse standard command-line args // 2021-02-25 jj5 - these will be expanded
+# make sure standard constants are defined if not already
+
+=== mud_is_bool_name() ===
+
+This will determine if a variable/field is a boolean based on its name. Basically it checks for
+'is', 'has', 'was', 'can', and 'should' prefixes in various formats. See code for details.
+
+=== mud_retry() ===
+
+This will retry a function a number of times before giving up.

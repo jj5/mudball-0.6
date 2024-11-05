@@ -1,0 +1,31 @@
+                                                                                    2021-04-11 jj5
+
+= Mud Cache =
+
+So this is a general purpose cache. You can use it to store key/value pairs. This was particularly
+written so that the Data Access Layer could cache values, particularly for elemental data.
+
+== SQLite ==
+
+NOTE: this query will report the number of megabytes used by all tables:
+
+  SELECT SUM("pgsize") / 1024 / 1024 FROM "dbstat" WHERE name like 't_%'
+
+...but I don't think index data is included.
+
+== File system permissions ==
+
+There are a few helper functions for creating a cache file in a particular directory. These
+methods will detect when you're running as 'root' and automatically change the owner and group of
+the directory and file so they are owned by 'www-data'. This is to fix a problem that can happen
+when you run the installer or updater as 'root', which creates the cache, and then run later as
+'www-data' but without access to the cache which is still owned by 'root'.
+
+== Serialization format ==
+
+We use PHP instead of JSON by default because JSON doesn't play well with binary data strings,
+such as the binary hash keys we use all over the place...
+
+I don't have a reference but I've heard JSON encoding can be faster than PHP serialization so if
+you've got a performance target you're not hitting you could investigate that option provided your
+string data is compatible.

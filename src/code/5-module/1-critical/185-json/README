@@ -1,0 +1,30 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball JSON module ==
+
+The JSON module is for:
+
+* data encoding and decoding using the JSON format
+
+=== mud_json_pretty() ===
+
+This will do a standard pretty-print encode. This is usually used for human/programmer consumption.
+
+=== mud_json_compact() ===
+
+This will do a standard compact encode, no pretty-printing. This is the best choice for storage.
+
+=== mud_json_ascii() ===
+
+This will do a standard compact ASCII encode, no pretty-printing. Unicode characters will be
+escaped. This is suitable when you need to transmit through an ASCII medium.
+
+=== mud_json_embed() ===
+
+This will do a compact encode suitable for inclusion in JavaScript or HTML documents. Importantly
+this function will escape backslash characters which means no malicious or accidental
+"</script>" content can create problems.
+
+=== mud_json_decode() ===
+
+This will decode JSON using associative arrays (not objects) where necessary.

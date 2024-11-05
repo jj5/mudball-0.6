@@ -1,0 +1,18 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball pclog module ==
+
+The pclog module is for:
+
+* sending log data to a pclog server
+
+=== MudModulePclogDispatcher ===
+
+The MudModulePclogDispatcher is responsible for intercepting events and dispatching them to the
+latest instance of the MudModulePclog (via its service locator). We separate the MudModulePclog
+and the MudModulePclogDispatcher so that we can switch out the MudModulePclog if we want to (the
+MudModulePclogDispatcher cannot be switched out).
+
+=== mud_whatever() ===
+
+This will...

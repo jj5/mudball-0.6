@@ -1,0 +1,12 @@
+<?php
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2021-03-19 jj5 - interface definition...
+//
+
+interface IMudLog {
+
+  public function log( string $message, int $level );
+
+}

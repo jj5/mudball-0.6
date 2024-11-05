@@ -1,0 +1,41 @@
+                                                                                    2021-10-23 jj5
+
+= Actions =
+
+Actions are how facilities do work. They handle POST submissions. The class name and the action
+name are one and the same and should be all capitals such as:
+
+$default = [ yes => 'DEFAULT', no => '' ];
+
+$channel = one of [ cli, web ]
+
+$type = facility type
+
+ACTION _ $default _ $channel _ $type _ $entity _ $verb
+
+Actions should have a version number, starting at 1 and incrementing upon each change to the
+implementation. Hmm. This needs thought. Maybe we only bump version for breaking changes? Or
+maybe we implement full semver for each action?
+
+ACTION_DEFAULT_WEB_LOGIN
+
+ACTION_WEB_ADMIN_USER_ADD
+
+ACTION_WEB_API_SUBSCRIBE
+
+ACTION_CLI_CONSOLIDATE_DATA
+
+Note: 'default' implementations are bundled with Mud Ball. If overriding the action remove
+'default' from the action name. You can do e.g.:
+
+class ACTION_WEB_LOGIN extends ACTION_DEFAULT_WEB_LOGIN { ... }
+
+They just replace the 'action' input in your HTML <form> to be e.g. ACTION_WEB_LOGIN
+
+At the moment we're just gonna have one big long list of ACTION* classes in
+
+src / code / 5-action /
+
+But in future we might tidy this up with support for subdirectories, viz
+
+src / code / 5-action / [ cli, web ] / [ api, admin, util, ... ] / ...

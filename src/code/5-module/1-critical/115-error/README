@@ -1,0 +1,60 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball error module ==
+
+The error module is for:
+
+* declaring possible errors
+* throwing exceptions for particular errors
+* redacting sensitive data
+
+=== mud_define_error() ===
+
+This will declare a particular error. Errors are identified by name and are allocated a code. The
+error names are constant but the error codes can change between software versions.
+
+Errors also have a text, which is a description of the error, and potentially a hint. The hint is
+to suggest to the user (or more usually the programmer) what they might check to resolve an error.
+
+Errors can be defined in multiple scopes, usually you will use the APP_CODE as your scope, the
+Mudball library uses the MUDBALL_CODE as the scope for its own errors.
+
+Each module should declare its errors at the top of the main module file or in an errors file
+in the bootstrap directory.
+
+=== mud_fail() ===
+
+This will throw an exception for a particular error condition. You can attach associated data and
+a previous exception, if any.
+
+=== mud_not_implemented() ===
+
+If you run into a situation where functionality has not yet been implemented you can use this
+helper function to throw a not implemented exception.
+
+=== mud_not_supported() ===
+
+If you run into a situation which is not supported by your software you can use this helper
+function to throw a not supported exception.
+
+=== mud_redact_secrets() ===
+
+This function will replace secret/sensitive data with '**REDACTED**'. It works based on names, so
+things like 'secret' and 'pass[word]' will be redacted. See the source code for full details.
+
+Call this function before you log data to make sure that you don't put secret information into
+the log. In addition to the default filtering functionality you can add whitelist and blacklist
+literals and regular expression patterns. Your regular expression patterns must begin and end with
+a pipe character (|).
+
+Redaction is done automatically on data associated with an exception thrown from mud_fail() and
+that is why redaction is in this module rather than say the Mudball general module or elsewhere.
+
+Note that if you fuck up with your whitelist or blacklist and pass invalid string literal or
+regular expression values then everything should be redacted by default, so make sure you get
+those right. Ideally you won't need to use the whitelist or blacklist functionality at all, the
+default behaviour should be safe.
+
+See the code for details but basically if you have the substring 'secret' or 'pass' in your
+variable names that content will be automatically redacted. If you need such content to be
+redacted then use such variable names!

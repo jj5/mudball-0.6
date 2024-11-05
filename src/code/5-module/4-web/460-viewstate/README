@@ -1,0 +1,7 @@
+                                                                                                              2024-02-08 jj5
+
+View State is posted back to the server on HTML <form> submission.
+
+It should include data for optomistic concurrency control.
+
+View State is also the data that results from a query (HTTP GET) which is rendered to a HTML (or other?) view.

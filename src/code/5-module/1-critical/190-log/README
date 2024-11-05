@@ -1,0 +1,12 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball log module ==
+
+The log module is for:
+
+* logging to syslog
+* logging to file
+
+=== mud_retry() ===
+
+This will retry a function a number of times before giving up.

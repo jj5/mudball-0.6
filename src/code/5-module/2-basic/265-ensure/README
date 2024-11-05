@@ -1,0 +1,10 @@
+                                                                                    2021-03-19 jj5
+
+== Mudball ensure module ==
+
+This module provides facilities for making assertions which are always verified.
+
+Unlike most Mudball modules this module does not define a functional interface. You can access
+this module via its service locator mud_module_ensure().
+
+// 2021-04-11 jj5 - TODO: define a proper functional interface into this module.

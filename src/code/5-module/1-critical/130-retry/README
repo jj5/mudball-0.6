@@ -1,0 +1,20 @@
+                                                                                    2021-04-11 jj5
+
+= Mud Retry =
+
+This module provides some functions which will retry an operation a number of times until it
+either succeeds or exceeds its retry count. The purpose of these functions is to provide some
+resilience and robustness when integrating with unreliable external systems which can
+intermittently fail, such as the file system.
+
+See the 'file' and 'directory' modules for example usage of this module.
+
+== mud_retry() ==
+
+This function will retry an operation a number of times and return false on failure and otherwise
+on success.
+
+== mud_require() ==
+
+This function will retry an operation a number of times and throw an exception if the operation
+does not complete within the allowed number of retries.

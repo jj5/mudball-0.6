@@ -1,0 +1,22 @@
+                                                                                    2021-04-07 jj5
+
+= mudballdb =
+
+So this is the definition for the basic schema that comes with the framework. The mudball schema
+items are in the 'std' namespace, and your application schema items will typically be in the 'app'
+namespace.
+
+== Upgrades ==
+
+At the present time upgrades are not well supported. Not all the functionality that was developed
+in PHPBOM was migrated to Mudball, particularly not all the support for schema upgrades. I will
+add the support for schema upgrades as it becomes necessary. Some fairly significant technical
+debt, granted.
+
+== Logs ==
+
+Note: logs have enforced foreign key constraints and for this reason cannot reference entity
+data directly as that entity data me get deleted. If you need to log information about entity
+data you can do so by using the history ID for the entity in question. You need to get the
+relevant history ID that you will put into the log before you commit your TRN transaction and
+write the log after you have committed your TRN transaction.

@@ -1,0 +1,11 @@
+                                                                                    2021-10-27 jj5
+
+# Schema Declarations
+
+This module provides a set of functions for use by schema declaration files.
+
+The def_ functions are for defining new schema elements, and the mod_ functions are for modifying
+existing elements.
+
+Elements are modelled in a linked list of MudSchemaDecl nodes. Later processing applies each
+MudSchemaDecl node to a schema definition to take the modelling process to the next phase.

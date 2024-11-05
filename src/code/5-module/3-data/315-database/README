@@ -1,0 +1,5 @@
+                                                                                    2021-03-19 jj5
+
+== Mudball database module ==
+
+This module provides a wrapper around PDO.

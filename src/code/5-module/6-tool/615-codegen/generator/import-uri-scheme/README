@@ -1,0 +1,18 @@
+                                                                                    2022-02-21 jj5
+
+This scripot will pick up changes in the list of URI schemes maintained here:
+
+  https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
+
+and then do some code generation for a few files, see the 'gen' directory for specifics.
+
+Note: we used to parse the XHTML file above, but since then we have discovered a CSV file which
+we now use instead.
+
+I don't want to run this script too frequently and will not put it in the default build scripts.
+
+2022-02-21 jj5 - THINK: we still need to figure out how to update the schema migration scripts
+if the URI Scheme data changes due to new URIs.
+
+If you're debugging this script you can use the --debug flag to reuse the existing CSV file
+without downloading a fresh copy. You can use the --quiet flag to disable verbose output.

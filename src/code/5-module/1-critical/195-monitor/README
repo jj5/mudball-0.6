@@ -1,0 +1,10 @@
+                                                                                    2021-06-17 jj5
+
+== Mudball monitor ==
+
+A 'monitor' is a proxy which monitors access to a given object which it wraps.
+
+A flaw with this approach is that when a target object operates on itself via its $this pointer
+the wrapper is unable to log such activity.
+
+// 2021-06-17 jj5 - THINK: do we want to make value/arguments logging an option..?

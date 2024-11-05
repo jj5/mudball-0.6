@@ -1,0 +1,29 @@
+                                                                                    2021-02-24 jj5
+
+== Mudball buffer module ==
+
+The buffer module is a thin wrapper around the PHP output buffering library, it is for:
+
+* starting buffers
+* clearing buffers
+* flushing buffers
+
+=== mud_buffer_reset() ===
+
+This will clear all open buffers and start a new one.
+
+=== mud_buffer_start() ===
+
+This will push a new buffer onto the buffers stack.
+
+=== mud_buffer_flush() ===
+
+This will flush the current buffer and then pop it from the stack.
+
+=== mud_buffer_clear() ===
+
+This will delete the current buffer.
+
+=== mud_buffer_clear_all() ===
+
+This will delete all open buffers.

@@ -1,0 +1,21 @@
+                                                                                    2021-03-04 jj5
+
+== Mudball exit module ==
+
+The exit module is for:
+
+* declaring possible exit error levels
+* exiting with particular error levels
+
+=== mud_define_exit() ===
+
+This will declare a particular error level. Error levels are identified by name and are allocated
+a code. The names are constant but the codes can change between software versions.
+
+=== mud_abort() ===
+
+This will exit our process, call it if it's unsafe to continue processing.
+
+=== mud_exit() ===
+
+This will exit the current process for the nominated reason.

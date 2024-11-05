@@ -1,0 +1,38 @@
+<?php
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2021-04-13 jj5 - include dependencies...
+//
+
+require_once __DIR__ . '/../165-config/mud_config.php';
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2022-02-23 jj5 - include components...
+//
+
+require_once __DIR__ . '/class/MudModuleTemp.php';
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 2021-04-13 jj5 - functional interface...
+//
+
+function mud_get_temp_file( bool $manage = true ) : string {
+
+  return mud_module_temp()->get_temp_file( $manage );
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 2024-02-07 jj5 - service locator...
+//
+//
+
+function mud_module_temp() : MudModuleTemp {
+
+  return mud_locator()->get_module( MudModuleTemp::class );
+
+}

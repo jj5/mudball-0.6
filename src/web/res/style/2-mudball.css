@@ -1,0 +1,18 @@
+
+/* 2021-09-05 jj5 - this is the Mudball default style sheet... */
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+
+.flash {
+  color: green;
+}
