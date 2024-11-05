@@ -212,6 +212,14 @@ class MudModuleError extends MudModuleCritical {
     }
   }
 
+  public function handle_error( $severity, $message, $file, $line, $context = null ) {
+
+    if ( error_reporting() === 0 ) { return; }
+
+    throw new ErrorException( $message, 0, $severity, $file, $line );
+
+  }
+
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-02-24 jj5 - protected methods...

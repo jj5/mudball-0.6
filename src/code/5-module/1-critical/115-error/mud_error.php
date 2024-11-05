@@ -124,6 +124,12 @@ function mud_not_possible( mixed $data = null ) : MudException {
 
 }
 
+function mud_handle_error( $severity, $message, $file, $line, $context ) {
+
+  return mud_module_error()->handle_error( $severity, $message, $file, $line, $context );
+
+}
+
 // 2019-11-10 jj5 - this function makes a best-efforts endeavour to remove
 // secret/sensitive info, for use prior to logging...
 //
