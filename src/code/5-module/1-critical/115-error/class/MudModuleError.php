@@ -212,7 +212,7 @@ class MudModuleError extends MudModuleCritical {
     }
   }
 
-  public function handle_error( $severity, $message, $file, $line, $context = null ) {
+  public function handle_error( $severity, $message, $file, $line ) {
 
     if ( error_reporting() === 0 ) { return; }
 

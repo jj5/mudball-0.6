@@ -124,9 +124,9 @@ function mud_not_possible( mixed $data = null ) : MudException {
 
 }
 
-function mud_handle_error( $severity, $message, $file, $line, $context ) {
+function mud_handle_error( $severity, $message, $file, $line ) {
 
-  return mud_module_error()->handle_error( $severity, $message, $file, $line, $context );
+  return mud_module_error()->handle_error( $severity, $message, $file, $line );
 
 }
 
