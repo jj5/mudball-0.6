@@ -11,18 +11,22 @@ if ( file_exists( MUDBALL_CONFIG_PATH ) ) {
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-10-19 jj5 - we sneak this module loader function in here... we use it to load our
 // modules...
 //
 
 function mud_load_modules( $dir, $scope = 'mud' ) {
 
-  $dir = realpath( $dir );
+  $realpath = realpath( $dir );
 
-  assert( is_dir( $dir ) );
+  if ( ! is_dir( $realpath ) ) {
 
-  foreach ( scandir( $dir, SCANDIR_SORT_ASCENDING ) as $module_dir ) {
+    mud_fail( 'invalid directory.', [ 'dir' => $dir ] );
+
+  }
+
+  foreach ( scandir( $realpath, SCANDIR_SORT_ASCENDING ) as $module_dir ) {
 
     $parts = explode( '-', $module_dir, 2 );
 
@@ -31,7 +35,7 @@ function mud_load_modules( $dir, $scope = 'mud' ) {
 
     $name = str_replace( '-', '_', $name );
 
-    $path = "{$dir}/{$code}-{$name}/{$scope}_{$name}.php";
+    $path = "{$realpath}/{$code}-{$name}/{$scope}_{$name}.php";
 
     if ( is_file( $path ) ) { require_once $path; }
 
@@ -85,7 +89,7 @@ function mud_load_deep( $dir ) {
 }
 
 function mud_load_deep_breadth_first( $dir ) {
-  
+
   $dir = realpath( $dir );
 
   assert( is_dir( $dir ) );

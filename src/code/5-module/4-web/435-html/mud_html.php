@@ -1,14 +1,51 @@
 <?php
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-03-19 jj5 - include dependencies...
 //
 
-require_once __DIR__ . '/../430-session/mud_session.php';
+require_once __DIR__ . '/../425-browser/mud_browser.php';
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2024-07-05 jj5 - module constants...
+//
+
+// 2024-07-05 jj5 - NOTE: options can be set at the module level or at the element attribute level...
+
+// 2024-07-05 jj5 - all options are prefixed with 'opt-'...
+//
+define( 'MUD_HTML_OPTION_PREFIX',           'opt-'            );
+
+// 2024-07-05 jj5 - when opt-space is true then surrounding whitespace is added to the element...
+//
+define( 'MUD_HTML_OPT_SPACE',               'opt-space'       );
+define( 'MUD_HTML_DEFAULT_OPT_SPACE',       true              );
+
+
+// 2024-07-05 jj5 - when opt-break is true then line breaks are added to the element...
+//
+define( 'MUD_HTML_OPT_BREAK',               'opt-break'       );
+define( 'MUD_HTML_DEFAULT_OPT_BREAK',       false             );
+
+// 2024-07-05 jj5 - the op-quote value is the string to use for attribute quote marks... either (') or (")...
+//
+define( 'MUD_HTML_OPT_QUOTE',               'opt-quote'       );
+define( 'MUD_HTML_DEFAULT_OPT_QUOTE',       '"'               );
+
+// 2024-07-05 jj5 - when true the XSRF token is automatically added to HTML <form method=POST> forms.
+//
+define( 'MUD_HTML_OPT_AUTOXSRF',            'opt-autoxsrf'    );
+define( 'MUD_HTML_DEFAULT_OPT_AUTOXSRF',    true              );
+
+// 2024-07-05 jj5 - this affects some of the string functionality...
+//
+define( 'MUD_HTML_OPT_MAX_LENGTH',          'opt-max-length'  );
+define( 'MUD_HTML_DEFAULT_OPT_MAX_LENGTH',  32                );
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-04-12 jj5 - module error definitions...
 //
 
@@ -19,14 +56,14 @@ mud_define_error( 'MUD_ERR_HTML_DUPLICATE_ID', 'duplicate ID.' );
 mud_define_error( 'MUD_ERR_HTML_TAG_INVALID', 'invalid tag.' );
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2022-02-23 jj5 - include components...
 //
 
 require_once __DIR__ . '/class/MudModuleHtml.php';
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2018-06-17 jj5 - functional interface...
 //
 
@@ -39,7 +76,7 @@ function doc_open() {
 function doc_is_initialized() {
 
   return mud_module_html()->doc_is_initialized();
-  
+
 }
 
 function doc_init(
@@ -140,7 +177,7 @@ function mud_html_get_opt( string $option, $default = null ) {
 
 }
 
-function mud_html_render_table(
+function mud_render_table(
   $context,
   array $table,
   array $attrs = [],
@@ -161,37 +198,37 @@ function mud_html_render_table(
   );
 }
 
-function mud_html_render_open_form_table( $context, array $attrs ) : MudModuleHtml {
+function mud_render_open_form_table( $context, array $attrs ) : MudModuleHtml {
 
   return mud_module_html()->render_open_form_table( $context, $attrs );
 
 }
 
-function mud_html_render_shut_form_table( $context, array $attrs ) : MudModuleHtml {
+function mud_render_shut_form_table( $context, array $attrs ) : MudModuleHtml {
 
   return mud_module_html()->render_shut_form_table( $context, $attrs );
 
 }
 
-function mud_html_render_input_row_text( $context, array $attrs ) : MudModuleHtml {
+function mud_render_input_row_text( $context, array $attrs ) : MudModuleHtml {
 
   return mud_module_html()->render_input_row_text( $context, $attrs );
 
 }
 
-function mud_html_render_input_row_password( $context, array $attrs ) : MudModuleHtml {
+function mud_render_input_row_password( $context, array $attrs ) : MudModuleHtml {
 
   return mud_module_html()->render_input_row_password( $context, $attrs );
 
 }
 
-function mud_html_render_input_row_submit( $context, array $attrs ) : MudModuleHtml {
+function mud_render_input_row_submit( $context, array $attrs ) : MudModuleHtml {
 
   return mud_module_html()->render_input_row_submit( $context, $attrs );
 
 }
 
-function mud_html_render_input_row_button( $context, array $attrs ) : MudModuleHtml {
+function mud_render_input_row_button( $context, array $attrs ) : MudModuleHtml {
 
   return mud_module_html()->render_input_row_button( $context, $attrs );
 
@@ -279,6 +316,8 @@ function tag_shut( string $tag, array $attrs = [] ) : MudModuleHtml {
 
 }
 
+function mud_html_has_id( $id ) { return mud_module_html()->has_id( $id ); }
+
 // 2019-09-13 jj5 - I'm not happy with the unprefixed names get_attr() and
 // attrs_to_html() and as these functions probably don't need to be available
 // in the global namespace I have removed them for now...
@@ -297,7 +336,12 @@ function attrs_to_html( array $attrs, string $tag ) : string {
 }
 */
 
+// 2024-07-12 jj5 - NOTE: for the various out_*() functions I check the number of args is one. What can happen is that
+// and out_*() function is called as a tag_*() function which is a common mistake. This check will catch that mistake.
+
 function out_line( int $lines = 1 ) : MudModuleHtml {
+
+  assert( func_num_args() === 1 );
 
   return mud_module_html()->out_line( $lines );
 
@@ -305,17 +349,23 @@ function out_line( int $lines = 1 ) : MudModuleHtml {
 
 function out_html( $html ) :MudModuleHtml {
 
+  assert( func_num_args() === 1 );
+
   return mud_module_html()->out_html( $html );
 
 }
 
 function out_text( $text ) : MudModuleHtml {
 
+  assert( func_num_args() === 1 );
+
   return mud_module_html()->out_text( $text );
 
 }
 
 function out_code( $code ) : MudModuleHtml {
+
+  assert( func_num_args() === 1 );
 
   return mud_module_html()->out_code( $code );
 
@@ -335,7 +385,7 @@ function mud_attr_id( $col ) {
 function mud_tab_index( $set = false ) { return mud_module_html()->tab_index( $set ); }
 
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2024-02-07 jj5 - service locator...
 //
 //

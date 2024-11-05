@@ -28,7 +28,7 @@ abstract class MudService extends MudGadget {
   // 2024-02-08 jj5 - constructor...
   //
 
-  public function __construct( MudService|null $previous ) {
+  public function __construct() {
 
     parent::__construct();
 

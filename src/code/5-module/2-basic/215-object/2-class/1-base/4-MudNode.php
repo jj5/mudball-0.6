@@ -1,28 +1,12 @@
 <?php
 
-class MudNode extends MudHost implements IMudHost {
-
-  public function get_closest( string $class ) : IMudNode {
-
-    if ( $this instanceof $class ) { return $this; }
-
-    return $this->get_ancestor( $class );
-
-  }
+abstract class MudNode extends MudHost implements IMudNode {
 
   private IMudNode|null $parent = null;
 
-  public function get_parent( string|null $class = null ) : IMudNode {
+  public function get_parent() : IMudNode {
 
-    if ( $class === null ) {
-
-      return $this->parent ?? $this->get_null();
-
-    }
-
-    if ( $this->parent instanceof $class ) { return $this->parent; }
-
-    return $this->get_null();
+    return $this->parent ?? mud_null_object();
 
   }
 
@@ -32,13 +16,13 @@ class MudNode extends MudHost implements IMudHost {
 
   }
 
-  public function get_grandparent( string|null $class = null ) : IMudNode {
+  public function get_grandparent() : IMudNode {
 
-    return $this->get_parent()->get_parent( $class );
+    return $this->get_parent()->get_parent();
 
   }
 
-  public function get_ancestor( string|null $class = null ) : IMudNode {
+  public function get_ancestor( string $class ) : IMudNode {
 
     $ancestor = $this->get_parent();
 
@@ -50,25 +34,21 @@ class MudNode extends MudHost implements IMudHost {
 
     }
 
-    return $this->get_null();
+    return mud_null_object();
   
   }
 
-  public function get_root( string|null $class = null ) : IMudNode {
+  public function get_root() : IMudNode {
 
-    $root = $this;
+    $curr = $this;
 
-    while ( ! $root->is_null() ) {
+    while ( ! $curr->get_parent()->is_null() ) {
 
-      $root = $root->get_parent();
+      $curr = $curr->get_parent();
 
     }
 
-    if ( $class === null ) { return $root; }
-
-    if ( $root instanceof $class ) { return $root; }
-
-    return $this->get_null();
+    return $curr;
 
   }
 }

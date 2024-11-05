@@ -2,33 +2,56 @@
 
 trait MudHostMixin {
 
-  public function get_child_list() : array { return []; }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-07-30 jj5 - private fields...
+  //
+
+  private array $child_map = [];
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-07-30 jj5 - public static methods...
+  //
+
+  public static function get_null_object( $class_or_object ) {
+  
+    $class = is_string( $class_or_object ) ? $class_or_object : get_class( $class_or_object );
+
+    $null_class = 'Null' . $class;
+
+    return $null_class::Instance();
+
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-07-30 jj5 - public instance methods...
+  //
 
   public function get( string $class, int $index = 0 ) : IMudObject {
 
     if ( $index === 0 ) { return $this->get_first( $class ); }
 
-    return $this->get_list( $class )[ $index ] ?? mud_get_null_object();
+    return $this->get_list( $class )[ $index ] ?? self::get_null_object( $class );
 
   }
 
   public function get_first( string $class ) : IMudObject {
 
-    foreach ( $this->get_child_list() as $child ) {
+    $this->build_map( $class );
 
-      if ( $child instanceof $class ) { return $child; }
-
-    }
-
-    return mud_get_null_object();
+    return $this->child_map[ $class ][ 0 ] ?? self::get_null_object( $class );  
 
   }
 
   public function get_last( string $class ) : IMudObject {
 
-    $list = $this->get_list( $class );
+    $this->build_map( $class );
 
-    return $list[ count( $list ) - 1 ] ?? mud_get_null_object();
+    $list = $this->child_map[ $class ];
+
+    return $list[ count( $list ) - 1 ] ?? self::get_null_object( $class );  
 
   }
 
@@ -40,9 +63,13 @@ trait MudHostMixin {
 
   public function get_descendent_depth_first( string $class ) : IMudObject {
 
-    foreach ( $this->get_child_list() as $child ) {
+    $this->build_map( $class );
 
-      if ( $child instanceof $class ) { return $child; }
+    $list = $this->child_map[ $class ] ?? [];
+
+    if ( $list ) { return $list[ 0 ]; }
+
+    foreach ( $this->get_child_list() as $child ) {
 
       $result = $child->get_descendent_depth_first( $class );
 
@@ -50,7 +77,7 @@ trait MudHostMixin {
 
     }
 
-    return mud_get_null_object();
+    return self::get_null_object( $class );
 
   }
 
@@ -68,7 +95,7 @@ trait MudHostMixin {
 
     }
 
-    return mud_get_null_object();
+    return self::get_null_object( $class );
 
   }
 
@@ -76,15 +103,9 @@ trait MudHostMixin {
 
     if ( $class === null ) { return $this->get_child_list(); }
 
-    $result = [];
+    $this->build_map( $class );
 
-    foreach ( $this->get_child_list() as $child ) {
-
-      if ( $child instanceof $class ) { $result[] = $child; }
-
-    }
-
-    return $result;
+    return $this->child_map[ $class ];
 
   }
 
@@ -92,14 +113,13 @@ trait MudHostMixin {
 
     foreach ( $class_list as $class ) {
 
-      foreach ( $this->get_child_list() as $child ) {
-        
-        if ( $child instanceof $class ) { return $child; }
+      $this->build_map( $class );
 
-      }
+      if ( isset( $this->child_map[ $class ] ) ) { return $this->child_map[ $class ][ 0 ]; }
+
     }
 
-    return mud_get_null_object();
+    return self::get_null_object( $class_list[ 0 ] );
 
   }
 
@@ -109,14 +129,34 @@ trait MudHostMixin {
 
     foreach ( $class_list as $class ) {
 
-      foreach ( $this->get_child_list() as $child ) {
+      $this->build_map( $class );
+
+      foreach ( $this->child_map[ $class ] as $child ) {
         
-        if ( $child instanceof $class ) { $result[] = $child; }
+        $result[] = $child;
 
       }
     }
 
     return $result;
 
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-07-30 jj5 - protected instance methods...
+  //
+
+  protected function build_map( string $class ) {
+
+    if ( isset( $this->child_map[ $class ] ) ) { return; }
+
+    $this->child_map[ $class ] = [];
+
+    foreach ( $this->get_child_list() as $child ) {
+
+      if ( $child instanceof $class ) { $this->child_map[ $class ][] = $child; }
+
+    }
   }
 }

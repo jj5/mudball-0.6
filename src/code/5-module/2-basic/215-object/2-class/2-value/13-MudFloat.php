@@ -9,21 +9,16 @@ class MudFloat extends MudNumber implements IMudFloat {
 
   private float $value;
 
-  private float $max_value;
-
-  private float $min_value;
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-06-29 jj5 - constructor...
   //
 
-  public function __construct( float $value, float $max_value = INF, float $min_value = -INF ) {
+  public function __construct( float $value ) {
+
+    parent::__construct();
 
     $this->value = $value;
-
-    $this->max_value = $max_value;
-    $this->min_value = $min_value;
 
   }
 
@@ -48,7 +43,7 @@ class MudFloat extends MudNumber implements IMudFloat {
 
   public function is_valid( mixed $options = null ) : bool {
 
-    return $this->value >= $this->min_value && $this->value <= $this->max_value;
+    return $this->value >= $this->get_value_min_float() && $this->value <= $this->get_value_max_float();
 
   }
 
@@ -56,7 +51,7 @@ class MudFloat extends MudNumber implements IMudFloat {
 
   public function is_zero() : bool { return $this->to_int() === 0; }
 
-  public function is_integer( int $n ) : bool { return $this->to_int() === $n; }
+  //public function is_integer( int $n ) : bool { return $this->to_int() === $n; }
 
   public function is_nan() : bool { return is_nan( $this->value ); }
 
@@ -74,6 +69,8 @@ class MudFloat extends MudNumber implements IMudFloat {
 
   public function format( mixed $spec = null ) : string {
 
+    $spec = $this->get_format( $spec );
+
     $decimals = intval( $spec ?? 0 );
 
     return number_format( $this->value, $decimals, '.', ',' );
@@ -82,10 +79,26 @@ class MudFloat extends MudNumber implements IMudFloat {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-06-29 jj5 - IMudNumber interface...
+  // 2024-07-29 jj5 - IMudNumber interface...
   //
 
 
   public function get_number() : float|int { return $this->value; }
+
+  public function get_value_min_numeric() : int|float { return $this->get_value_min_float(); }
+
+  public function get_value_max_numeric() : int|float { return $this->get_value_max_float(); }
+
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-07-29 jj5 - IMudFloat interface...
+  //
+
+  public function get_float() : float { return $this->value; }
+
+  public function get_value_min_float() : float { return -INF; }
+
+  public function get_value_max_float() : float { return INF; }
 
 }

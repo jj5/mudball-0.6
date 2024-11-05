@@ -1,7 +1,7 @@
 <?php
 
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2018-06-17 jj5 - default HTML utility functionality, can be extended...
 //
 //
@@ -9,7 +9,7 @@
 class MudModuleHtml extends MudModuleWeb {
 
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2022-03-06 jj5 - public fields...
   //
 
@@ -909,19 +909,58 @@ class MudModuleHtml extends MudModuleWeb {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-12 jj5 - constructor...
+  // 2021-10-18 jj5 - public functions...
   //
 
-  public function __construct( MudModuleHtml|null $previous = null ) {
+  public function get_opt_space( bool $default = MUD_HTML_DEFAULT_OPT_SPACE ) : bool {
 
-    parent::__construct( $previous );
+    return $this->get_opt( MUD_HTML_OPT_SPACE, $default );
 
   }
 
+  public function get_opt_break( bool $default = MUD_HTML_DEFAULT_OPT_BREAK ) : bool {
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
-  // 2021-10-18 jj5 - public functions...
-  //
+    return $this->get_opt( MUD_HTML_OPT_BREAK, $default );
+
+  }
+
+  public function get_opt_quote( string $default = MUD_HTML_DEFAULT_OPT_QUOTE ) : string {
+
+    return $this->get_opt( MUD_HTML_OPT_QUOTE, $default );
+
+  }
+
+  public function get_opt_autoxsrf( bool $default = MUD_HTML_DEFAULT_OPT_AUTOXSRF ) : bool {
+
+    return $this->get_opt( MUD_HTML_OPT_AUTOXSRF, $default );
+
+  }
+
+  public function get_opt_max_length( int $default = MUD_HTML_DEFAULT_OPT_MAX_LENGTH ) : int {
+
+    return $this->get_opt( MUD_HTML_OPT_MAX_LENGTH, $default );
+
+  }
+
+  // 2017-06-01 jj5 - set a HTML output option...
+  public function get_opt( string $option, mixed $default = null ) : mixed {
+
+    $options = $this->html_state[ 'options' ];
+
+    if ( ! array_key_exists( $option, $options ) ) { return $default; }
+
+    return $options[ $option ];
+
+  }
+
+  // 2017-06-01 jj5 - set a HTML output option...
+  public function set_opt( string $option, mixed $value ) : MudModuleHtml {
+
+    $this->html_state[ 'options' ][ $option ] = $value;
+
+    return $this;
+
+  }
 
   public function doc_open() { return count( $this->html_state ) > 0; }
 
@@ -1089,32 +1128,6 @@ class MudModuleHtml extends MudModuleWeb {
   public function get_setting( string $setting ) {
 
     return $this->html_state[ $setting ];
-
-  }
-
-  public function get_opt_autoxsrf() : bool {
-
-    return $this->get_opt( 'autoxsrf' );
-
-  }
-
-  // 2017-06-01 jj5 - set a HTML output option...
-  public function set_opt( string $option, $value ) : MudModuleHtml {
-
-    $this->html_state[ 'options' ][ $option ] = $value;
-
-    return $this;
-
-  }
-
-  // 2017-06-01 jj5 - set a HTML output option...
-  public function get_opt( string $option, $default = null ) {
-
-    $options = $this->html_state[ 'options' ];
-
-    if ( ! array_key_exists( $option, $options ) ) { return $default; }
-
-    return $options[ $option ];
 
   }
 
@@ -1550,7 +1563,7 @@ class MudModuleHtml extends MudModuleWeb {
 
     if ( $value === null ) { $value = ''; }
 
-    if ( ! is_string( $value ) ) { $value = mud_json_encode( $value ); }
+    if ( ! is_string( $value ) ) { $value = mud_json_pretty( $value ); }
 
     return $this->tag_text( $tag, $value, $attrs );
 
@@ -1593,6 +1606,45 @@ class MudModuleHtml extends MudModuleWeb {
 
   }
 
+  private $opt_space = null;
+  private $opt_break = null;
+
+  protected function get_options( array $attrs, &$opt_space, &$opt_break ) {
+
+    if ( $this->opt_space === null ) {
+
+      $cache = $_COOKIE[ 'cache' ] ?? false;
+
+      if ( $cache !== false ) {
+
+        $opt_space = false;
+        $opt_break = true;
+
+        $this->opt_space = $opt_space;
+        $this->opt_break = $opt_break;
+
+      }
+      else {
+
+        $opt_space = $this->get_attr( $attrs, MUD_HTML_OPT_SPACE, $this->get_opt_space( DEBUG ) );
+        $opt_break = $this->get_attr( $attrs, MUD_HTML_OPT_BREAK, $this->get_opt_break( ! DEBUG ) );
+
+      }
+    }
+    else {
+
+      $opt_space = $this->opt_space;
+      $opt_break = $this->opt_break;
+
+    }
+  }
+
+  protected function is_cache_request() {
+
+    return false;
+
+  }
+
   // 2017-06-01 jj5 - TODO: think about validating whether elements are allowed
   // as sub-elements...
   public function tag_open( string $tag, array $attrs = [], $bare = false ) : MudModuleHtml {
@@ -1618,16 +1670,38 @@ class MudModuleHtml extends MudModuleWeb {
     assert( is_array( $this->html_state[ 'stack-tags' ] ) );
     assert( is_array( $this->html_state[ 'stack-attrs' ] ) );
 
+    // 2024-07-04 jj5 - NOTE: we need to read these before we call fix_attrs() because fix_attrs() will remove them...
+    //
+    $this->get_options( $attrs, $opt_space, $opt_break );
+
     $this->fix_attrs( $tag, $attrs );
+
+    $this->check_attrs( $tag, $attrs );
 
     array_push( $this->html_state[ 'stack-tags' ], $tag );
     array_push( $this->html_state[ 'stack-attrs' ], $attrs );
 
+    if ( DEBUG ) {
+
+      $href = $attrs[ 'href' ] ?? null;
+
+      if ( $href ) {
+
+        $href_parts = explode( '#', $href );
+
+        if ( count( $href_parts ) > 2 ) {
+
+          mud_fail( 'duplicate hash in href.', [ 'href' => $href ] );
+
+        }
+      }
+    }
+
     $this->debug_note();
 
-    $attrs_html = $this->attrs_to_html( $attrs, $tag );
+    $attrs_html = $this->attrs_to_html( $attrs, $tag, $opt_break );
 
-    if ( $this->get_attr( $attrs, 'opt-space', true ) ) {
+    if ( $opt_space ) {
 
       $this->out_line();
 
@@ -1645,13 +1719,49 @@ class MudModuleHtml extends MudModuleWeb {
 
     if ( $bare && $this->html_state[ 'doctype' ] === MUD_DOCTYPE_XML ) {
 
-      $this->put_html( "<{$tag}{$attrs_html} />" );
+      if ( $opt_space ) {
 
+        $this->put_html( "<{$tag}{$attrs_html} />" );
+
+      }
+      else {
+
+        if ( $opt_break ) {
+
+          $attrs_html = ltrim( $attrs_html );
+
+          $this->put_html( "<{$tag}\n{$attrs_html} />" );
+
+        }
+        else {
+
+          $this->put_html( "<{$tag}{$attrs_html} />" );
+
+        }
+      }
     }
     else {
 
-      $this->put_html( "<{$tag}{$attrs_html}>" );
+      if ( $opt_space ) {
 
+        $this->put_html( "<{$tag}{$attrs_html}>" );
+
+      }
+      else {
+
+        if ( $opt_break ) {
+
+          $attrs_html = ltrim( $attrs_html );
+
+          $this->put_html( "<{$tag}\n{$attrs_html}>" );
+
+        }
+        else {
+
+          $this->put_html( "<{$tag}{$attrs_html}>" );
+
+        }
+      }
     }
 
     switch ( $tag ) :
@@ -1698,6 +1808,8 @@ class MudModuleHtml extends MudModuleWeb {
       );
 
     }
+
+    $this->fix_attrs( $tag, $attrs );
 
     // 2017-06-01 jj5 - TODO: get the elements which don't need to be (or can't
     // be) closed...
@@ -1868,6 +1980,20 @@ class MudModuleHtml extends MudModuleWeb {
   //
   public function out_code( $code ) : MudModuleHtml {
 
+    if ( $this->is_cache_request() ) {
+
+      if ( strlen( $code ) === 0 ) { return $this; }
+
+      if ( $code[ 0 ] !== "\n" ) {
+
+        return $this->out_html( "\n$code" );
+
+      }
+
+      return $this->out_html( $code );
+
+    }
+
     $lines = explode( "\n", $code );
 
     $min_space_count = PHP_INT_MAX;
@@ -1999,7 +2125,7 @@ class MudModuleHtml extends MudModuleWeb {
 
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2022-02-19 jj5 - protected methods...
   //
 
@@ -2051,7 +2177,9 @@ class MudModuleHtml extends MudModuleWeb {
 
   // 2019-09-13 jj5 - attrs_to_html() used to be public, but now it's not...
   //
-  protected function attrs_to_html( array $attrs, string $tag ) : string {
+  protected function attrs_to_html( array $attrs, string $tag, bool $opt_break ) : string {
+
+    $join = $opt_break ? "\n" : ' ';
 
     if ( DEBUG ) {
 
@@ -2141,11 +2269,37 @@ class MudModuleHtml extends MudModuleWeb {
 
           if ( $href ) {
 
-            if ( $href[ 0 ] === '/' && strpos( $href, '?' ) ) {
+            if (
+              ( $href[ 0 ] === '/' && strpos( $href, '?' ) ) ||
+              ( $href[ 0 ] === '?' )
+            ) {
 
               $attrs[ 'rel' ] = 'nofollow';
 
             }
+          }
+        }
+
+        break;
+
+      case 'h1' :
+      case 'h2' :
+      case 'h3' :
+      case 'h4' :
+      case 'h5' :
+      case 'h6' :
+
+        if ( ! isset( $attrs[ 'id' ] ) ) {
+
+          if ( $tag === 'h1' ) {
+
+            $attrs[ 'id' ] = 'heading';
+
+          }
+          else {
+
+            if ( DEBUG ) { mud_fail( 'Please provide an id for heading elements.' ); }
+
           }
         }
 
@@ -2156,14 +2310,18 @@ class MudModuleHtml extends MudModuleWeb {
     // 2017-06-01 jj5 - TODO: implement this function!
 
     $result = '';
-    $quote = $this->get_attr( $attrs, 'opt-quote', '"' );
+    $quote = $this->get_attr( $attrs, MUD_HTML_OPT_QUOTE, $this->get_opt_quote() );
 
     // 2017-06-02 jj5 - TEMP: just for now...
     foreach ( $attrs as $name => $spec ) {
 
+      if ( strpos( $name, MUD_HTML_OPTION_PREFIX ) === 0 ) { continue; }
+
       if ( is_bool( $spec ) ) {
 
-        if ( $spec ) { $result .= ' ' . mud_henc( $name ); }
+        // 2024-07-05 jj5 - TODO: this needs to be done differently for XML...
+
+        if ( $spec ) { $result .= $join . mud_henc( $name ); }
 
       }
       else if ( is_array( $spec ) ) {
@@ -2258,7 +2416,7 @@ class MudModuleHtml extends MudModuleWeb {
       }
       else {
 
-        $result .= ' ' . mud_henc( $name ) . '=' . $quote . mud_henc( $spec ) . $quote;
+        $result .= $join . mud_henc( $name ) . '=' . $quote . mud_henc( $spec ) . $quote;
 
       }
     }
@@ -2285,9 +2443,21 @@ class MudModuleHtml extends MudModuleWeb {
 
   }
 
+  public function has_id( $id ) { return array_key_exists( $id, $this->html_state[ 'id_map' ] ); }
+
   protected function fix_attrs( string $tag, array &$attrs ) {
 
     static $auto_name = [ 'input', 'select', 'textarea', ];
+
+    // 2024-07-04 jj5 - remove any 'opt-' attributes from the attributes list...
+    // 2024-07-05 jj5 - OLD: we don't remove these here any more, rather we ignore them when generating the HTML...
+    /*
+    foreach ( $attrs as $key => $val ) {
+
+      if ( strpos( $key, MUD_HTML_OPTION_PREFIX ) === 0 ) { unset( $attrs[ $key ] ); }
+
+    }
+    */
 
     // 2021-10-20 jj5 - I don't think we need this...
     /*
@@ -2316,6 +2486,70 @@ class MudModuleHtml extends MudModuleWeb {
 
       }
     }
+
+    foreach ( $attrs as $key => $val ) {
+
+      if ( is_string( $val ) ) { continue; }
+
+      if ( is_int( $val ) ) { continue; }
+
+      if ( is_bool( $val ) ) { continue; }
+
+      if ( is_array( $val ) ) {
+
+        foreach ( $val as $index => $item ) {
+
+          if ( is_string( $item ) ) { continue; }
+
+          $attrs[ $key ][ $index ] = strval( $item );
+
+        }
+
+       continue;
+
+      }
+
+      //error_log( "tag: $tag; key: $key; type: " . gettype( $val ) );
+
+      $attrs[ $key ] = strval( $val );
+
+    }
+
+    switch ( $tag ) {
+
+      case 'img' :
+
+        if ( isset( $attrs[ 'alt' ] ) && ! isset( $attrs[ 'title' ] ) ) {
+
+          $attrs[ 'title' ] = $attrs[ 'alt' ];
+
+        }
+        elseif( isset( $attrs[ 'title' ] ) && ! isset( $attrs[ 'alt' ] ) ) {
+
+          $attrs[ 'alt' ] = $attrs[ 'title' ];
+
+        }
+
+        if ( ! isset( $attrs[ 'alt' ] ) ) {
+
+          $attrs[ 'alt' ] = '';
+
+        }
+
+        if ( ! isset( $attrs[ 'loading' ] ) ) {
+
+          $attrs[ 'loading' ] = 'lazy';
+
+        }
+
+        break;
+
+      default :
+
+    }
+  }
+
+  protected function check_attrs( string $tag, array $attrs ) {
 
     $id = $attrs[ 'id' ] ?? null;
 
@@ -2352,8 +2586,15 @@ class MudModuleHtml extends MudModuleWeb {
       'stack-attrs' => [],
       'stack-form-errors' => [],
       'options' => [
-        'autoxsrf' => true,
-        'max-length' => 32,
+        // 2024-07-05 jj5 - OLD: it's better if we don't set these here, because when they are unset we can fallback to
+        // the default value specified by the programmer, which is handy.
+        /*
+        MUD_HTML_OPT_SPACE      => MUD_HTML_DEFAULT_OPT_SPACE,
+        MUD_HTML_OPT_BREAK      => MUD_HTML_DEFAULT_OPT_BREAK,
+        MUD_HTML_OPT_QUOTE      => MUD_HTML_DEFAULT_OPT_QUOTE,
+        MUD_HTML_OPT_AUTOXSRF   => MUD_HTML_DEFAULT_OPT_AUTOXSRF,
+        MUD_HTML_OPT_MAX_LENGTH => MUD_HTML_DEFAULT_OPT_MAX_LENGTH,
+        */
       ],
       'id_map' => [],
     ];
@@ -2581,7 +2822,7 @@ class MudModuleHtml extends MudModuleWeb {
         //
         mud_not_supported( [ 'type' => $type, 'field' => $field ] );
 
-        return $field ? mud_henc( format_currency( $field ) ) : '';
+        //return $field ? mud_henc( format_currency( $field ) ) : '';
 
       case MUD_HTML_COL_TYPE_DOLLARS :
 
@@ -2589,7 +2830,7 @@ class MudModuleHtml extends MudModuleWeb {
         //
         mud_not_supported( [ 'type' => $type, 'field' => $field ] );
 
-        return $field ? henc( format_currency( round( $field ) ) ) : '';
+        //return $field ? henc( format_currency( round( $field ) ) ) : '';
 
       case MUD_HTML_COL_TYPE_TEXT :
 
@@ -2603,7 +2844,7 @@ class MudModuleHtml extends MudModuleWeb {
 
       case MUD_HTML_COL_TYPE_STRING :
 
-        $max_length = $this->get_opt( 'max-length', 32 );
+        $max_length = $this->get_opt_max_length();
         $ondblclick =
           $this->get_opt( 'ondblclick', 'mud_show_long(this,event)' );
 
@@ -2710,10 +2951,12 @@ class MudModuleHtml extends MudModuleWeb {
         //
         mud_not_supported( [ 'type' => $type, 'field' => $field ] );
 
+        /*
         return
           '<textarea>' .
             henc( x_www_form_urldecode( $field ) ) .
           '</textarea>';
+        */
 
       default :
 
@@ -2817,6 +3060,8 @@ class MudModuleHtml extends MudModuleWeb {
     static $note = null;
 
     if ( ! DEBUG ) { return; }
+
+    if ( ! $this->is_cache_request() ) { return; }
 
     $backtrace = debug_backtrace();
 

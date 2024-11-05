@@ -9,7 +9,7 @@ class MudModuleRequest extends MudModuleWeb {
 
   public function new_mud_request_reader() {
 
-    return new MudRequestReader();
+    return MudRequestReader::Create();
 
   }
 
@@ -36,7 +36,7 @@ class MudModuleRequest extends MudModuleWeb {
     $facility,
   ) {
 
-    return new MudRequest(
+    return MudRequest::Create(
       $verb,
       $headers,
       $http_user_agent,

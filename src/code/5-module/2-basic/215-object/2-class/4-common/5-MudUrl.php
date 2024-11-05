@@ -36,7 +36,13 @@ class MudUrl extends MudString {
   // 2024-06-29 jj5 - constructor...
   //
 
-  public function __construct( string $url ) {
+  public function __construct( string|null $url = null ) {
+
+    if ( ! $url ) {
+
+      $url = self::get_full_url();
+
+    }
 
     parent::__construct( $url );
 
@@ -75,6 +81,43 @@ class MudUrl extends MudString {
     if ( $value === null ) { return null; }
 
     return urldecode( $value );
+
+  }
+
+  public static function get_full_url( string|null $fragment = null ) {
+
+    // 2024-10-21 jj5 - get the protocol (HTTP or HTTPS)...
+    //
+    $protocol =
+      ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' || $_SERVER[ 'SERVER_PORT' ] == 443 ) ?
+      "https://" :
+      "http://";
+
+    // 2024-10-21 jj5 - get the host (domain name or IP address)...
+    //
+    $host = $_SERVER[ 'HTTP_HOST' ];
+
+    // 2024-10-21 jj5 - get the path and query string...
+    //
+    $path_and_query = $_SERVER[ 'REQUEST_URI' ];
+
+    // 2024-10-21 jj5 - combine to get the full URL...
+    //
+    $full_url = $protocol . $host . $path_and_query;
+
+    if ( $fragment ) {
+
+      if ( $fragment[ 0 ] !== '#' ) {
+
+        $fragment = '#' . $fragment;
+
+      }
+
+      $full_url .= $fragment;
+
+    }
+
+    return $full_url;
 
   }
 

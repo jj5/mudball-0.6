@@ -28,18 +28,9 @@ class MudModuleError extends MudModuleCritical {
   // 2024-02-08 jj5 - constructor...
   //
 
-  public function __construct( MudModuleError|null $previous = null ) {
+  public function __construct() {
 
-    parent::__construct( $previous );
-
-    if ( $previous ) {
-
-      $this->error_map = $previous->error_map;
-      $this->name_map = $previous->name_map;
-      $this->scope_map = $previous->scope_map;
-      $this->counter_map = $previous->counter_map;
-
-    }
+    parent::__construct();
 
     if ( ! defined( 'MUD_ERR_SUCCESS' ) ) {
 
@@ -61,8 +52,11 @@ class MudModuleError extends MudModuleCritical {
 
     }
 
-    parent::__destruct();
+    if ( method_exists( parent::class, '__destruct' ) ) {
 
+      parent::__destruct();
+
+    }
   }
 
 
@@ -79,19 +73,19 @@ class MudModuleError extends MudModuleCritical {
     mixed $data,
   ) {
 
-    return new MudException( $message, $code, $previous, $name, $hint, $data );
+    return MudException::Create( $message, $code, $previous, $name, $hint, $data );
 
   }
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-08 jj5 - public methods...
   //
 
   public function get_error_text( $code ) { return $this->error_map[ $code ][ 'text' ] ?? null; }
 
   public function get_error_name( $code ) { return $this->error_map[ $code ][ 'name' ] ?? null; }
-  
+
   public function get_error_hint( $code ) { return $this->error_map[ $code ][ 'hint' ] ?? null; }
 
   public function define_error(
@@ -219,7 +213,7 @@ class MudModuleError extends MudModuleCritical {
   }
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-02-24 jj5 - protected methods...
   //
 

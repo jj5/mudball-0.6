@@ -44,9 +44,9 @@ class MudModuleValue extends MudModuleBasic {
   // 2024-06-29 jj5 - constructor...
   //
 
-  public function __construct( MudModuleValue|null $previous = null) {
+  public function __construct() {
 
-    parent::__construct( $previous );
+    parent::__construct();
 
     $this->true = $this->get_atom( MudTrue::class, '1' );
     $this->false = $this->get_atom( MudFalse::class, '0' );
@@ -54,7 +54,7 @@ class MudModuleValue extends MudModuleBasic {
     $this->positive = $this->get_atom( MudPositive::class, '+' );
     $this->negative = $this->get_atom( MudNegative::class, '-' );
 
-    $this->null_object = $this->new_null_object();
+    $this->null_object = MudNullObject::Instance();
 
   }
 
@@ -178,18 +178,39 @@ class MudModuleValue extends MudModuleBasic {
 
   }
 
-  public function get_money( mixed $value ) : IMudMoney {
+  public function get_currency( IMudCurrency|string|null $currency ) : IMudCurrency {
 
-    return $this->get_atom( MudMoney::class, $value );
+    if ( ! $currency ) { return $this->get_null(); }
+
+    if ( is_string( $currency ) ) {
+
+      $class = 'MudCurrency_' . $currency;
+
+      return $this->get_atom( $class, $currency );
+
+    }
+
+    return $currency;
 
   }
 
-  public function get_currency( mixed $value ) : IMudCurrency {
+  public function get_money( int $amount, IMudCurrency|string $currency ) : IMudMoney {
 
-    return $this->get_atom( MudCurrency::class, $value );
+    $class = 'MudMoney_' . mud_get_currency( $currency )->get_currency_code();
+
+    return $this->get_atom( $class, $amount );
 
   }
 
+  public function parse_money( string $value ) : IMudMoney {
+
+    return MudMoney::parse( $value );
+
+  }
+
+
+
+/*
   public function get_dollars( mixed $value ) : IMudDollars {
 
     return $this->get_atom( MudDollars::class, $value );
@@ -201,6 +222,7 @@ class MudModuleValue extends MudModuleBasic {
     return $this->get_atom( MudCents::class, $value );
 
   }
+*/
 
   public function get_url( mixed $value ) : IMudUrl {
 
@@ -263,7 +285,7 @@ class MudModuleValue extends MudModuleBasic {
       if ( is_array( $argument ) ) { $argument = $argument[ 0 ] ?? null;}
 
       return $this->get_atom( $class, $argument );
-      
+
     }
 
     assert( is_a( $class, IMudComposite::class ) );
@@ -283,6 +305,8 @@ class MudModuleValue extends MudModuleBasic {
     if ( ! isset( $this->atom_map[ $class ][ $key ] ) ) {
 
       $new_value = new $class( $value );
+
+      $new_value->set_key( $key );
 
       $this->atom_count += 1;
 
@@ -313,6 +337,8 @@ class MudModuleValue extends MudModuleBasic {
     if ( ! isset( $this->composite_map[ $class ][ $key ] ) ) {
 
       $new_value = new $class( $value_list );
+
+      $new_value->set_key( $key );
 
       $this->composite_count += 1;
 
@@ -365,7 +391,7 @@ class MudModuleValue extends MudModuleBasic {
 
   protected function new_null_object() : IMudNullObject {
 
-    return new MudNullObject();
+    return MudNullObject::Create();
 
   }
 

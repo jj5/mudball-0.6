@@ -1,14 +1,14 @@
 <?php
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-03-19 jj5 - class definition...
 //
 
 class MudModulePclog extends MudModuleCritical {
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-02-24 jj5 - fields...
   //
 
@@ -34,17 +34,6 @@ class MudModulePclog extends MudModuleCritical {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModulePclog|null $previous = null ) {
-
-    parent::__construct( $previous );
-
-  }
-  
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-02-24 jj5 - public static functions...
   //
 
@@ -72,7 +61,7 @@ class MudModulePclog extends MudModuleCritical {
   }
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-02-24 jj5 - public functions...
   //
 
@@ -100,7 +89,7 @@ class MudModulePclog extends MudModuleCritical {
 
     //mud_dump( $ex->data ); exit;
 
-    $this->log_exception( $ex, MudExceptionSort::UNHANDLED, $report, $issue );
+    $this->log_exception( $ex, MudExceptionKind::UNHANDLED, $report, $issue );
 
     $this->write_report( 'exception', $report );
 
@@ -321,7 +310,7 @@ class MudModulePclog extends MudModuleCritical {
     if ( ! defined( 'DEV' ) ) { define( 'DEV', false ); }
 
     // 2017-06-06 jj5 - we can't hash any more, so force daily refresh...
-    //$hash = md5( __DIR__ . '/browser.js' );
+    //$hash = mud_hash_hex( __DIR__ . '/browser.js' );
     $date = date( 'Y-m-d' );
 
     $app_name = $this->read_const( 'APP_NAME' );
@@ -366,20 +355,44 @@ class MudModulePclog extends MudModuleCritical {
 
   }
 
-  public function log_exception( $ex, int $sort, &$report = null, &$issue = null ) {
+  public function log_exception( Throwable $ex, MudExceptionKind $kind, &$report = null, &$issue = null ) {
 
-    $level  = mud_module_log()->settings[ $sort ][ 'level' ];
-    $final  = mud_module_log()->settings[ $sort ][ 'final' ];
-    $max    = mud_module_log()->settings[ $sort ][ 'max'   ];
+    if ( DEBUG ) {
 
-    if ( $final ) { $this->final = true; }
+      try {
 
-    if ( $this->exception_log_count >= $max ) {
+        $file = $ex->getFile();
+        $line = $ex->getLine();
+        $mesg = $ex->getMessage();
 
-      mud_log_try_warn( 'pclog has logged too many exceptions.' );
+        mud_log_try_warn( "pclog: logging exception: $file:$line: $mesg" );
 
-      return false;
+      }
+      catch ( Throwable $ignore ) { ; }
 
+    }
+
+    $level = mud_module_log()->settings[ $kind->value ][ 'level' ];
+    $final = mud_module_log()->settings[ $kind->value ][ 'final' ];
+
+    if ( $final ) {
+
+      assert( $this->final === false );
+
+      if ( $this->final ) { return false; }
+
+      $this->final = true;
+
+    }
+    else {
+
+      if ( $this->exception_log_count >= 10 ) {
+
+        mud_log_try_warn( 'pclog has logged too many exceptions.' );
+
+        return false;
+
+      }
     }
 
     $this->exception_log_count++;
@@ -388,28 +401,7 @@ class MudModulePclog extends MudModuleCritical {
 
       $report = null;
       $issue = null;
-      $status = MudExceptionSort::GetCode( $sort );
-
-      $type = get_class( $ex );
-      $file = $ex->getFile();
-      $line = $ex->getLine();
-      $code = $ex->getCode();
-      $mesg = $ex->getMessage();
-
-      $json = $this->json_encode( isset( $ex->data ) ? $ex->data : null );
-
-      // 2018-06-19 jj5 - here we fix up what we report for TypeError
-      // exceptions...
-      //
-      $regex = '|^(.*), called in (.*) on line (.*)$|';
-
-      if ( preg_match( $regex, $mesg, $matches ) ) {
-
-        $mesg = $matches[ 1 ] . '.';
-        $file = $matches[ 2 ];
-        $line = $matches[ 3 ];
-
-      }
+      $status = $kind->name;
 
       $form = MUD_PCLOG_FORM_EXCEPTION;
 
@@ -429,12 +421,25 @@ class MudModulePclog extends MudModuleCritical {
       $this->last_report = $report;
       $this->last_issue = $issue;
 
+      if ( function_exists( 'mud_interaction' ) ) {
+
+        try {
+
+          // 2024-10-21 jj5 - TODO: put this back in...
+
+          //mud_interaction()->log_fail( $issue );
+
+        }
+        catch ( Throwable $ignore ) { ; }
+
+      }
+
       return true;
 
     }
-    catch ( Throwable $ex ) {
+    catch ( Throwable $ignore ) {
 
-      mud_log_try_warn( 'pclog: error logging exception: ' . $ex->getMessage() );
+      mud_log_try_warn( 'pclog: error logging exception: ' . $ignore->getMessage() );
 
       return false;
 
@@ -571,7 +576,7 @@ $handler
   }
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-02-24 jj5 - protected functions...
   //
 
@@ -1048,7 +1053,7 @@ $trace
       }
       catch ( Throwable $ignore ) {
 
-        if ( mud_is_set( 'DEBUG' ) ) {
+        if ( DEBUG ) {
 
           mud_log_exception_ignored( $ignore );
 
@@ -1121,6 +1126,10 @@ $trace
 
     }
 
+    mud_log_try_warn( 'pclog submission failed: ' . $curl_error );
+
+    return;
+
     var_dump([
       'url' => $url,
       'result' => $result,
@@ -1128,6 +1137,8 @@ $trace
       'curl_error' => $curl_error,
       'msts' => $msts,
     ]);
+
+    exit;
 
     throw new Exception( 'Pclog submission failed.' );
 
@@ -1169,7 +1180,14 @@ $trace
     $file = $ex->getFile();
     $line = $ex->getLine();
     $code = $ex->getCode();
-    $data = isset( $ex->data ) ? $this->redact_secrets( $ex->data ) : null;
+    $data = null;
+
+    if ( method_exists( $ex, 'getData' ) ) {
+
+      $data = $this->redact_secrets( $ex->getData() );
+
+    }
+
     $trace = $this->redact_secrets( $ex->getTrace() );
 
     return [
@@ -1423,10 +1441,18 @@ $trace
 
         default :
 
-          header( 'Content-Type: text/plain', $replace = true );
+          if ( function_exists( 'render_500' ) ) {
 
-          echo "{$report}\n";
+            render_500( $message, $form, $issue, $exit, $ex );
 
+          }
+          else {
+
+            header( 'Content-Type: text/plain', $replace = true );
+
+            echo "{$report}\n";
+
+          }
       }
     }
     else {

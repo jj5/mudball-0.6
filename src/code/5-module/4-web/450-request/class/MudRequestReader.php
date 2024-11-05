@@ -3,7 +3,7 @@
 class MudRequestReader extends MudGadget {
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-08-24 jj5 - public methods...
   //
 
@@ -58,7 +58,7 @@ class MudRequestReader extends MudGadget {
   }
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-08-24 jj5 - protected static methods...
   //
 
@@ -148,25 +148,6 @@ class MudRequestReader extends MudGadget {
       'SESSION' => $_SESSION  ?? null,
       'SERVER'  => $_SERVER   ?? null,
     ];
-
-    if ( DEBUG ) {
-
-      // 2021-12-07 jj5 - NOTE: we clear our super globals so we can make sure we're not
-      // depenedent on them...
-
-      $_POST = [];
-      $_GET = [];
-      $_FILES = [];
-      $_COOKIE = array_key_exists( session_name(), $_COOKIE ) ?
-        [ session_name() => $_COOKIE[ session_name() ] ] :
-        [];
-      $_ENV = [];
-      //$_SESSION = [];
-      $_SERVER = [];
-
-      $_REQEUST = [];
-
-    }
 
     //$facility = MudFacility::Find( $request_path_parts, $selector );
     $facility = mud_load_facility( $request_path_parts, $selector );

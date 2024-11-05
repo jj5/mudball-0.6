@@ -8,24 +8,13 @@
 class MudModuleSchemata extends MudModuleData {
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleSchemata|null $previous = null) {
-
-    parent::__construct( $previous );
-
-  }
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-07 jj5 - factory methods...
   //
 
   public function new_mud_schemata( array $rev_map ) {
 
-    return new MudSchemata( $rev_map );
+    return MudSchemata::Create( $rev_map );
 
   }
 
@@ -44,7 +33,7 @@ class MudModuleSchemata extends MudModuleData {
     $const,
   ) {
 
-    return new MudSchemaTab(
+    return MudSchemaTab::Create(
       $schemata,
       $schema,
       $revision,
@@ -105,7 +94,7 @@ class MudModuleSchemata extends MudModuleData {
     $human_name,
   ) {
 
-    return new MudSchemaCol(
+    return MudSchemaCol::Create(
       $schemata,
       $tab,
       $schema,
@@ -165,7 +154,7 @@ class MudModuleSchemata extends MudModuleData {
     $col_name_list,
   ) {
 
-    return new MudSchemaIdx(
+    return MudSchemaIdx::Create(
       $schemata,
       $tab,
       $schema,
@@ -183,8 +172,7 @@ class MudModuleSchemata extends MudModuleData {
 
   public function new_mud_schema( $schemata = null ) {
 
-    return new MudSchema( $schemata );
+    return MudSchema::Create( $schemata );
 
   }
-
 }

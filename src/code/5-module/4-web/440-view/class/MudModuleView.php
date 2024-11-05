@@ -1,14 +1,14 @@
 <?php
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-08-24 jj5 - class definition...
 //
 
 class MudModuleView extends MudModuleWeb {
 
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2022-03-20 jj5 - triats...
   //
 
@@ -16,29 +16,20 @@ class MudModuleView extends MudModuleWeb {
   use MudViewForms;
 
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-10-18 jj5 - protected fields...
   //
 
-  protected $container_id;
+  protected $container_id = null;
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-12 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleView|null $previous = null ) {
-
-    parent::__construct( $previous );
-
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////
   // 2022-03-20 jj5 - public methods...
   //
 
-  public function render_head( $context, $args = [] ) {
+  public function render_head( $context = null, $args = [] ) {
+
+    if ( ! $context ) { $context = mud_null_object(); }
 
     $iframe = $args[ 'iframe' ] ?? false;
 
@@ -123,7 +114,7 @@ class MudModuleView extends MudModuleWeb {
 
         //tag_link( 'image/png', 'icon', bom_get_favicon_url() );
 
-        tag_link( 'image/x-icon', 'icon', app_url()->res( '/res/image/favicon.ico' ) );
+        //tag_link( 'image/x-icon', 'icon', app_url()->res( '/res/image/favicon.ico' ) );
 
 
         $copyright_url = $args[ 'copyright' ] ?? null;
@@ -159,9 +150,8 @@ class MudModuleView extends MudModuleWeb {
         //tag_link( 'text/css', 'stylesheet', 'https://www.staticmagic.net/global/table.css' );
         tag_link( 'text/css', 'stylesheet', 'https://d27cckvuinr11o.cloudfront.net/global/table.css' );
 
-        tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/style' ) );
-
-        tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/debug/style.css' ) );
+        //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/style' ) );
+        //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/debug/style.css' ) );
 
         foreach ( $args[ 'scripts' ] ?? [] as $url ) {
 
@@ -197,7 +187,7 @@ class MudModuleView extends MudModuleWeb {
 
               $this->render_nav_header( $context, $args );
 
-              if ( $flash = app_session()->flash() ) {
+              if ( $flash = mud_session()->flash() ) {
 
                 tag_text( 'p', $flash, [ 'class' => 'flash' ] );
 
@@ -233,7 +223,9 @@ class MudModuleView extends MudModuleWeb {
 
   }
 
-  public function render_foot( $context, $args = [] ) {
+  public function render_foot( $context = null, $args = [] ) {
+
+        if ( ! $context ) { $context = mud_null_object(); }
 
         $iframe = $args[ 'iframe' ] ?? false;
 
@@ -261,7 +253,7 @@ class MudModuleView extends MudModuleWeb {
 
         }
 
-        tag_bare( 'script', [ 'src' => app_url()->res( '/res/script' ) ] );
+        //tag_bare( 'script', [ 'src' => app_url()->res( '/res/script' ) ] );
 
       tag_shut( 'body' );
 

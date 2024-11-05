@@ -1,11 +1,11 @@
 <?php
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-03-19 jj5 - class definition...
 //
 
-class MudLoggerNull implements IMudLog {
+class MudLoggerNull extends MudLoggerBase implements IMudLog {
 
   public static function Instance() {
 
@@ -13,7 +13,7 @@ class MudLoggerNull implements IMudLog {
 
     if ( $instance === null ) {
 
-      $instance = new_mud_logger_null();
+      $instance = MudLoggerNull::Create();
 
     }
 

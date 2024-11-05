@@ -4,25 +4,14 @@
 // $ sudo apt install php-intl
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-03-19 jj5 - class definition...
 //
 
 class MudModuleString extends MudModuleCritical {
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleString|null $previous = null) {
-
-    parent::__construct( $previous );
-
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-10-18 jj5 - public functions...
   //
 
@@ -202,6 +191,14 @@ class MudModuleString extends MudModuleCritical {
 
   }
 
+  public function hash( string $input, bool $raw_output, string $salt = '' ) : string {
+
+    if ( $raw_output ) { return $this->hash_bin( $input, $salt ); }
+
+    return $this->hash_hex( $input, $salt );
+
+  }
+
   public function hash_bin( string $input, string $salt = '' ) : string {
 
     return hash( 'sha512/224', "{$salt}{$input}", $raw_output = true );
@@ -211,6 +208,14 @@ class MudModuleString extends MudModuleCritical {
   public function hash_hex( string $input, string $salt = '' ) : string {
 
     return hash( 'sha512/224', "{$salt}{$input}" );
+
+  }
+
+  public function hash_file( string $path, bool $raw_output = false ) : string {
+
+    if ( $raw_output ) { return $this->hash_file_bin( $path ); }
+
+    return $this->hash_file_hex( $path );
 
   }
 
@@ -772,7 +777,7 @@ class MudModuleString extends MudModuleCritical {
 
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2022-04-10 jj5 - protected static methods...
   //
 

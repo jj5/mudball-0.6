@@ -20,24 +20,9 @@ class MudLocator extends MudService {
 
   private array $module_map = [];
 
+  private array $module_indicator_map = [];
+
   private array $service_map = [];
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudLocator|null $previous = null ) {
-
-    parent::__construct( $previous );
-
-    if ( $previous ) {
-
-      $this->module_map = $previous->module_map;
-      $this->service_map = $previous->service_map;
-
-    }
-  }
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +61,11 @@ class MudLocator extends MudService {
 
   }
 
-  public function get_module( string $module_indicator ) : MudModule {
+  public function get_module( string $module_indicator ) {
+
+    $module = $this->module_indicator_map[ $module_indicator ] ?? null;
+
+    if ( $module ) { return $module; }
 
     $module_name = $this->get_module_name( $module_indicator );
 
@@ -89,6 +78,8 @@ class MudLocator extends MudService {
       $this->module_map[ $module_name ] = $module;
 
     }
+
+    $this->module_indicator_map[ $module_indicator ] = $module;
 
     return $module;
 
@@ -122,7 +113,7 @@ class MudLocator extends MudService {
 
   }
 
-  public function get_service( string $service_indicator ) : MudService {
+  public function get_service( string $service_indicator ) : object {
 
     $service_name = $this->get_service_name( $service_indicator );
 
@@ -182,12 +173,9 @@ class MudLocator extends MudService {
 
     // 2024-02-15 jj5 - the service/module name is the name of the class sans the 'Mud' or 'App' prefix...
 
-    // 2024-02-15 jj5 - if you have an AppApplication class or similar you're gonna want to use the full class name,
-    // otherwise you're gonna have a bad time...
-
     if (
-      preg_match( '/^Mud/', $indicator ) ||
-      preg_match( '/^App/', $indicator )
+      preg_match( '/^Mud[A-Z]/', $indicator ) ||
+      preg_match( '/^App[A-Z]/', $indicator )
     ) {
 
       return substr( $indicator, 3 );

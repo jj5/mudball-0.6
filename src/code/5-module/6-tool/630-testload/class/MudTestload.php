@@ -582,7 +582,7 @@ class MudTestload extends MudTool {
     // 2022-03-06 jj5 - 465-webhost
     //
 
-    $this->obj( new MudWebController() );
+    $this->obj( new MudControllerWeb() );
 
     //
     // 2022-03-06 jj5 - 520-factory

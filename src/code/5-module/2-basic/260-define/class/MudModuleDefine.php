@@ -1,25 +1,14 @@
 <?php
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-03-19 jj5 - class definition...
 //
 
 class MudModuleDefine extends MudModuleBasic {
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleDefine|null $previous = null) {
-
-    parent::__construct( $previous );
-
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-10-18 jj5 - public functions...
   //
 
@@ -129,11 +118,14 @@ class MudModuleDefine extends MudModuleBasic {
 
     }
 
-    if ( $vcs_revision ) {
+    // 2024-08-12 jj5 - OLD: we don't do this any more because we're on git now...
+    /*
+    if ( defined( 'DEV' ) && DEV && $vcs_revision ) {
 
       $version .= "-$vcs_revision";
 
     }
+    */
 
     if ( $build !== 'prod' ) {
 
@@ -156,11 +148,25 @@ class MudModuleDefine extends MudModuleBasic {
     $this->define_default( $const_prefix . '_SLUG', $slug );
     $this->define_default( $const_prefix . '_CONST', $const_prefix );
 
+    $this->define_default( $const_prefix, $slug );
+
+    if ( $const_prefix === 'MUDBALL' ) {
+
+      return $this->define_list( $const_prefix, 'MUD' );
+
+    }
+
     return $this;
 
   }
 
   public function define_app( string $const_prefix ) {
+
+    return $this->define_list( $const_prefix, 'APP' );
+
+  }
+
+  protected function define_list( $const_prefix, $short_prefix ) {
 
     static $const_list = [
       'NAME', 'CODE', 'PATH', 'CONFIG_FILE', 'CONFIG_PATH',
@@ -178,18 +184,20 @@ class MudModuleDefine extends MudModuleBasic {
 
     }
 
-    $component = constant( $const_prefix . '_CODE' );
-    $path = constant( $const_prefix . '_PATH' );
-    $version_base = constant( $const_prefix . '_VERSION_BASE' );
+    if ( $const_prefix === $short_prefix ) {
+
+      mud_fail( MUD_ERR_DEFINE_APP_CONSTANTS_CANNOT_BE_REDEFINED );
+
+    }
 
     foreach ( $const_list as $const ) {
 
       $real_const = $const_prefix . '_' . $const;
-      $app_const = 'APP_' . $const;
+      $short_const = $short_prefix . '_' . $const;
 
-      if ( defined( $app_const ) ) {
+      if ( defined( $short_const ) ) {
 
-        mud_fail( MUD_ERR_DEFINE_APP_CONSTANT_IS_ALREADY_DEFINED, [ 'const' => $app_const ] );
+        mud_fail( MUD_ERR_DEFINE_APP_CONSTANT_IS_ALREADY_DEFINED, [ 'const' => $short_const ] );
 
       }
 
@@ -199,7 +207,7 @@ class MudModuleDefine extends MudModuleBasic {
 
       }
 
-      define( $app_const, constant( $real_const ) );
+      define( $short_const, constant( $real_const ) );
 
     }
 
@@ -242,6 +250,29 @@ class MudModuleDefine extends MudModuleBasic {
   }
 
   protected function parse_svn_revision( string $path, &$date = null ) : int {
+
+    $lines = file( __DIR__ . '/../../../../../../inc/version.php' );
+
+    foreach ( $lines as $line ) {
+
+      if ( preg_match( '/Date: ([^ ]*) ([^ ]*)([^ ]*)/', $line, $matches ) ) {
+
+        $iso_date = $matches[ 1 ] . ' ' . $matches[ 2 ] . ' ' . $matches[ 3 ];
+
+        $date = date( "D, j M y H:i:s O", strtotime( $iso_date ) );
+
+      }
+
+      if ( preg_match( '/Revision: ([^ ]*)/', $line, $matches ) ) {
+
+        return intval( $matches[ 1 ] );
+
+      }
+    }
+
+    mud_not_supported();
+
+    // 2024-07-01 jj5 - we used to load this info from svn, but now we're on git.
 
     $cmd = 'svn info ' . addslashes( $path );
 

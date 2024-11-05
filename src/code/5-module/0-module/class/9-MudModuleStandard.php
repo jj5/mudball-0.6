@@ -12,17 +12,6 @@ class MudModuleStandard extends MudModule {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleStandard|null $previous = null ) {
-
-    parent::__construct( $previous );
-
-  }
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-09 jj5 - destructor...
   //
 
@@ -77,10 +66,56 @@ class MudModuleStandard extends MudModule {
 
   public function is_prod() : bool { return ! ( mud_is_dev() || mud_is_beta() ); }
 
+  // 2024-07-04 jj5 - THINK: this might not be the best place for this function...
+  //
+  public function format_string( string $format, array $value_map = [] ) : string {
+
+    // 2024-07-04 jj5 - NOTE: an example format string: $format = 'My name is {name} and I am {age} {units} old.';
+
+    $map = $this->get_substitution_map( $value_map );
+
+    //var_dump( $map ); exit;
+
+    $result = $format;
+
+    foreach ( $map as $key => $value ) {
+
+      $result = str_replace( $key, $value, $result );
+
+    }
+
+    return $result;
+
+  }
+
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-09 jj5 - protected methods...
   //
+
+  protected function get_substitution_map( array $value_map ) : array {
+
+    $result = [];
+
+    foreach ( $value_map as $key => $value ) {
+
+      if ( strpos( $key, '{' ) === 0 ) {
+
+        assert( substr( $key, -1 ) === '}' );
+
+        $result[ $key ] = $value;
+
+      }
+      else {
+
+        $result[ "{{$key}}" ] = $value;
+
+      }
+    }
+
+    return $result;
+
+  }
 
   protected function save_constants() {
 

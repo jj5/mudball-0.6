@@ -7,7 +7,7 @@ abstract class MudValue extends MudHost implements IMudValue {
   // 2024-07-01 jj5 - IMudValue interface...
   //
 
-  public function is_zero() : bool { return $this->is_integer( 0 ); }
+  public function is_zero() : bool { return $this->to_int() === 0; }
 
   // 2024-06-30 jj5 - NOTE: this is a useful default implementation...
   //
@@ -36,4 +36,11 @@ abstract class MudValue extends MudHost implements IMudValue {
     tag_text( 'span', $this->format( $format ), $attrs );
 
   }
+
+  private string $key = '';
+
+  public function get_key() : string { return $this->key; }
+
+  public function set_key( string $key ) : void { $this->key = $key; }
+
 }

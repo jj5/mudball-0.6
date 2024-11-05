@@ -38,9 +38,9 @@ abstract class MudModule extends MudService {
   // 2024-02-08 jj5 - constructor...
   //
 
-  public function __construct( MudModule|null $previous ) {
+  public function __construct() {
 
-    parent::__construct( $previous );
+    parent::__construct();
 
     $class = get_class( $this );
 

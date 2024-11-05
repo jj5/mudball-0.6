@@ -1,7 +1,7 @@
 <?php
 
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-04-11 jj5 - include dependencies...
 //
 
@@ -9,14 +9,14 @@ require_once __DIR__ . '/../../../../host/dev/example.php';
 require_once __DIR__ . '/mud_cache.php';
 
 
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-04-11 jj5 - declare examples...
 //
 
 declare_examples([
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-04-11 jj5 - cache example...
   //
 
@@ -27,7 +27,7 @@ declare_examples([
     // 2021-04-11 jj5 - create a new cache, the cache name is used in the file name for the
     // SQLite database for this cache...
     //
-    $cache = new_mud_cache( $cache_name = 'example-' . md5( microtime() ) );
+    $cache = new_mud_cache( $cache_name = 'example-' . mud_hash_hex( microtime() ) );
 
     // 2021-04-11 jj5 - a cache container is just a scope for particular types of key/value pairs
     // stored in the cache...
@@ -37,7 +37,7 @@ declare_examples([
     // 2021-04-11 jj5 - the $id is the key and the $value is the associated value... note that
     // complex types are supported for both the $id and the $value...
     //
-    $id = [ 'example' => md5( microtime() ) ];
+    $id = [ 'example' => mud_hash_hex( microtime() ) ];
     $value = [ 'some value' => 123 ];
 
     // 2021-04-11 jj5 - first determine that there is no value for this $id in our cache...
@@ -95,7 +95,7 @@ declare_examples([
   },
 
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-04-11 jj5 - cache example with JSON serialization...
   //
 
@@ -106,7 +106,7 @@ declare_examples([
     // 2021-04-11 jj5 - create a new cache, the cache name is used in the file name for the
     // SQLite database for this cache...
     //
-    $cache = new_mud_cache( $cache_name = 'example-' . md5( microtime() ) );
+    $cache = new_mud_cache( $cache_name = 'example-' . mud_hash_hex( microtime() ) );
 
     // 2021-04-11 jj5 - a cache container is just a scope for particular types of key/value pairs
     // stored in the cache...
@@ -121,7 +121,7 @@ declare_examples([
     // 2021-04-11 jj5 - the $id is the key and the $value is the associated value... note that
     // complex types are supported for both the $id and the $value...
     //
-    $id = [ 'example' => md5( microtime() ) ];
+    $id = [ 'example' => mud_hash_hex( microtime() ) ];
     $value = [ 'some value' => 123 ];
 
     // 2021-04-11 jj5 - first determine that there is no value for this $id in our cache...

@@ -9,7 +9,7 @@ class MudModuleViewstate extends MudModuleWeb {
 
   public function new_mud_view_state( array $state = [] ) {
 
-    return new MudViewState( $state );
+    return MudViewState::Create( $state );
 
   }
 }

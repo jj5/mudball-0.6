@@ -77,4 +77,9 @@ abstract class MudDal extends MudDalBase {
 
   }
 
+  public function quote( string $value ) {
+
+    return $this->get_database()->quote( $value );
+
+  }
 }

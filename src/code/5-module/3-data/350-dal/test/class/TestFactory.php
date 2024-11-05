@@ -1,6 +1,6 @@
 <?php
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-03-29 jj5 - helper classes...
 //
 
@@ -96,13 +96,13 @@ class TestFactory {
 
  public function new_database_upgrader( $schema_list, $dba ) {
 
-   return new MudDatabaseUpgrader( $schema_list, $dba );
+   return MudDatabaseUpgrader::Create( $schema_list, $dba );
 
  }
 
  public function new_schema_loader() {
 
-   return new MudSchemaLoader();
+   return MudSchemaLoader::Create();
 
  }
 }

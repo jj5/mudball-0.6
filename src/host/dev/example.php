@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/inc/cli.php';
+require_once __DIR__ . '/inc/run-cli.php';
 
 function declare_examples() { return declare_things( $catch = true, func_get_args() ); }
 

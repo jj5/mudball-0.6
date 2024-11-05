@@ -6,4 +6,6 @@ interface IMudNullObject extends IMudNullThing, ArrayAccess, JsonSerializable {
 
   public function __set( string $setting, $value );
 
+  public function get_null() : IMudNullObject;
+
 }

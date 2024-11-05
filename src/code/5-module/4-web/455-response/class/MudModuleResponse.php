@@ -9,7 +9,7 @@ class MudModuleResponse extends MudModuleWeb {
 
   public function new_mud_response() {
 
-    return new MudResponse();
-    
+    return MudResponse::Create();
+
   }
 }

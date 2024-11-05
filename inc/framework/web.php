@@ -2,10 +2,17 @@
 
 require_once __DIR__ . '/../module.php';
 
-function run( $controller ) {
+if ( function_exists( 'app_render' ) ) {
 
-  //var_dump( $controller ); exit;
+  // 2024-10-21 jj5 - TODO: think about how app_submit() might work...
 
-  return $controller->run();
+  app_render();
+
+}
+else {
+
+  $controller = new MudControllerWeb();
+
+  $controller->run();
 
 }
