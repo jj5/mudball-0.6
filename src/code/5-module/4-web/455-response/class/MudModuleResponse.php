@@ -9,14 +9,7 @@ class MudModuleResponse extends MudModuleWeb {
 
   public function new_mud_response() {
 
-<<<<<<< HEAD
     return MudResponse::Create();
 
   }
 }
-=======
-    return new MudResponse();
-    
-  }
-}
->>>>>>> e3a066e (Work, work...)

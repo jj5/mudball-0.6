@@ -36,7 +36,6 @@ class MudUrl extends MudString {
   // 2024-06-29 jj5 - constructor...
   //
 
-<<<<<<< HEAD
   public function __construct( string|null $url = null ) {
 
     if ( ! $url ) {
@@ -44,9 +43,6 @@ class MudUrl extends MudString {
       $url = self::get_full_url();
 
     }
-=======
-  public function __construct( string $url ) {
->>>>>>> e3a066e (Work, work...)
 
     parent::__construct( $url );
 
@@ -88,7 +84,6 @@ class MudUrl extends MudString {
 
   }
 
-<<<<<<< HEAD
   public static function get_full_url( string|null $fragment = null ) {
 
     // 2024-10-21 jj5 - get the protocol (HTTP or HTTPS)...
@@ -126,8 +121,6 @@ class MudUrl extends MudString {
 
   }
 
-=======
->>>>>>> e3a066e (Work, work...)
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-06-29 jj5 - public instance methods...

@@ -1,20 +1,12 @@
 <?php
 
-<<<<<<< HEAD
 interface IMudValue extends IMudHost {
-=======
-interface IMudValue extends IMudHost, IMudNullable {
->>>>>>> e3a066e (Work, work...)
 
   public function is_empty() : bool;
 
   public function is_zero() : bool;
 
-<<<<<<< HEAD
   //public function is_integer( int $compare ) : bool;
-=======
-  public function is_integer( int $n ) : bool;
->>>>>>> e3a066e (Work, work...)
 
   public function is_nan() : bool;
 
@@ -30,11 +22,8 @@ interface IMudValue extends IMudHost, IMudNullable {
 
   public function get_sort_value() : int|float|string|null;
 
-<<<<<<< HEAD
   public function get_key() : string;
 
   public function set_key( string $key ) : void;
 
-=======
->>>>>>> e3a066e (Work, work...)
 }

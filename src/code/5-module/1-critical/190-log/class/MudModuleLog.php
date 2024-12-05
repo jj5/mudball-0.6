@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 define( 'MUD_MudExceptionKind_PREVIOUS', MudExceptionKind::PREVIOUS->value );
 define( 'MUD_MudExceptionKind_HANDLED', MudExceptionKind::HANDLED->value );
 define( 'MUD_MudExceptionKind_IGNORED', MudExceptionKind::IGNORED->value );
@@ -8,37 +7,24 @@ define( 'MUD_MudExceptionKind_FATAL', MudExceptionKind::FATAL->value );
 define( 'MUD_MudExceptionKind_UNHANDLED', MudExceptionKind::UNHANDLED->value );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2021-03-19 jj5 - class definition...
 //
 
 class MudModuleLog extends MudModuleWebLog {
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ///////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2022-02-28 jj5 - traits...
   //
 
   use MudMixin;
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ///////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-04-13 jj5 - public fields...
   //
 
   public $settings = [
-<<<<<<< HEAD
     MUD_MudExceptionKind_PREVIOUS   => [ 'level' => MUD_LOG_LEVEL_6_INFO,     'final' => false ],
     MUD_MudExceptionKind_HANDLED    => [ 'level' => MUD_LOG_LEVEL_5_NOTICE,   'final' => false ],
     MUD_MudExceptionKind_IGNORED    => [ 'level' => MUD_LOG_LEVEL_4_WARNING,  'final' => false ],
@@ -48,98 +34,48 @@ class MudModuleLog extends MudModuleWebLog {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-    MudExceptionSort::PREVIOUS  => [ 'level' => MUD_LOG_LEVEL_6_INFO,     'final' => false, 'max' =>  0 ],
-    MudExceptionSort::HANDLED   => [ 'level' => MUD_LOG_LEVEL_5_NOTICE,   'final' => false, 'max' =>  2 ],
-    MudExceptionSort::IGNORED   => [ 'level' => MUD_LOG_LEVEL_4_WARNING,  'final' => false, 'max' =>  4 ],
-    MudExceptionSort::SHUTDOWN  => [ 'level' => MUD_LOG_LEVEL_3_ERROR,    'final' => false, 'max' =>  6 ],
-    MudExceptionSort::FATAL     => [ 'level' => MUD_LOG_LEVEL_2_CRITICAL, 'final' => true,  'max' =>  8 ],
-    MudExceptionSort::UNHANDLED => [ 'level' => MUD_LOG_LEVEL_2_CRITICAL, 'final' => true,  'max' => 10 ],
-  ];
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-02-24 jj5 - private fields...
   //
 
   private $logger_list = [];
 
 
-<<<<<<< HEAD
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleLog|null $previous = null) {
-
-    parent::__construct( $previous );
-
-  }
-
-
->>>>>>> e3a066e (Work, work...)
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-07 jj5 - factory methods...
   //
 
   public function new_mud_logger_null() {
 
-<<<<<<< HEAD
     return MudLoggerNull::Instance();
-=======
-    return new MudLoggerNull();
->>>>>>> e3a066e (Work, work...)
 
   }
 
   public function new_mud_logger_stderr( int $level = MUD_DEFAULT_LOG_LEVEL ) {
 
-<<<<<<< HEAD
     return MudLoggerStderr::Create( $level );
-=======
-    return new MudLoggerStderr( $level );
->>>>>>> e3a066e (Work, work...)
 
   }
 
   public function new_mud_logger_weblog( int $level = MUD_DEFAULT_LOG_LEVEL ) {
 
-<<<<<<< HEAD
     return MudLoggerWeblog::Create( $level );
-=======
-    return new MudLoggerWeblog( $level );
->>>>>>> e3a066e (Work, work...)
 
   }
 
   public function new_mud_logger_syslog( $copy_to_stderr = true, int $level = MUD_DEFAULT_LOG_LEVEL ) {
 
-<<<<<<< HEAD
     return MudLoggerSyslog::Create( $copy_to_stderr, $level );
-=======
-    return new MudLoggerSyslog( $copy_to_stderr, $level );
->>>>>>> e3a066e (Work, work...)
 
   }
 
   public function new_mud_logger_file( string $path, int $level = MUD_DEFAULT_LOG_LEVEL ) {
 
-<<<<<<< HEAD
     return MudLoggerFile::Create( $path, $level );
-=======
-    return new MudLoggerFile( $path, $level );
->>>>>>> e3a066e (Work, work...)
 
   }
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-02-24 jj5 - public functions...
   //
 
@@ -219,31 +155,19 @@ class MudModuleLog extends MudModuleWebLog {
 
   }
 
-<<<<<<< HEAD
   public function log_exception( Throwable $exception, MudExceptionKind $kind, bool $pclog = true ) {
-=======
-  public function log_exception( Throwable $exception, int $sort, bool $pclog = true ) {
->>>>>>> e3a066e (Work, work...)
 
     try {
 
       if ( $pclog ) {
 
-<<<<<<< HEAD
         mud_pclog_log_exception( $exception, $kind );
-=======
-        mud_pclog_log_exception( $exception, $sort );
->>>>>>> e3a066e (Work, work...)
 
       }
 
       $previous = $exception->getPrevious();
 
-<<<<<<< HEAD
       if ( $previous ) { $this->log_exception( $previous, MudExceptionKind::PREVIOUS, false ); }
-=======
-      if ( $previous ) { $this->log_exception( $previous, MudExceptionSort::PREVIOUS, false ); }
->>>>>>> e3a066e (Work, work...)
 
       $type = get_class( $exception );
       $code = $exception->getCode();
@@ -263,11 +187,7 @@ class MudModuleLog extends MudModuleWebLog {
 
       }
 
-<<<<<<< HEAD
       $level = $this->settings[ $kind->value ][ 'level' ];
-=======
-      $level = $this->settings[ $sort ][ 'level' ];
->>>>>>> e3a066e (Work, work...)
 
       return $this->log( $message, $level );
 
@@ -415,11 +335,7 @@ class MudModuleLog extends MudModuleWebLog {
   }
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-02-24 jj5 - protected functions...
   //
 

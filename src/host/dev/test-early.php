@@ -1,14 +1,8 @@
 <?php
 
-<<<<<<< HEAD
 //define( 'DEV', true );
 //define( 'DEBUG', true );
 //define( 'TEST', true );
-=======
-define( 'DEV', true );
-define( 'DEBUG', true );
-define( 'TEST', true );
->>>>>>> e3a066e (Work, work...)
 
 // 2024-02-16 jj5 - SEE: https://www.jj5.net/wiki/Error_levels
 define( 'MUD_EXIT_SUCCESS', 0 );
@@ -18,7 +12,7 @@ define( 'MUD_EXIT_INVALID', 85 );
 require_once __DIR__ . '/../../../inc/example.php';
 
 function declare_tests() {
-  
+
   $args = func_get_args();
 
   error_reporting( ~0 );

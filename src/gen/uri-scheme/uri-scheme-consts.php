@@ -357,8 +357,4 @@
     define( 'MUD_URI_SCHEME_SWIDPATH',                             'swidpath'                             );
     define( 'MUD_URI_SCHEME_UUID_IN_PACKAGE',                      'uuid-in-package'                      );
     define( 'MUD_URI_SCHEME_VES',                                  'ves'                                  );
-<<<<<<< HEAD
-  
-=======
-  
->>>>>>> e3a066e (Work, work...)
+

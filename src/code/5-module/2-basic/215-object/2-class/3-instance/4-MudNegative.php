@@ -33,16 +33,10 @@ class MudNegative extends MudSign implements IMudNegative {
 
   public function is_zero() : bool { return false; }
 
-<<<<<<< HEAD
-=======
-  public function is_integer( int $n ) : bool { return $n === MUD_VALUE_NEGATIVE_FACTOR; }
-
->>>>>>> e3a066e (Work, work...)
   public function is_nan() : bool { return false; }
 
   public function to_bool() : bool { return false; }
 
-<<<<<<< HEAD
   public function to_int() : int { return $this->get_factor(); }
 
   public function to_float() : float { return $this->get_factor(); }
@@ -54,25 +48,11 @@ class MudNegative extends MudSign implements IMudNegative {
   public function get_db_value() : int { return $this->get_factor(); }
 
   public function format( mixed $spec = null ) : string { return $this->to_string(); }
-=======
-  public function to_int() : int { return MUD_VALUE_NEGATIVE_FACTOR; }
-
-  public function to_float() : float { return MUD_VALUE_NEGATIVE_FACTOR; }
-
-  public function to_string() : string { return MUD_VALUE_NEGATIVE_STRING; }
-
-  public function get_value() : int { return MUD_VALUE_NEGATIVE_FACTOR; }
-
-  public function get_db_value() : int { return MUD_VALUE_NEGATIVE_FACTOR; }
-
-  public function format( mixed $spec = null ) : string { return MUD_VALUE_NEGATIVE_STRING; }
->>>>>>> e3a066e (Work, work...)
 
   public function set_parent( IMudNode $parent ) : void { ; }
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
   // 2024-07-29 jj5 - IMudNumber interface...
   //
 
@@ -92,12 +72,6 @@ class MudNegative extends MudSign implements IMudNegative {
   public function get_value_min_integer() : int { return MUD_VALUE_NEGATIVE_FACTOR; }
 
   public function get_value_max_integer() : int { return MUD_VALUE_NEGATIVE_FACTOR; }
-=======
-  // 2024-06-30 jj5 - IMudNumber interface...
-  //
-
-  public function get_number() : float|int { return MUD_VALUE_NEGATIVE_FACTOR; }
->>>>>>> e3a066e (Work, work...)
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -110,10 +84,6 @@ class MudNegative extends MudSign implements IMudNegative {
 
   public function get_factor() : int { return MUD_VALUE_NEGATIVE_FACTOR; }
 
-<<<<<<< HEAD
   public function get_sign_char() : string { return MUD_VALUE_NEGATIVE_CHAR; }
-=======
-  public function get_char() : string { return MUD_VALUE_NEGATIVE_CHAR; }
->>>>>>> e3a066e (Work, work...)
 
 }

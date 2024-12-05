@@ -13,20 +13,6 @@ class MudFactory extends MudService {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-=======
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudFactory|null $previous = null ) {
-
-    parent::__construct( $previous );
-
-  }
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2024-02-07 jj5 - factory methods for modules and services...
   //
 
@@ -36,11 +22,7 @@ class MudFactory extends MudService {
 
   }
 
-<<<<<<< HEAD
   public function create_service( string $service_name ) : object {
-=======
-  public function create_service( string $service_name ) : MudService {
->>>>>>> e3a066e (Work, work...)
 
     $app_class = 'App' . $service_name;
 

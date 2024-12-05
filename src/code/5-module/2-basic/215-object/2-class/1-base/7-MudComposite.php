@@ -2,7 +2,6 @@
 
 abstract class MudComposite extends MudValue implements IMudComposite {
 
-<<<<<<< HEAD
   private array $parts;
 
   public function __construct( array $parts ) {
@@ -24,6 +23,4 @@ abstract class MudComposite extends MudValue implements IMudComposite {
     return $this->parts[ $index ];
 
   }
-=======
->>>>>>> e3a066e (Work, work...)
 }

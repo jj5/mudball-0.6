@@ -253,8 +253,4 @@
     define( 'MUD_COUNTRY_YE', 'YE' );
     define( 'MUD_COUNTRY_ZM', 'ZM' );
     define( 'MUD_COUNTRY_ZW', 'ZW' );
-<<<<<<< HEAD
-  
-=======
-  
->>>>>>> e3a066e (Work, work...)
+

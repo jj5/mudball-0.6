@@ -361,7 +361,7 @@
       const SWIDPATH                             = 352; // 'swidpath'
       const UUID_IN_PACKAGE                      = 353; // 'uuid-in-package'
       const VES                                  = 354; // 'ves'
-  
+
     static $map = [
         MUD_URI_SCHEME_HTTPS                                => self::HTTPS,
         MUD_URI_SCHEME_HTTP                                 => self::HTTP,
@@ -719,8 +719,4 @@
       ];
 
   }
-<<<<<<< HEAD
-  
-=======
-  
->>>>>>> e3a066e (Work, work...)
+

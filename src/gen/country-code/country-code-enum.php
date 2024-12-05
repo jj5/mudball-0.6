@@ -257,7 +257,7 @@
       const YE = 247; // 'Yemen'
       const ZM = 248; // 'Zambia'
       const ZW = 249; // 'Zimbabwe'
-  
+
     static $map = [
         MUD_COUNTRY_AF => self::AF,
         MUD_COUNTRY_AX => self::AX,
@@ -511,8 +511,4 @@
       ];
 
   }
-<<<<<<< HEAD
-  
-=======
-  
->>>>>>> e3a066e (Work, work...)
+

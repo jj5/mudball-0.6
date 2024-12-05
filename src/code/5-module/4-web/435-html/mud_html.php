@@ -1,7 +1,6 @@
 <?php
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-03-19 jj5 - include dependencies...
 //
@@ -47,16 +46,6 @@ define( 'MUD_HTML_DEFAULT_OPT_MAX_LENGTH',  32                );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
-// 2021-03-19 jj5 - include dependencies...
-//
-
-require_once __DIR__ . '/../430-session/mud_session.php';
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2021-04-12 jj5 - module error definitions...
 //
 
@@ -67,22 +56,14 @@ mud_define_error( 'MUD_ERR_HTML_DUPLICATE_ID', 'duplicate ID.' );
 mud_define_error( 'MUD_ERR_HTML_TAG_INVALID', 'invalid tag.' );
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2022-02-23 jj5 - include components...
 //
 
 require_once __DIR__ . '/class/MudModuleHtml.php';
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2018-06-17 jj5 - functional interface...
 //
 
@@ -95,11 +76,6 @@ function doc_open() {
 function doc_is_initialized() {
 
   return mud_module_html()->doc_is_initialized();
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> e3a066e (Work, work...)
 }
 
 function doc_init(
@@ -200,11 +176,7 @@ function mud_html_get_opt( string $option, $default = null ) {
 
 }
 
-<<<<<<< HEAD
 function mud_render_table(
-=======
-function mud_html_render_table(
->>>>>>> e3a066e (Work, work...)
   $context,
   array $table,
   array $attrs = [],
@@ -225,61 +197,37 @@ function mud_html_render_table(
   );
 }
 
-<<<<<<< HEAD
 function mud_render_open_form_table( $context, array $attrs ) : MudModuleHtml {
-=======
-function mud_html_render_open_form_table( $context, array $attrs ) : MudModuleHtml {
->>>>>>> e3a066e (Work, work...)
 
   return mud_module_html()->render_open_form_table( $context, $attrs );
 
 }
 
-<<<<<<< HEAD
 function mud_render_shut_form_table( $context, array $attrs ) : MudModuleHtml {
-=======
-function mud_html_render_shut_form_table( $context, array $attrs ) : MudModuleHtml {
->>>>>>> e3a066e (Work, work...)
 
   return mud_module_html()->render_shut_form_table( $context, $attrs );
 
 }
 
-<<<<<<< HEAD
 function mud_render_input_row_text( $context, array $attrs ) : MudModuleHtml {
-=======
-function mud_html_render_input_row_text( $context, array $attrs ) : MudModuleHtml {
->>>>>>> e3a066e (Work, work...)
 
   return mud_module_html()->render_input_row_text( $context, $attrs );
 
 }
 
-<<<<<<< HEAD
 function mud_render_input_row_password( $context, array $attrs ) : MudModuleHtml {
-=======
-function mud_html_render_input_row_password( $context, array $attrs ) : MudModuleHtml {
->>>>>>> e3a066e (Work, work...)
 
   return mud_module_html()->render_input_row_password( $context, $attrs );
 
 }
 
-<<<<<<< HEAD
 function mud_render_input_row_submit( $context, array $attrs ) : MudModuleHtml {
-=======
-function mud_html_render_input_row_submit( $context, array $attrs ) : MudModuleHtml {
->>>>>>> e3a066e (Work, work...)
 
   return mud_module_html()->render_input_row_submit( $context, $attrs );
 
 }
 
-<<<<<<< HEAD
 function mud_render_input_row_button( $context, array $attrs ) : MudModuleHtml {
-=======
-function mud_html_render_input_row_button( $context, array $attrs ) : MudModuleHtml {
->>>>>>> e3a066e (Work, work...)
 
   return mud_module_html()->render_input_row_button( $context, $attrs );
 
@@ -367,11 +315,8 @@ function tag_shut( string $tag, array $attrs = [] ) : MudModuleHtml {
 
 }
 
-<<<<<<< HEAD
 function mud_html_has_id( $id ) { return mud_module_html()->has_id( $id ); }
 
-=======
->>>>>>> e3a066e (Work, work...)
 // 2019-09-13 jj5 - I'm not happy with the unprefixed names get_attr() and
 // attrs_to_html() and as these functions probably don't need to be available
 // in the global namespace I have removed them for now...
@@ -390,7 +335,6 @@ function attrs_to_html( array $attrs, string $tag ) : string {
 }
 */
 
-<<<<<<< HEAD
 // 2024-07-12 jj5 - NOTE: for the various out_*() functions I check the number of args is one. What can happen is that
 // and out_*() function is called as a tag_*() function which is a common mistake. This check will catch that mistake.
 
@@ -398,43 +342,30 @@ function out_line( int $lines = 1 ) : MudModuleHtml {
 
   assert( func_num_args() === 1 );
 
-=======
-function out_line( int $lines = 1 ) : MudModuleHtml {
-
->>>>>>> e3a066e (Work, work...)
   return mud_module_html()->out_line( $lines );
 
 }
 
 function out_html( $html ) :MudModuleHtml {
 
-<<<<<<< HEAD
   assert( func_num_args() === 1 );
 
-=======
->>>>>>> e3a066e (Work, work...)
   return mud_module_html()->out_html( $html );
 
 }
 
 function out_text( $text ) : MudModuleHtml {
 
-<<<<<<< HEAD
   assert( func_num_args() === 1 );
 
-=======
->>>>>>> e3a066e (Work, work...)
   return mud_module_html()->out_text( $text );
 
 }
 
 function out_code( $code ) : MudModuleHtml {
 
-<<<<<<< HEAD
   assert( func_num_args() === 1 );
 
-=======
->>>>>>> e3a066e (Work, work...)
   return mud_module_html()->out_code( $code );
 
 }
@@ -453,11 +384,7 @@ function mud_attr_id( $col ) {
 function mud_tab_index( $set = false ) { return mud_module_html()->tab_index( $set ); }
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2024-02-07 jj5 - service locator...
 //
 //

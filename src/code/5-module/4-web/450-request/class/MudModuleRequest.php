@@ -9,11 +9,7 @@ class MudModuleRequest extends MudModuleWeb {
 
   public function new_mud_request_reader() {
 
-<<<<<<< HEAD
     return MudRequestReader::Create();
-=======
-    return new MudRequestReader();
->>>>>>> e3a066e (Work, work...)
 
   }
 
@@ -40,11 +36,7 @@ class MudModuleRequest extends MudModuleWeb {
     $facility,
   ) {
 
-<<<<<<< HEAD
     return MudRequest::Create(
-=======
-    return new MudRequest(
->>>>>>> e3a066e (Work, work...)
       $verb,
       $headers,
       $http_user_agent,

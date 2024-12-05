@@ -1,11 +1,7 @@
 <?php
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2021-04-10 jj5 - include dependencies...
 //
 
@@ -14,11 +10,7 @@ require_once __DIR__ . '/mud_cache.php';
 require_once __DIR__ . '/test/common.php';
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2021-04-11 jj5 - define some constants...
 //
 
@@ -26,11 +18,7 @@ define( 'TEST_CACHE_NAME', 'test-cache' );
 define( 'TEST_CACHE_SPIN', 10000 );
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2021-04-10 jj5 - declare tests...
 //
 
@@ -66,15 +54,9 @@ declare_tests([
 
     $container = 'test-container';
 
-<<<<<<< HEAD
     $id =  mud_hash( microtime(), $raw = true );
 
     $input = mud_hash( $id, $raw = true );
-=======
-    $id =  md5( microtime(), $raw = true );
-
-    $input = md5( $id, $raw = true );
->>>>>>> e3a066e (Work, work...)
 
     if ( $cache->read( $container, $id, $cache_key, $result ) ) {
 
@@ -176,24 +158,14 @@ function run_dal( $thread ) {
 
   for ( $n = 1; $n <= TEST_CACHE_SPIN; $n++ ) {
 
-<<<<<<< HEAD
     $container = 'test-container-' . substr( mud_hash( microtime() ), -1 );
 
     $id =  substr( mud_hash( microtime() ), -5 );
-=======
-    $container = 'test-container-' . substr( md5( microtime() ), -1 );
-
-    $id =  substr( md5( microtime() ), -5 );
->>>>>>> e3a066e (Work, work...)
 
     // 2021-04-11 jj5 - NOTE: the value must always be the same for any given ID, so we base
     // our example values on the hash of the ID...
     //
-<<<<<<< HEAD
     $input = mud_hash( $id );
-=======
-    $input = md5( $id );
->>>>>>> e3a066e (Work, work...)
 
     if ( $cache->read( $container, $id, $cache_key, $result ) ) {
 

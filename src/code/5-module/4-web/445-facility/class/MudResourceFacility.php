@@ -3,11 +3,7 @@
 class MudResourceFacility extends MudFacility {
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-09-05 jj5 - public methods...
   //
 
@@ -59,11 +55,7 @@ class MudResourceFacility extends MudFacility {
   }
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-09-05 jj5 - protected methods...
   //
 
@@ -84,11 +76,7 @@ class MudResourceFacility extends MudFacility {
     // 2021-12-08 jj5 - there should be some sort of hash in the URL, so if we hash the URL
     // we should be good...
     //
-<<<<<<< HEAD
     $etag = mud_hash( $request->get_request_path() );
-=======
-    $etag = md5( $request->get_request_path() );
->>>>>>> e3a066e (Work, work...)
 
     $this->send_headers( $response, $content_type, $etag );
 
@@ -163,11 +151,7 @@ class MudResourceFacility extends MudFacility {
       $etag = $last_modified_time;
       //
       // 2021-12-08 jj5 - OLD:
-<<<<<<< HEAD
       //$etag = mud_hash_file( $file );
-=======
-      //$etag = md5_file( $file );
->>>>>>> e3a066e (Work, work...)
 
       $this->send_headers( $response, $content_type, $etag, $last_modified_time );
 

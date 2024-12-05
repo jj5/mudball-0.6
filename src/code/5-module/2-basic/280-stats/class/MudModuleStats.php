@@ -1,33 +1,14 @@
 <?php
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2022-01-28 jj5 - class definition...
 //
 
 class MudModuleStats extends MudModuleBasic {
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleStats|null $previous = null) {
-
-    parent::__construct( $previous );
-
-  }
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2022-01-28 jj5 - public interface...
   //
 
@@ -62,10 +43,7 @@ class MudModuleStats extends MudModuleBasic {
       //
       MUD_STATS_DISTINCT                      => 0,
 
-<<<<<<< HEAD
       MUD_STATS_TOTAL                         => 0,
-=======
->>>>>>> e3a066e (Work, work...)
       MUD_STATS_MINIMUM                       => null,
       MUD_STATS_MAXIMUM                       => null,
       MUD_STATS_RANGE                         => null,
@@ -85,11 +63,7 @@ class MudModuleStats extends MudModuleBasic {
       // 2022-01-29 jj5 - that will do
 
     }
-<<<<<<< HEAD
     elseif ( is_object( $input ) && is_a( $input, 'Traversable' ) ) {
-=======
-    else if ( is_object( $input ) && is_a( $input, 'Traversable' ) ) {
->>>>>>> e3a066e (Work, work...)
 
       // 2022-01-29 jj5 - that will do
 
@@ -102,63 +76,39 @@ class MudModuleStats extends MudModuleBasic {
 
     if ( $type === null ) {
 
-<<<<<<< HEAD
       if ( $input === [] ) {
 
         // 2024-08-06 jj5 - if it's empty it doesn't matter what it is...
-=======
-      if ( $this->is_list_of_int( $input ) ) {
->>>>>>> e3a066e (Work, work...)
 
         $type = MUD_STATS_TYPE_INT;
 
       }
-<<<<<<< HEAD
       elseif ( $this->is_list_of_int( $input ) ) {
 
         $type = MUD_STATS_TYPE_INT;
 
       }
       elseif ( $this->is_list_of_float( $input ) ) {
-=======
-      else if ( $this->is_list_of_float( $input ) ) {
->>>>>>> e3a066e (Work, work...)
 
         $type = MUD_STATS_TYPE_FLOAT;
 
       }
-<<<<<<< HEAD
       elseif ( $this->is_list_of_ascii( $input ) ) {
-=======
-      else if ( $this->is_list_of_ascii( $input ) ) {
->>>>>>> e3a066e (Work, work...)
 
         $type = MUD_STATS_TYPE_ASCII;
 
       }
-<<<<<<< HEAD
       elseif ( $this->is_list_of_utf8( $input ) ) {
-=======
-      else if ( $this->is_list_of_utf8( $input ) ) {
->>>>>>> e3a066e (Work, work...)
 
         $type = MUD_STATS_TYPE_UTF8;
 
       }
-<<<<<<< HEAD
       elseif ( $this->is_list_of_object( $input ) ) {
-=======
-      else if ( $this->is_list_of_object( $input ) ) {
->>>>>>> e3a066e (Work, work...)
 
         $type = MUD_STATS_TYPE_OBJECT;
 
       }
-<<<<<<< HEAD
       elseif ( $this->is_list_of_null( $input ) ) {
-=======
-      else if ( $this->is_list_of_null( $input ) ) {
->>>>>>> e3a066e (Work, work...)
 
         // 2022-01-29 jj5 - if all the value are null the type can be pretty much anything,
         // we say float because there may be NaN values which are technically floats.
@@ -168,11 +118,7 @@ class MudModuleStats extends MudModuleBasic {
       }
       else {
 
-<<<<<<< HEAD
         mud_fail( MUD_ERR_STATS_UNKNOWN_TYPE, [ 'input' => $input ] );
-=======
-        mud_fail( MUD_ERR_STATS_UNKNOWN_TYPE );
->>>>>>> e3a066e (Work, work...)
 
       }
     }
@@ -216,11 +162,8 @@ class MudModuleStats extends MudModuleBasic {
 
         $value = $parser( $value );
 
-<<<<<<< HEAD
         $stats[ MUD_STATS_TOTAL ] += $value;
 
-=======
->>>>>>> e3a066e (Work, work...)
         if ( count( $data ) === 0 ) {
 
           $stats[ MUD_STATS_MINIMUM ] = $value;
@@ -318,11 +261,7 @@ class MudModuleStats extends MudModuleBasic {
             $stats[ MUD_STATS_MODES ][] = $x;
 
           }
-<<<<<<< HEAD
           elseif ( $tally > $stats[ MUD_STATS_MODE_FREQUENCY ] ) {
-=======
-          else if( $tally > $stats[ MUD_STATS_MODE_FREQUENCY ] ) {
->>>>>>> e3a066e (Work, work...)
 
             $stats[ MUD_STATS_MODES ] = [ $x ];
             $stats[ MUD_STATS_MODE_FREQUENCY ] = $tally;
@@ -407,11 +346,7 @@ class MudModuleStats extends MudModuleBasic {
   }
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ///////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2022-01-28 jj5 - protected methods...
   //
 
@@ -535,11 +470,7 @@ class MudModuleStats extends MudModuleBasic {
 
   }
 
-<<<<<<< HEAD
   protected function is_null_value( $value ) : bool {
-=======
-  protected function is_null_value( $value ) {
->>>>>>> e3a066e (Work, work...)
 
     return ( $value === null || ( is_float( $value ) && is_nan( $value ) ) );
 

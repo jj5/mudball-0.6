@@ -3,11 +3,7 @@
 class MudDalClassGenerator extends MudDalGeneratorBase {
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ///////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2022-02-22 jj5 - public methods...
   //
 
@@ -31,17 +27,9 @@ class MudDalClassGenerator extends MudDalGeneratorBase {
 
     $this->print_class_raw( $traits_list );
 
-<<<<<<< HEAD
     //$this->print_class_emu( $traits_list );
     //$this->print_class_aux( $traits_list );
     //$this->print_class_dba( $traits_list );
-=======
-    $this->print_class_emu( $traits_list );
-
-    $this->print_class_aux( $traits_list );
-
-    $this->print_class_dba( $traits_list );
->>>>>>> e3a066e (Work, work...)
 
     $code = ob_get_clean();
 

@@ -1,10 +1,6 @@
 <?php
 
-<<<<<<< HEAD
 interface IMudHost extends IMudObject, IMudNullable {
-=======
-interface IMudHost extends IMudNullable {
->>>>>>> e3a066e (Work, work...)
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

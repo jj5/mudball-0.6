@@ -8,31 +8,13 @@
 class MudModuleSchemata extends MudModuleData {
 
 
-<<<<<<< HEAD
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleSchemata|null $previous = null) {
-
-    parent::__construct( $previous );
-
-  }
-
-
->>>>>>> e3a066e (Work, work...)
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-07 jj5 - factory methods...
   //
 
   public function new_mud_schemata( array $rev_map ) {
 
-<<<<<<< HEAD
     return MudSchemata::Create( $rev_map );
-=======
-    return new MudSchemata( $rev_map );
->>>>>>> e3a066e (Work, work...)
 
   }
 
@@ -51,11 +33,7 @@ class MudModuleSchemata extends MudModuleData {
     $const,
   ) {
 
-<<<<<<< HEAD
     return MudSchemaTab::Create(
-=======
-    return new MudSchemaTab(
->>>>>>> e3a066e (Work, work...)
       $schemata,
       $schema,
       $revision,
@@ -116,11 +94,7 @@ class MudModuleSchemata extends MudModuleData {
     $human_name,
   ) {
 
-<<<<<<< HEAD
     return MudSchemaCol::Create(
-=======
-    return new MudSchemaCol(
->>>>>>> e3a066e (Work, work...)
       $schemata,
       $tab,
       $schema,
@@ -180,11 +154,7 @@ class MudModuleSchemata extends MudModuleData {
     $col_name_list,
   ) {
 
-<<<<<<< HEAD
     return MudSchemaIdx::Create(
-=======
-    return new MudSchemaIdx(
->>>>>>> e3a066e (Work, work...)
       $schemata,
       $tab,
       $schema,
@@ -202,14 +172,7 @@ class MudModuleSchemata extends MudModuleData {
 
   public function new_mud_schema( $schemata = null ) {
 
-<<<<<<< HEAD
     return MudSchema::Create( $schemata );
 
   }
-=======
-    return new MudSchema( $schemata );
-
-  }
-
->>>>>>> e3a066e (Work, work...)
 }

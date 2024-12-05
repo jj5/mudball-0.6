@@ -1,21 +1,13 @@
 <?php
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-//////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2021-10-16 jj5 - class definition...
 //
 
 class MudModuleSchemadecl extends MudModuleBasic {
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-10-16 jj5 - protected fields...
   //
 
@@ -25,40 +17,18 @@ class MudModuleSchemadecl extends MudModuleBasic {
   protected $curr = null;
 
 
-<<<<<<< HEAD
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudModuleSchemadecl|null $previous = null) {
-
-    parent::__construct( $previous );
-
-  }
-
-
->>>>>>> e3a066e (Work, work...)
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-07 jj5 - factory methods...
   //
 
   public function new_mud_schema_decl( $info, $type, $name_spec, $attrs, $prev, $file, $line ) {
 
-<<<<<<< HEAD
     return MudSchemaDecl::Create( $info, $type, $name_spec, $attrs, $prev, $file, $line );
-=======
-    return new MudSchemaDecl( $info, $type, $name_spec, $attrs, $prev, $file, $line );
->>>>>>> e3a066e (Work, work...)
 
   }
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-10-16 jj5 - public interface...
   //
 
@@ -317,11 +287,7 @@ class MudModuleSchemadecl extends MudModuleBasic {
 
   }
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-10-16 jj5 - protected methods...
   //
 
@@ -357,15 +323,9 @@ class MudModuleSchemadecl extends MudModuleBasic {
 
         $schema = $file;
 
-<<<<<<< HEAD
         foreach ( scandir( "$search/$schema/table" ) as $file ) {
 
           $path = "$search/$schema/table/$file";
-=======
-        foreach ( scandir( "$search/$schema" ) as $file ) {
-
-          $path = "$search/$schema/$file";
->>>>>>> e3a066e (Work, work...)
 
           if ( is_dir( $path ) ) { continue; }
 

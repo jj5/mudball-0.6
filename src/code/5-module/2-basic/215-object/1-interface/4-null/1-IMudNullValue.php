@@ -1,11 +1,8 @@
 <?php
 
 interface IMudNullValue extends
-<<<<<<< HEAD
   IMudObject,
   IMudNullable,
-=======
->>>>>>> e3a066e (Work, work...)
   IMudFalse,
   IMudInteger,
   IMudFloat,
@@ -18,7 +15,6 @@ interface IMudNullValue extends
   IMudDateTimeLocal,
   IMudDateTimeZoned,
   IMudDateTimeZone,
-<<<<<<< HEAD
   IMudDateInterval,
   IMudMoney,
   IMudCurrency,
@@ -33,8 +29,5 @@ interface IMudNullValue extends
   IMudUrlPath,
   IMudUrlQuery,
   IMudUrlFragment {
-=======
-  IMudDateInterval {
->>>>>>> e3a066e (Work, work...)
 
 }

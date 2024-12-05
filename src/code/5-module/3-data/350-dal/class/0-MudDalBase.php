@@ -1,11 +1,7 @@
 <?php
 
 
-<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-/////////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
 // 2021-04-13 jj5 - class definition...
 //
 
@@ -18,11 +14,7 @@ abstract class MudDalBase extends MudService {
 
   // 2019-12-02 jj5 - our cache object...
   //
-<<<<<<< HEAD
   protected $cache = null;
-=======
-  protected $cache;
->>>>>>> e3a066e (Work, work...)
 
   /*
   // 2019-07-08 jj5 - pdo_raw is for logging, it uses autocommit transactions...
@@ -44,32 +36,12 @@ abstract class MudDalBase extends MudService {
   private $pdo_trn_disable = false;
   */
 
-<<<<<<< HEAD
   private $database = null;
-=======
-  private $database;
-
->>>>>>> e3a066e (Work, work...)
 
   private $entity_id_list = null;
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-=======
-  // 2024-02-09 jj5 - constructor...
-  //
-
-  public function __construct( MudDalBase|null $previous = null ) {
-
-    parent::__construct( $previous );
-
-  }
-
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2022-04-10 jj5 - public methods...
   //
 
@@ -871,11 +843,7 @@ abstract class MudDalBase extends MudService {
   }
 
 
-<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-=======
-  ///////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> e3a066e (Work, work...)
   // 2021-04-14 jj5 - protected methods...
   //
 

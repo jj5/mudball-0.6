@@ -2,7 +2,6 @@
 
 interface IMudString extends IMudAtom {
 
-<<<<<<< HEAD
   public function get_string() : string;
 
   public function get_hash() : string;
@@ -15,8 +14,4 @@ interface IMudString extends IMudAtom {
 
   public function get_regex_invalid() : array;
 
-=======
-  public function get_hash() : string;
-
->>>>>>> e3a066e (Work, work...)
 }
