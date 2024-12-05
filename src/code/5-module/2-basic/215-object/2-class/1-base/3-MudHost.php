@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 abstract class MudHost extends MudNullable implements IMudHost {
 
 
@@ -23,4 +24,10 @@ abstract class MudHost extends MudNullable implements IMudHost {
 
   public function get_child_list() : array { return []; }
 
+=======
+class MudHost extends MudNullable implements IMudHost {
+
+  use MudHostMixin;
+
+>>>>>>> e3a066e (Work, work...)
 }

@@ -44,9 +44,15 @@ class MudModuleValue extends MudModuleBasic {
   // 2024-06-29 jj5 - constructor...
   //
 
+<<<<<<< HEAD
   public function __construct() {
 
     parent::__construct();
+=======
+  public function __construct( MudModuleValue|null $previous = null) {
+
+    parent::__construct( $previous );
+>>>>>>> e3a066e (Work, work...)
 
     $this->true = $this->get_atom( MudTrue::class, '1' );
     $this->false = $this->get_atom( MudFalse::class, '0' );
@@ -54,7 +60,11 @@ class MudModuleValue extends MudModuleBasic {
     $this->positive = $this->get_atom( MudPositive::class, '+' );
     $this->negative = $this->get_atom( MudNegative::class, '-' );
 
+<<<<<<< HEAD
     $this->null_object = MudNullObject::Instance();
+=======
+    $this->null_object = $this->new_null_object();
+>>>>>>> e3a066e (Work, work...)
 
   }
 
@@ -178,6 +188,7 @@ class MudModuleValue extends MudModuleBasic {
 
   }
 
+<<<<<<< HEAD
   public function get_currency( IMudCurrency|string|null $currency ) : IMudCurrency {
 
     if ( ! $currency ) { return $this->get_null(); }
@@ -211,6 +222,20 @@ class MudModuleValue extends MudModuleBasic {
 
 
 /*
+=======
+  public function get_money( mixed $value ) : IMudMoney {
+
+    return $this->get_atom( MudMoney::class, $value );
+
+  }
+
+  public function get_currency( mixed $value ) : IMudCurrency {
+
+    return $this->get_atom( MudCurrency::class, $value );
+
+  }
+
+>>>>>>> e3a066e (Work, work...)
   public function get_dollars( mixed $value ) : IMudDollars {
 
     return $this->get_atom( MudDollars::class, $value );
@@ -222,7 +247,10 @@ class MudModuleValue extends MudModuleBasic {
     return $this->get_atom( MudCents::class, $value );
 
   }
+<<<<<<< HEAD
 */
+=======
+>>>>>>> e3a066e (Work, work...)
 
   public function get_url( mixed $value ) : IMudUrl {
 
@@ -285,7 +313,11 @@ class MudModuleValue extends MudModuleBasic {
       if ( is_array( $argument ) ) { $argument = $argument[ 0 ] ?? null;}
 
       return $this->get_atom( $class, $argument );
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> e3a066e (Work, work...)
     }
 
     assert( is_a( $class, IMudComposite::class ) );
@@ -306,8 +338,11 @@ class MudModuleValue extends MudModuleBasic {
 
       $new_value = new $class( $value );
 
+<<<<<<< HEAD
       $new_value->set_key( $key );
 
+=======
+>>>>>>> e3a066e (Work, work...)
       $this->atom_count += 1;
 
       if ( DEBUG ) { $this->atom_size += $this->get_size( $new_value ); }
@@ -338,8 +373,11 @@ class MudModuleValue extends MudModuleBasic {
 
       $new_value = new $class( $value_list );
 
+<<<<<<< HEAD
       $new_value->set_key( $key );
 
+=======
+>>>>>>> e3a066e (Work, work...)
       $this->composite_count += 1;
 
       if ( DEBUG ) { $this->composite_size += $this->get_size( $new_value ); }
@@ -391,7 +429,11 @@ class MudModuleValue extends MudModuleBasic {
 
   protected function new_null_object() : IMudNullObject {
 
+<<<<<<< HEAD
     return MudNullObject::Create();
+=======
+    return new MudNullObject();
+>>>>>>> e3a066e (Work, work...)
 
   }
 

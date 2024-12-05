@@ -1,7 +1,11 @@
 <?php
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2021-03-19 jj5 - traits definition...
 //
 
@@ -44,7 +48,11 @@ trait MudNullObjectMixin {
 
   public static function __callStatic( string $name, array $arguments ) { return null; }
 
+<<<<<<< HEAD
   public function __toString() : string { return ''; }
+=======
+  public function __toString() { return ''; }
+>>>>>>> e3a066e (Work, work...)
 
 
   //

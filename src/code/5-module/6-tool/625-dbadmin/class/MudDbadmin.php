@@ -29,8 +29,13 @@ class MudDbadmin extends MudTool {
 
   public function load_dev_data( $argv ) {
 
+<<<<<<< HEAD
     $trn = new MudDalTrn;
     $raw = new MudDalRaw;
+=======
+    $trn = new AppDalTrn;
+    $raw = new AppDalRaw;
+>>>>>>> e3a066e (Work, work...)
 
     //$id = $raw->new_internal_id();
 
@@ -141,7 +146,11 @@ class MudDbadmin extends MudTool {
     $db = new MudDatabase( MUD_CONNECTION_TYPE_DBA );
     $upgrader = new MudDatabaseUpgrader( $db );
 
+<<<<<<< HEAD
     mud_raw( new MudDalRaw );
+=======
+    app_raw( new AppDalRaw );
+>>>>>>> e3a066e (Work, work...)
 
     $prefix = $db->get_prefix();
 
@@ -225,7 +234,11 @@ class MudDbadmin extends MudTool {
 
   public function go_offline( $argv ) {
 
+<<<<<<< HEAD
     mud_raw()->put_row_t_config_std_application_status([
+=======
+    app_raw()->put_row_t_config_std_application_status([
+>>>>>>> e3a066e (Work, work...)
       A_STD_APPLICATION_STATUS_SOFTWARE_NAME => APP_CODE,
       A_STD_APPLICATION_STATUS_IS_ONLINE => 0,
     ]);
@@ -234,12 +247,20 @@ class MudDbadmin extends MudTool {
 
   public function go_online( $argv ) {
 
+<<<<<<< HEAD
     mud_raw()->put_row_t_config_std_application_status( APP_CODE, $is_online = 1 );
+=======
+    app_raw()->put_row_t_config_std_application_status( APP_CODE, $is_online = 1 );
+>>>>>>> e3a066e (Work, work...)
 
   }
 
 
+<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
   // 2022-02-22 jj5 - protected methods...
   //
 

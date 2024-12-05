@@ -1,8 +1,14 @@
 <?php
 
+<<<<<<< HEAD
 //define( 'DEV', true );
 //define( 'DEBUG', true );
 //define( 'TEST', true );
+=======
+define( 'DEV', true );
+define( 'DEBUG', true );
+define( 'TEST', true );
+>>>>>>> e3a066e (Work, work...)
 
 // 2024-02-16 jj5 - SEE: https://www.jj5.net/wiki/Error_levels
 define( 'MUD_EXIT_SUCCESS', 0 );

@@ -11,13 +11,18 @@ if ( file_exists( MUDBALL_CONFIG_PATH ) ) {
 }
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+//////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2021-10-19 jj5 - we sneak this module loader function in here... we use it to load our
 // modules...
 //
 
 function mud_load_modules( $dir, $scope = 'mud' ) {
 
+<<<<<<< HEAD
   $realpath = realpath( $dir );
 
   if ( ! is_dir( $realpath ) ) {
@@ -27,6 +32,13 @@ function mud_load_modules( $dir, $scope = 'mud' ) {
   }
 
   foreach ( scandir( $realpath, SCANDIR_SORT_ASCENDING ) as $module_dir ) {
+=======
+  $dir = realpath( $dir );
+
+  assert( is_dir( $dir ) );
+
+  foreach ( scandir( $dir, SCANDIR_SORT_ASCENDING ) as $module_dir ) {
+>>>>>>> e3a066e (Work, work...)
 
     $parts = explode( '-', $module_dir, 2 );
 
@@ -35,7 +47,11 @@ function mud_load_modules( $dir, $scope = 'mud' ) {
 
     $name = str_replace( '-', '_', $name );
 
+<<<<<<< HEAD
     $path = "{$realpath}/{$code}-{$name}/{$scope}_{$name}.php";
+=======
+    $path = "{$dir}/{$code}-{$name}/{$scope}_{$name}.php";
+>>>>>>> e3a066e (Work, work...)
 
     if ( is_file( $path ) ) { require_once $path; }
 
@@ -89,7 +105,11 @@ function mud_load_deep( $dir ) {
 }
 
 function mud_load_deep_breadth_first( $dir ) {
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> e3a066e (Work, work...)
   $dir = realpath( $dir );
 
   assert( is_dir( $dir ) );

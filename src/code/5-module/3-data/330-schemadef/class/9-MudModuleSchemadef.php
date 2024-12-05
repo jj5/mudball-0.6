@@ -8,19 +8,41 @@
 class MudModuleSchemadef extends MudModuleData {
 
 
+<<<<<<< HEAD
+=======
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-02-09 jj5 - constructor...
+  //
+
+  public function __construct( MudModuleSchemadef|null $previous = null) {
+
+    parent::__construct( $previous );
+
+  }
+
+
+>>>>>>> e3a066e (Work, work...)
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-07 jj5 - factory methods...
   //
 
   public function new_mud_schema_def() {
 
+<<<<<<< HEAD
     return MudSchemaDef::Create();
+=======
+    return new MudSchemaDef();
+>>>>>>> e3a066e (Work, work...)
 
   }
 
   public function new_mud_schema_tab_def( $file_info, $file, $line, $tab_name, $tab_type ) {
 
+<<<<<<< HEAD
     return MudSchemaTabDef::Create( $file_info, $file, $line, $tab_name, $tab_type );
+=======
+    return new MudSchemaTabDef( $file_info, $file, $line, $tab_name, $tab_type );
+>>>>>>> e3a066e (Work, work...)
 
   }
 
@@ -49,7 +71,11 @@ class MudModuleSchemadef extends MudModuleData {
     $is_interaction_id,
   ) {
 
+<<<<<<< HEAD
     return MudSchemaColDef::Create(
+=======
+    return new MudSchemaColDef(
+>>>>>>> e3a066e (Work, work...)
       $file_info,
       $file,
       $line,
@@ -85,7 +111,11 @@ class MudModuleSchemadef extends MudModuleData {
     $col_name_list,
   ) {
 
+<<<<<<< HEAD
     return MudSchemaIdxDef::Create(
+=======
+    return new MudSchemaIdxDef(
+>>>>>>> e3a066e (Work, work...)
       $file_info,
       $file,
       $line,

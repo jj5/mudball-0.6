@@ -1,28 +1,44 @@
 <?php
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2021-03-19 jj5 - include dependencies...
 //
 
 require_once __DIR__ . '/../150-random/mud_random.php';
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2022-02-23 jj5 - include components...
 //
 
 require_once __DIR__ . '/class/MudModuleString.php';
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2022-04-10 jj5 - module errors...
 //
 
 mud_define_error( 'MUD_ERR_STRING_NORMALIZATION_FAILED', 'normalization failed.' );
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2019-07-14 jj5 - functional interface...
 //
 //
@@ -97,24 +113,30 @@ function mud_hash_bin( string $input, string $salt = '' ) : string {
 
 }
 
+<<<<<<< HEAD
 function mud_hash( string $input, bool $raw_output = false, string $salt = '' ) : string {
 
   return mud_module_string()->hash( $input, $raw_output, $salt );
 
 }
 
+=======
+>>>>>>> e3a066e (Work, work...)
 function mud_hash_hex( string $input, string $salt = '' ) : string {
 
   return mud_module_string()->hash_hex( $input, $salt );
 
 }
 
+<<<<<<< HEAD
 function mud_hash_file( string $path, bool $raw_output = false ) : string {
 
   return mud_module_string()->hash_file( $path, $raw_output );
 
 }
 
+=======
+>>>>>>> e3a066e (Work, work...)
 function mud_hash_file_bin( string $path ) : string {
 
   return mud_module_string()->hash_file_bin( $path );
@@ -190,17 +212,29 @@ function mud_unicode_normalize( $data ) {
 function mud_quote( $string ) {
 
   return mud_module_string()->quote( $string );
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> e3a066e (Work, work...)
 }
 
 function mud_escape( $string ) {
 
   return mud_module_string()->escape( $string );
+<<<<<<< HEAD
 
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+  
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2019-07-14 jj5 - service locator...
 //
 //

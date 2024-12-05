@@ -16,10 +16,13 @@ interface IMudObject extends Stringable {
 
   public function format( mixed $spec = null ) : string;
 
+<<<<<<< HEAD
   public function get_format( mixed $spec = null ) : mixed;
 
   public function get_format_default() : mixed;
 
+=======
+>>>>>>> e3a066e (Work, work...)
   public function render( mixed $format = null, array $attrs = [] ) : void;
 
   public function validate( mixed $options = null ) : void;

@@ -12,6 +12,7 @@ require_once __DIR__ . '/../../1-bootstrap/4-config.php';
 // 2024-02-08 jj5 - include components...
 //
 
+<<<<<<< HEAD
 require_once __DIR__ . '/trait/MudCreationMixin.php';
 require_once __DIR__ . '/trait/MudMixin.php';
 
@@ -29,6 +30,11 @@ else {
 }
 
 
+=======
+require_once __DIR__ . '/trait/MudMixin.php';
+
+require_once __DIR__ . '/class/1-MudGadget.php';
+>>>>>>> e3a066e (Work, work...)
 require_once __DIR__ . '/class/2-MudService.php';
 require_once __DIR__ . '/class/3-MudModule.php';
 require_once __DIR__ . '/class/6-MudFactory.php';
@@ -40,6 +46,7 @@ require_once __DIR__ . '/class/9-MudModuleStandard.php';
 // 2024-02-08 jj5 - functional interface...
 //
 
+<<<<<<< HEAD
 // 2024-07-30 jj5 - this improves performance...
 
 function mud_is_debug() : bool {
@@ -47,27 +54,41 @@ function mud_is_debug() : bool {
   return DEBUG;
 
   //return mud_module_standard()->is_debug();
+=======
+function mud_is_debug() : bool {
+
+  return mud_module_standard()->is_debug();
+>>>>>>> e3a066e (Work, work...)
 
 }
 
 function mud_is_dev() : bool {
 
+<<<<<<< HEAD
   return DEV;
 
   //return mud_module_standard()->is_dev();
+=======
+  return mud_module_standard()->is_dev();
+>>>>>>> e3a066e (Work, work...)
 
 }
 
 function mud_is_beta() : bool {
 
+<<<<<<< HEAD
   return BETA;
 
   //return mud_module_standard()->is_beta();
+=======
+  return mud_module_standard()->is_beta();
+>>>>>>> e3a066e (Work, work...)
 
 }
 
 function mud_is_prod() : bool {
 
+<<<<<<< HEAD
   return PROD;
 
   //return mud_module_standard()->is_prod();
@@ -77,6 +98,9 @@ function mud_is_prod() : bool {
 function mud_format_string( string $format, mixed $arg ) : string {
 
   return mud_module_standard()->format_string( $format, $arg );
+=======
+  return mud_module_standard()->is_prod();
+>>>>>>> e3a066e (Work, work...)
 
 }
 

@@ -12,6 +12,20 @@ class MudModuleStandard extends MudModule {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
+=======
+  // 2024-02-09 jj5 - constructor...
+  //
+
+  public function __construct( MudModuleStandard|null $previous = null ) {
+
+    parent::__construct( $previous );
+
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
   // 2024-02-09 jj5 - destructor...
   //
 
@@ -66,6 +80,7 @@ class MudModuleStandard extends MudModule {
 
   public function is_prod() : bool { return ! ( mud_is_dev() || mud_is_beta() ); }
 
+<<<<<<< HEAD
   // 2024-07-04 jj5 - THINK: this might not be the best place for this function...
   //
   public function format_string( string $format, array $value_map = [] ) : string {
@@ -88,11 +103,14 @@ class MudModuleStandard extends MudModule {
 
   }
 
+=======
+>>>>>>> e3a066e (Work, work...)
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2024-02-09 jj5 - protected methods...
   //
 
+<<<<<<< HEAD
   protected function get_substitution_map( array $value_map ) : array {
 
     $result = [];
@@ -117,6 +135,8 @@ class MudModuleStandard extends MudModule {
 
   }
 
+=======
+>>>>>>> e3a066e (Work, work...)
   protected function save_constants() {
 
     $skip_list = [

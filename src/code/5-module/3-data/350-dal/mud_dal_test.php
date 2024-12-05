@@ -1,7 +1,11 @@
 <?php
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2021-03-29 jj5 - include dependencies...
 //
 
@@ -11,7 +15,11 @@ require_once __DIR__ . '/test/class/TestFactory.php';
 //require_once __DIR__ . '/../../../4-schema/mudballdb.php';
 
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2021-03-19 jj5 - declare tests...
 //
 
@@ -202,7 +210,11 @@ declare_tests([
     $http_user_agent_hash_bin = mud_hash_bin( $http_user_agent );
     $http_user_agent_id = $dal->add_row_t_piece_mud_http_user_agent($http_user_agent, $http_user_agent_hash_bin );
 
+<<<<<<< HEAD
     $password = mud_hash( uniqid( time(), $more_entropy = true ) );
+=======
+    $password = md5( uniqid( time(), $more_entropy = true ) );
+>>>>>>> e3a066e (Work, work...)
     $password_hash = mud_password_hash( $password );
     $password_hash_id = $dal->add_row_t_particle_mud_password_hash( $password_hash );
 

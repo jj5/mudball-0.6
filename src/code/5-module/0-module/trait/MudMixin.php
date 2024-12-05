@@ -11,6 +11,7 @@ trait MudMixin {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
   // 2024-10-21 jj5 - traits...
   //
 
@@ -34,6 +35,8 @@ trait MudMixin {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+>>>>>>> e3a066e (Work, work...)
   // 2024-02-06 jj5 - JsonSerializable interface...
   //
 
@@ -57,6 +60,7 @@ trait MudMixin {
   // 2024-02-07 jj5 - Object ID...
   //
 
+<<<<<<< HEAD
   protected function count_increment() : void {
 
     self::$counter++;
@@ -150,6 +154,15 @@ trait MudMixin {
     }
 
     return $class_map[ $class ];
+=======
+  private int|false $oid = false;
+
+  public function get_oid() : int|false { return $this->oid; }
+
+  protected function set_oid( int $oid ) : void {
+
+    $this->oid = $oid;
+>>>>>>> e3a066e (Work, work...)
 
   }
 

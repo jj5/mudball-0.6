@@ -27,7 +27,11 @@ class MudFalse extends MudBoolean implements IMudFalse {
 
   public function is_zero() : bool { return true; }
 
+<<<<<<< HEAD
   //public function is_integer( int $n ) : bool { return $n === 0; }
+=======
+  public function is_integer( int $n ) : bool { return $n === 0; }
+>>>>>>> e3a066e (Work, work...)
 
   public function is_nan() : bool { return false; }
 
@@ -39,8 +43,11 @@ class MudFalse extends MudBoolean implements IMudFalse {
 
   public function to_string() : string { return $this->format(); }
 
+<<<<<<< HEAD
   public function get_value() : mixed { return 0; }
 
+=======
+>>>>>>> e3a066e (Work, work...)
   public function get_db_value() : int { return 0; }
 
 
@@ -56,7 +63,11 @@ class MudFalse extends MudBoolean implements IMudFalse {
   // 2024-06-29 jj5 - IMudBoolean interface...
   //
 
+<<<<<<< HEAD
   public function get_bool() : bool { return false; }
+=======
+  public function get_value() : bool|null { return false; }
+>>>>>>> e3a066e (Work, work...)
 
   public function is_true() : bool { return false; }
 

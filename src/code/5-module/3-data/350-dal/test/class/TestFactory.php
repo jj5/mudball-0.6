@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+/////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
 // 2021-03-29 jj5 - helper classes...
 //
 
@@ -96,13 +100,24 @@ class TestFactory {
 
  public function new_database_upgrader( $schema_list, $dba ) {
 
+<<<<<<< HEAD
    return MudDatabaseUpgrader::Create( $schema_list, $dba );
+=======
+   return new MudDatabaseUpgrader( $schema_list, $dba );
+>>>>>>> e3a066e (Work, work...)
 
  }
 
  public function new_schema_loader() {
 
+<<<<<<< HEAD
    return MudSchemaLoader::Create();
 
  }
 }
+=======
+   return new MudSchemaLoader();
+
+ }
+}
+>>>>>>> e3a066e (Work, work...)

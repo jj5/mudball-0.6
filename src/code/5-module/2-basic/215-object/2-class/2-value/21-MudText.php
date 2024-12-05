@@ -17,9 +17,15 @@ class MudText extends MudString implements IMudText {
   // 2024-06-29 jj5 - constructor...
   //
 
+<<<<<<< HEAD
   public function __construct( string $value ) {
 
     parent::__construct( $value );
+=======
+  public function __construct( string $value, int $max_length = PHP_INT_MAX, int $min_length = 0 ) {
+
+    parent::__construct( $value, $max_length, $min_length );
+>>>>>>> e3a066e (Work, work...)
 
     $this->hash = self::hash( $value );
 

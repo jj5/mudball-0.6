@@ -4,6 +4,21 @@ class MudReader extends MudService {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
+=======
+  // 2024-02-09 jj5 - constructor...
+  //
+
+  public function __construct( MudReader|null $previous = null ) {
+
+    parent::__construct( $previous );
+
+  }
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
   // 2022-04-10 jj5 - public methods...
   //
 
@@ -30,4 +45,8 @@ class MudReader extends MudService {
     return $value;
 
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> e3a066e (Work, work...)

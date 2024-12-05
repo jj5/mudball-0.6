@@ -3,7 +3,11 @@
 class MudModuleHttp extends MudModuleWeb {
 
 
+<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+=======
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> e3a066e (Work, work...)
   // 2021-10-18 jj5 - public methods...
   //
 
@@ -26,6 +30,7 @@ class MudModuleHttp extends MudModuleWeb {
     return mb_strtoupper( $_SERVER[ 'REQUEST_METHOD' ] ?? 'GET' );
 
   }
+<<<<<<< HEAD
 
   public function cache_forever() {
 
@@ -35,4 +40,6 @@ class MudModuleHttp extends MudModuleWeb {
     header( 'Pragma: cache' );
 
   }
+=======
+>>>>>>> e3a066e (Work, work...)
 }
