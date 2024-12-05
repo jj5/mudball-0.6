@@ -255,6 +255,9 @@ class MudModuleView extends MudModuleWeb {
 
         //tag_bare( 'script', [ 'src' => app_url()->res( '/res/script' ) ] );
 
+        tag_bare( 'script', [ 'src' => 'https://d27cckvuinr11o.cloudfront.net/global/table.js' ]  );
+
+
       tag_shut( 'body' );
 
     tag_shut( 'html' );
