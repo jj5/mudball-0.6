@@ -235,7 +235,7 @@ class MudModuleView extends MudModuleWeb {
 
           tag_open( 'p' );
 
-            tag_text( 'span', APP_SLUG . ' with ' . MUDBALL_SLUG );
+            tag_text( 'span', APP_SLUG . ' with ' . MUD_SLUG );
 
           tag_shut( 'p' );
 
