@@ -203,8 +203,16 @@ function mud_factory( MudFactory|false $set = false ) : MudFactory {
   }
   else if ( $instance === false ) {
 
-    $instance = new MudFactory();
+    if ( class_exists( 'AppFactory' ) ) {
 
+      $instance = new AppFactory();
+
+    }
+    else {
+
+      $instance = new MudFactory();
+
+    }
   }
 
   return $instance;
