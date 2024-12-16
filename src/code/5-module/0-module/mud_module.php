@@ -203,15 +203,15 @@ function mud_factory( MudFactory|false $set = false ) : MudFactory {
   }
   else if ( $instance === false ) {
 
-    if ( class_exists( 'AppFactory' ) ) {
+    foreach ( [ 'AppFactory', 'MudFactory' ] as $class ) {
 
-      $instance = new AppFactory();
+      if ( class_exists( $class ) ) {
 
-    }
-    else {
+        $instance = new $class();
 
-      $instance = new MudFactory();
+        break;
 
+      }
     }
   }
 

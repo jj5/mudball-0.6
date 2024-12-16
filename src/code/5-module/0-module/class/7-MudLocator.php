@@ -18,11 +18,11 @@ class MudLocator extends MudService {
   // 2024-02-08 jj5 - private fields...
   //
 
-  private array $module_map = [];
+  private array $module_class_map = [];
+  private array $module_name_map = [];
 
-  private array $module_indicator_map = [];
-
-  private array $service_map = [];
+  private array $service_class_map = [];
+  private array $service_name_map = [];
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,136 +53,147 @@ class MudLocator extends MudService {
 
   }
 
-  public function has_module( string $module_indicator ) : bool {
+  public function get_module_name( string $class ) : string {
 
-    $module_name = $this->get_module_name( $module_indicator );
-
-    return array_key_exists( $module_name, $this->module_map );
+    return $this->get_name( $class );
 
   }
 
-  public function get_module( string $module_indicator ) {
+  public function has_module( string $module_class ) : bool {
 
-    $module = $this->module_indicator_map[ $module_indicator ] ?? null;
-
-    if ( $module ) { return $module; }
-
-    $module_name = $this->get_module_name( $module_indicator );
-
-    $module = $this->module_map[ $module_name ] ?? null;
-
-    if ( $module === null ) {
-
-      $module = $this->get_factory()->create_module( $module_name );
-
-      $this->module_map[ $module_name ] = $module;
-
-    }
-
-    $this->module_indicator_map[ $module_indicator ] = $module;
-
-    return $module;
+    return $this->has_object( $module_class, $this->module_class_map, $this->module_name_map );
 
   }
 
-  public function set_module( string $module_indicator, MudModule $module ) {
+  public function get_module( string $module_class ) {
 
-    $module_name = $this->get_module_name( $module_indicator );
-
-    $this->module_map[ $module_name ] = $module;
+    return $this->get_object( $module_class, $this->module_class_map, $this->module_name_map );
 
   }
 
-  public function manage_module( string $module_indicator, MudModule|false $module ) {
+  public function set_module( string $module_class, MudModule $module ) {
+
+    $this->set_object( $module_class, $module, $this->module_class_map, $this->module_name_map );
+
+  }
+
+  public function manage_module( string $module_class, MudModule|false $module ) {
 
     if ( $module !== false ) {
 
-      $this->set_module( $module_indicator, $module );
+      $this->set_module( $module_class, $module );
 
     }
 
-    return $this->get_module( $module_indicator );
+    return $this->get_module( $module_class );
 
   }
 
-  public function has_service( string $service_indicator ) : bool {
+  public function get_service_name( string $class ) : string {
 
-    $service_name = $this->get_service_name( $service_indicator );
-
-    return array_key_exists( $service_name, $this->service_map );
+    return $this->get_name( $class );
 
   }
 
-  public function get_service( string $service_indicator ) : object {
+  public function has_service( string $service_class ) : bool {
 
-    $service_name = $this->get_service_name( $service_indicator );
-
-    $service = $this->service_map[ $service_name ] ?? null;
-
-    if ( $service === null ) {
-
-      $service = $this->get_factory()->create_service( $service_name );
-
-      $this->service_map[ $service_name ] = $service;
-
-    }
-
-    return $service;
+    return $this->has_object( $service_class, $this->service_class_map, $this->service_name_map );
 
   }
 
-  public function set_service( string $service_indicator, MudService $service ) {
+  public function get_service( string $service_class ) {
 
-    $service_name = $this->get_service_name( $service_indicator );
-
-    $this->service_map[ $service_name ] = $service;
+    return $this->get_object( $service_class, $this->service_class_map, $this->service_name_map );
 
   }
 
-  public function manage_service( string $service_indicator, MudService|false $service ) {
+  public function set_service( string $service_class, MudModule $service ) {
+
+    $this->set_object( $service_class, $service, $this->service_class_map, $this->service_name_map );
+
+  }
+
+  public function manage_service( string $service_class, MudModule|false $service ) {
 
     if ( $service !== false ) {
 
-      $this->set_service( $service_indicator, $service );
+      $this->set_service( $service_class, $service );
 
     }
 
-    return $this->get_service( $service_indicator );
+    return $this->get_service( $service_class );
 
   }
 
-  public function get_module_name( string $indicator ) : string {
 
-    return $this->get_name( $indicator );
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-12-17 jj5 - protected methods...
+  //
 
-  }
-
-  public function get_service_name( string $indicator ) : string {
-
-    return $this->get_name( $indicator );
-
-  }
-
-  public function get_name( string $indicator ) : string {
+  protected function get_name( string $class ) : string {
 
     // 2024-02-15 jj5 - we might relax this requirement in future, but for now it seems like this might be a good idea...
     //
-    assert( class_exists( $indicator ), "class '$indicator' does not exist." );
+    assert( class_exists( $class ), "class '$class' does not exist." );
 
-    // 2024-02-15 jj5 - the $indicator is usually just a class name, like MudModuleDatabase or AppOrm.
+    // 2024-02-15 jj5 - the $class is usually just a class name, like MudModuleDatabase or AppOrm.
 
     // 2024-02-15 jj5 - the service/module name is the name of the class sans the 'Mud' or 'App' prefix...
 
     if (
-      preg_match( '/^Mud[A-Z]/', $indicator ) ||
-      preg_match( '/^App[A-Z]/', $indicator )
+      preg_match( '/^Mud[A-Z]/', $class ) ||
+      preg_match( '/^App[A-Z]/', $class )
     ) {
 
-      return substr( $indicator, 3 );
+      return substr( $class, 3 );
 
     }
 
-    return $indicator;
+    return $class;
+
+  }
+
+  protected function has_object( string $class, array $class_map, array $map ) : bool {
+
+    if ( array_key_exists( $class, $class_map ) ) { return true; }
+
+    $name = self::get_name( $class );
+
+    return array_key_exists( $name, $map );
+
+  }
+
+  protected function get_object( string $class, array &$class_map, array &$map ) {
+
+    $object = $class_map[ $class ] ?? null;
+
+    if ( $object ) { return $object; }
+
+    $name = self::get_name( $class );
+
+    $object = $map[ $name ] ?? null;
+
+    if ( $object === null ) {
+
+      $object = $this->get_factory()->create_object( $class );
+
+      $map[ $name ] = $object;
+
+    }
+
+    $class_map[ $class ] = $object;
+
+    return $object;
+
+  }
+
+  protected function set_object( string $class, object $object, array &$class_map, array &$map ) {
+
+    $name = self::get_name( $class );
+
+    $map[ $name ] = $object;
+
+    $class_map[ $class ] = $object;
 
   }
 }

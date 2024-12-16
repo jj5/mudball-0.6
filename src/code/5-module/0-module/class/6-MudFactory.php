@@ -18,23 +18,38 @@ class MudFactory extends MudService {
 
   public function create_module( string $module_name ) : MudModule {
 
-    return $this->create_service( $module_name );;
+    return $this->create_service( $module_name );
 
   }
 
   public function create_service( string $service_name ) : object {
 
-    $app_class = 'App' . $service_name;
-
-    if ( class_exists( $app_class ) ) { return $this->create_object( $app_class ); }
-
-    $mud_class = 'Mud' . $service_name;
-
-    return $this->create_object( $mud_class );
+    return $this->create_object( $service_name );
 
   }
 
   public function create_object( string $class ) {
+
+    // 2024-02-15 jj5 - we might relax this requirement in future, but for now it seems like this might be a good idea...
+    //
+    assert( class_exists( $class ), "class '$class' does not exist." );
+
+    if (
+      preg_match( '/^Mud[A-Z]/', $class ) ||
+      preg_match( '/^App[A-Z]/', $class )
+    ) {
+
+      $name = substr( $class, 3 );
+
+      $app_class = 'App' . $name;
+
+      if ( class_exists( $app_class ) ) { return new $app_class(); }
+
+      $mud_class = 'Mud' . $name;
+
+      if ( class_exists( $mud_class ) ) { return new $mud_class(); }
+
+    }
 
     return new $class();
 
