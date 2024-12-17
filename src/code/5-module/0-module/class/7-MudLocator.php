@@ -65,7 +65,7 @@ class MudLocator extends MudService {
 
   }
 
-  public function get_module( string $module_class ) : MudModule{
+  public function get_module( string $module_class ) : MudModule {
 
     return $this->get_object( $module_class, $this->module_class_map, $this->module_name_map );
 
@@ -77,7 +77,7 @@ class MudLocator extends MudService {
 
   }
 
-  public function manage_module( string $module_class, MudModule|false $module ) : MudModule{
+  public function manage_module( string $module_class, MudModule|false $module ) : MudModule {
 
     if ( $module !== false ) {
 
