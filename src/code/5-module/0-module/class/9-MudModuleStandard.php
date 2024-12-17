@@ -64,7 +64,7 @@ class MudModuleStandard extends MudModule {
 
   public function is_beta() : bool { return defined( 'BETA' ) && BETA; }
 
-  public function is_prod() : bool { return ! ( mud_is_dev() || mud_is_beta() ); }
+  public function is_prod() : bool { return defined( 'PROD' ) && PROD; }
 
   // 2024-07-04 jj5 - THINK: this might not be the best place for this function...
   //
