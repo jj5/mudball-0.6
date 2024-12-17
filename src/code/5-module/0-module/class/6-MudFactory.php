@@ -22,7 +22,7 @@ class MudFactory extends MudService {
 
   }
 
-  public function create_service( string $service_name ) : object {
+  public function create_service( string $service_name ) : MudService {
 
     return $this->create_object( $service_name );
 
