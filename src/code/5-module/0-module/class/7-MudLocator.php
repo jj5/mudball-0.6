@@ -65,7 +65,7 @@ class MudLocator extends MudService {
 
   }
 
-  public function get_module( string $module_class ) {
+  public function get_module( string $module_class ) : MudModule{
 
     return $this->get_object( $module_class, $this->module_class_map, $this->module_name_map );
 
@@ -77,7 +77,7 @@ class MudLocator extends MudService {
 
   }
 
-  public function manage_module( string $module_class, MudModule|false $module ) {
+  public function manage_module( string $module_class, MudModule|false $module ) : MudModule{
 
     if ( $module !== false ) {
 
@@ -101,19 +101,19 @@ class MudLocator extends MudService {
 
   }
 
-  public function get_service( string $service_class ) {
+  public function get_service( string $service_class ) : MudService {
 
     return $this->get_object( $service_class, $this->service_class_map, $this->service_name_map );
 
   }
 
-  public function set_service( string $service_class, MudModule $service ) {
+  public function set_service( string $service_class, MudService $service ) {
 
     $this->set_object( $service_class, $service, $this->service_class_map, $this->service_name_map );
 
   }
 
-  public function manage_service( string $service_class, MudModule|false $service ) {
+  public function manage_service( string $service_class, MudService|false $service ) : MudService {
 
     if ( $service !== false ) {
 
@@ -153,17 +153,17 @@ class MudLocator extends MudService {
 
   }
 
-  protected function has_object( string $class, array $class_map, array $map ) : bool {
+  protected function has_object( string $class, array $class_map, array $name_map ) : bool {
 
     if ( array_key_exists( $class, $class_map ) ) { return true; }
 
     $name = self::get_name( $class );
 
-    return array_key_exists( $name, $map );
+    return array_key_exists( $name, $name_map );
 
   }
 
-  protected function get_object( string $class, array &$class_map, array &$map ) {
+  protected function get_object( string $class, array &$class_map, array &$name_map ) {
 
     $object = $class_map[ $class ] ?? null;
 
@@ -171,13 +171,13 @@ class MudLocator extends MudService {
 
     $name = self::get_name( $class );
 
-    $object = $map[ $name ] ?? null;
+    $object = $name_map[ $name ] ?? null;
 
     if ( $object === null ) {
 
       $object = $this->get_factory()->create_object( $class );
 
-      $map[ $name ] = $object;
+      $name_map[ $name ] = $object;
 
     }
 
@@ -187,11 +187,11 @@ class MudLocator extends MudService {
 
   }
 
-  protected function set_object( string $class, object $object, array &$class_map, array &$map ) {
+  protected function set_object( string $class, object $object, array &$class_map, array &$name_map ) {
 
     $name = self::get_name( $class );
 
-    $map[ $name ] = $object;
+    $name_map[ $name ] = $object;
 
     $class_map[ $class ] = $object;
 
