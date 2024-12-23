@@ -43,6 +43,8 @@ define( 'MUDBALL_CONFIG_PATH', MUDBALL_PATH . '/' . MUDBALL_CONFIG_FILE );
   // 2024-07-07 jj5 - having now loaded both of the debug config file (if it exists) we can now define the DEBUG and DEV
   // constants if they haven't already been defined...
 
+  /* 2024-12-23 jj5 - I'm not sure if we need this but I hope not!
+
   if ( ! defined( 'DEBUG' ) ) { define( 'DEBUG',  false ); }
 
   if ( ! defined( 'DEV'   ) ) { define( 'DEV',    false ); }
@@ -52,6 +54,8 @@ define( 'MUDBALL_CONFIG_PATH', MUDBALL_PATH . '/' . MUDBALL_CONFIG_FILE );
   if ( ! defined( 'PROD'  ) ) { define( 'PROD',   ( ! DEV ) && ( ! BETA ) ); }
 
   if ( ! defined( 'TEST'  ) ) { define( 'TEST',   false ); }
+
+  */
 
 })();
 
