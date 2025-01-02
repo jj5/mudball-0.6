@@ -14,6 +14,8 @@ abstract class MudObject extends MudGadget implements IMudObject {
   // 2024-07-01 jj5 - IMudObject interface...
   //
 
+  public function is_live() : bool { return true; }
+
   public function is_valid( mixed $options = null ) : bool { return true; }
 
   public function to_string() : string { return get_class( $this ); }

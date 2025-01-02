@@ -21,6 +21,8 @@ trait MudNullObjectMixin {
 
   public function is_null() : bool { return true; }
 
+  public function is_live() : bool { return false; }
+
   // 2024-07-01 jj5 - NOTE: I don't remember what is_missing() is supposed to mean so I've commented out for now...
   //
   //public function is_missing() { return true; }

@@ -155,7 +155,7 @@ trait MudHostMixin {
 
     foreach ( $this->get_child_list() as $child ) {
 
-      if ( $child instanceof $class ) { $this->child_map[ $class ][] = $child; }
+      if ( $child->is_live() && $child instanceof $class ) { $this->child_map[ $class ][] = $child; }
 
     }
   }

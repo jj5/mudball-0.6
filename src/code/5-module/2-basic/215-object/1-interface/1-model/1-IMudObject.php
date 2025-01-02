@@ -2,6 +2,8 @@
 
 interface IMudObject extends Stringable {
 
+  public function is_live() : bool;
+
   public function is_valid( mixed $options = null ) : bool;
 
   public function to_string() : string;
