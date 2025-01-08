@@ -15,6 +15,6 @@ mud_load_modules( __DIR__ . '/../5-module/3-data' );
 
 mud_load_modules( __DIR__ . '/../5-module/4-web' );
 
-mud_load_modules( __DIR__ . '/../5-module/5-service' );
+mud_load_modules( __DIR__ . '/../5-module/5-api' );
 
 mud_load_modules( __DIR__ . '/../5-module/6-app' );
