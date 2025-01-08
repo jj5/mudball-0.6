@@ -1,5 +1,9 @@
 <?php
 
+// 2025-01-08 jj5 - you will need to include the Google API client library in your project...
+//
+// $ composer require google/apiclient
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2025-01-08 jj5 - include dependencies...
