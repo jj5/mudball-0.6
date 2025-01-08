@@ -8,13 +8,13 @@
 // 2022-03-06 jj5 - include dependencies...
 //
 
-require_once __DIR__ . '/../600-tool/mud_tool.php';
+require_once __DIR__ . '/../700-tool/mud_tool.php';
 
 require_once __DIR__ . '/../../../../../../../src/code/1-bootstrap/9-keystone.php';
 
-require_once __DIR__ . '/../615-codegen/mud_codegen.php';
-require_once __DIR__ . '/../620-linter/mud_linter.php';
-require_once __DIR__ . '/../625-dbadmin/mud_dbadmin.php';
+require_once __DIR__ . '/../715-codegen/mud_codegen.php';
+require_once __DIR__ . '/../720-linter/mud_linter.php';
+require_once __DIR__ . '/../725-dbadmin/mud_dbadmin.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
