@@ -62,25 +62,25 @@ abstract class MudMoney extends MudInteger implements IMudMoney {
     $decimal_position = strpos( $decimal, '.' );
 
     if ( $decimal_position !== false ) {
-      
+
       $decimal_length   = strlen( $decimal );
       $fraction_digits  = $decimal_length - $decimal_position - 1;
       $decimal          = str_replace( '.', '', $decimal );
       $decimal          = self::round_money_value( $decimal, $subunit, $fraction_digits );
 
       if ( $fraction_digits > $subunit ) {
-        
+
         $decimal = substr( $decimal, 0, $decimal_position + $subunit );
-        
+
       }
       elseif ( $fraction_digits < $subunit ) {
-        
+
         $decimal .= str_pad( '', $subunit - $fraction_digits, '0' );
-        
+
       }
     }
     else {
-      
+
       $decimal .= str_pad( '', $subunit, '0' );
 
     }
@@ -88,16 +88,16 @@ abstract class MudMoney extends MudInteger implements IMudMoney {
     if ( $decimal[ 0 ] === '-' ) {
 
       $decimal = '-' . ltrim( substr( $decimal, 1 ), '0' );
-      
+
     }
     else {
-      
+
       $decimal = ltrim( $decimal, '0' );
-      
+
     }
 
     if ( $decimal === '' ) {
-      
+
       $decimal = '0';
 
     }
@@ -114,39 +114,39 @@ abstract class MudMoney extends MudInteger implements IMudMoney {
     $should_round = $target_digits < $having_digits && $value_length - $having_digits + $target_digits > 0;
 
     if ( $should_round && $money_value[ $value_length - $having_digits + $target_digits ] >= 5 ) {
-      
+
       $position = $value_length - $having_digits + $target_digits;
-      
+
       $addend = 1;
 
       while ( $position > 0 ) {
-        
+
         $new_value = (string)((int)$money_value[ $position - 1 ] + $addend );
 
         if ( $new_value >= 10 ) {
-          
+
           $money_value[ $position - 1 ] = $new_value[ 1 ];
-          
+
           $addend = $new_value[ 0 ];
 
           $position--;
-          
+
           if ( $position === 0 ) {
-            
+
             $money_value = $addend . $money_value;
-            
+
           }
         }
         else {
-          
+
           if ( $money_value[ $position - 1 ] === '-' ) {
-            
+
             $money_value[ $position - 1 ] = $new_value[ 0 ];
             $money_value                  = '-' . $money_value;
-            
+
           }
           else {
-          
+
             $money_value[ $position - 1 ] = $new_value[ 0 ];
 
           }
@@ -256,9 +256,13 @@ abstract class MudMoney extends MudInteger implements IMudMoney {
 
   public function format( $spec = null ) : string {
 
+    // 2025-01-20 jj5 - HACK! I'm not sure this is a good idea...
+    //
+    if ( $this->get_amount() === 0 ) { return ''; }
+
     $formatter = self::get_formatter();
 
     return $formatter->formatCurrency( $this->get_amount() / 100, $this->get_currency()->get_currency_code() );
 
-  }  
+  }
 }
