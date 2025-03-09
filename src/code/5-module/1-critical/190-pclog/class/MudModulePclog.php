@@ -1128,20 +1128,17 @@ $trace
 
     mud_log_try_warn( 'pclog submission failed: ' . $curl_error );
 
-    return;
+    if ( defined( 'DEBUG' ) && DEBUG ) {
 
-    var_dump([
-      'url' => $url,
-      'result' => $result,
-      'http_status' => $http_status,
-      'curl_error' => $curl_error,
-      'msts' => $msts,
-    ]);
+      var_dump([
+        'url' => $url,
+        'result' => $result,
+        'http_status' => $http_status,
+        'curl_error' => $curl_error,
+        'msts' => $msts,
+      ]);
 
-    exit;
-
-    throw new Exception( 'Pclog submission failed.' );
-
+    }
   }
 
   protected function post( $url, $json, &$result, &$http_status, &$curl_error ) {
