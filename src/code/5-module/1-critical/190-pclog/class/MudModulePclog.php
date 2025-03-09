@@ -299,7 +299,7 @@ class MudModulePclog extends MudModuleCritical {
 
   public function render_scripts() {
 
-    if ( ! defined( 'MUD_PCLOG_API' ) ) { return false; }
+    if ( ! defined( 'CFG_PCLOG_API' ) ) { return false; }
 
     // 2017-06-06 jj5 - if you didn't define these before calling this function
     // then you're shit out of luck.
@@ -345,7 +345,7 @@ class MudModulePclog extends MudModuleCritical {
 
       tag_open(
         'script',
-        [ 'src' => MUD_PCLOG_API . '/script/browser.js?v=' . $date ]
+        [ 'src' => CFG_PCLOG_API . '/script/browser.js?v=' . $date ]
       );
       tag_shut( 'script' );
 
@@ -1106,7 +1106,7 @@ $trace
 
     }
 
-    $url = MUD_PCLOG_API . "/submit/$type/$form/$uuid/$msts/$client";
+    $url = CFG_PCLOG_API . "/submit/$type/$form/$uuid/$msts/$client";
 
     $this->post( $url, $json, $result, $http_status, $curl_error );
 
@@ -1550,7 +1550,7 @@ $trace
 
   protected function configure_api() {
 
-    if ( defined( 'MUD_PCLOG_API' ) ) { return MUD_PCLOG_API; }
+    if ( defined( 'CFG_PCLOG_API' ) ) { return CFG_PCLOG_API; }
 
     // 2020-03-20 jj5 - NOTE: we read this config setting directly as the
     // MudConfig object might not be loaded yet...
@@ -1568,9 +1568,9 @@ $trace
 
     }
 
-    define( 'MUD_PCLOG_API', $api );
+    define( 'CFG_PCLOG_API', $api );
 
-    return MUD_PCLOG_API;
+    return CFG_PCLOG_API;
 
   }
 }

@@ -1453,7 +1453,6 @@ define( 'MUD_MAINTAINER_USERNAME', "jj5" );
 define( 'MUD_MAINTAINER_EMAIL', "jj5@jj5.net" );
 define( 'MUD_MAINTAINER_NAME', "John Elliot V" );
 define( 'MUD_MAINTAINER', "John Elliot V <jj5@jj5.net>" );
-define( 'MUD_PCLOG_API', "http://localhost/log/api" );
 define( 'MUD_ERR_HOST_UNAUTHORIZED', 10118 );
 define( 'MUD_MudExceptionKind_PREVIOUS', 10 );
 define( 'MUD_MudExceptionKind_HANDLED', 20 );
