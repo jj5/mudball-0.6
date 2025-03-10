@@ -108,9 +108,9 @@ class MudLoggerFile extends MudLoggerBase implements IMudLog {
 
     }
 
+    /*
     $error = ! $success;
 
-    /*
     if ( $error || $this->copy_to_stderr ) {
 
       mud_stderr( $std_log );
