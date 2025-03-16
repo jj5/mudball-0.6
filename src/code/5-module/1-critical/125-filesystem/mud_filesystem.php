@@ -22,7 +22,7 @@ require_once __DIR__ . '/class/MudModuleFilesystem.php';
 // 2025-03-16 jj5 - module errors...
 //
 
-mud_define_error( 'MUD_ERR_FILESYSTEM_ATTEMPT_FAILED', 'an error occurred while attempting file-system operation.' );
+mud_define_error( 'MUD_ERR_FILESYSTEM_ATTEMPT_FAILED', 'an error occurred while attempting a file-system operation.' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

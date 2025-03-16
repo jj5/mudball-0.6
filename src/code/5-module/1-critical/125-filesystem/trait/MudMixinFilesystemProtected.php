@@ -6,8 +6,6 @@ trait MudMixinFilesystemProtected {
 
   protected static function fopen( string $path, string $mode ) {
 
-    //mud_log_trace( __FUNCTION__, [ 'path' => $path, 'mode' => $mode ] );
-
     return self::attempt_function( __FUNCTION__, function() use ( $path, $mode ) {
 
       return fopen( $path, $mode );
