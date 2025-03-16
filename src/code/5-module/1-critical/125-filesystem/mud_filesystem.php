@@ -50,50 +50,53 @@ function mud_module_filesystem() : MudModuleFilesystem {
 //
 //
 
-function mud_fopen( string $path, string $mode ) {
+/**
+ * @return resource Returns a file handle resource on success or throws an exception on failure.
+ */
+function mud_fopen( string $path, string $mode ) : mixed {
 
   return mud_module_filesystem()->fopen( $path, $mode );
 
 }
 
-function mud_flock( $handle, int $operation ) {
+function mud_flock( $handle, int $operation ) : void {
 
-  return mud_module_filesystem()->flock( $handle, $operation );
+  mud_module_filesystem()->flock( $handle, $operation );
 
 }
 
-function mud_stream_get_contents( $handle, ?int $length = null, int $offset = -1 ) {
+function mud_stream_get_contents( $handle, ?int $length = null, int $offset = -1 ) : string {
 
   return mud_module_filesystem()->stream_get_contents( $handle, $length, $offset );
 
 }
 
-function mud_ftruncate( $handle, int $size ) {
+function mud_ftruncate( $handle, int $size ) : void {
 
-  return mud_module_filesystem()->ftruncate( $handle, $size );
-
-}
-
-function mud_rewind( $handle ) {
-
-  return mud_module_filesystem()->rewind( $handle );
+  mud_module_filesystem()->ftruncate( $handle, $size );
 
 }
 
-function mud_fwrite( $handle, string $data, ?int $length = null ) {
+function mud_rewind( $handle ) : void {
+
+  mud_module_filesystem()->rewind( $handle );
+
+}
+
+function mud_fwrite( $handle, string $data, ?int $length = null ) : int {
 
   return mud_module_filesystem()->fwrite( $handle, $data, $length );
 
 }
 
-function mud_fflush( $handle ) {
+function mud_fflush( $handle ) : void {
 
-  return mud_module_filesystem()->fflush( $handle );
+  mud_module_filesystem()->fflush( $handle );
 
 }
 
-function mud_fclose( $handle ) {
+function mud_fclose( $handle ) : void {
 
-  return mud_module_filesystem()->fclose( $handle );
+  mud_module_filesystem()->fclose( $handle );
 
 }

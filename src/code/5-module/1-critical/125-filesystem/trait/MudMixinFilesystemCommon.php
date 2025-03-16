@@ -34,7 +34,7 @@ trait MudMixinFilesystemCommon {
 
   }
 
-  protected static function attempt_function( $function, $callback ) {
+  protected static function attempt_function( $function, $callback ) : mixed {
 
     $limit = self::get_attempt_limit();
 

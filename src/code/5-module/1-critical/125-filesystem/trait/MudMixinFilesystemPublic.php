@@ -4,7 +4,10 @@ trait MudMixinFilesystemPublic {
 
   use MudMixinFilesystemCommon;
 
-  public function fopen( string $path, string $mode ) {
+  /**
+  * @return resource Returns a file handle resource on success or throws an exception on failure.
+  */
+  public function fopen( string $path, string $mode ) : mixed {
 
     return self::attempt_function( __FUNCTION__, function() use ( $path, $mode ) {
 
@@ -14,9 +17,9 @@ trait MudMixinFilesystemPublic {
 
   }
 
-  public function flock( $handle, int $operation ) {
+  public function flock( $handle, int $operation ) : void {
 
-    return self::attempt_function( __FUNCTION__, function() use ( $handle, $operation ) {
+    self::attempt_function( __FUNCTION__, function() use ( $handle, $operation ) {
 
       return flock( $handle, $operation );
 
@@ -24,7 +27,7 @@ trait MudMixinFilesystemPublic {
 
   }
 
-  public function stream_get_contents( $handle, ?int $length = null, int $offset = -1 ) {
+  public function stream_get_contents( $handle, ?int $length = null, int $offset = -1 ) : string {
 
     return self::attempt_function( __FUNCTION__, function() use ( $handle, $length, $offset ) {
 
@@ -34,9 +37,9 @@ trait MudMixinFilesystemPublic {
 
   }
 
-  public function ftruncate( $handle, int $size ) {
+  public function ftruncate( $handle, int $size ) : void {
 
-    return self::attempt_function( __FUNCTION__, function() use ( $handle, $size ) {
+    self::attempt_function( __FUNCTION__, function() use ( $handle, $size ) {
 
       return ftruncate( $handle, $size );
 
@@ -44,9 +47,9 @@ trait MudMixinFilesystemPublic {
 
   }
 
-  public function rewind( $handle ) {
+  public function rewind( $handle ) : void{
 
-    return self::attempt_function( __FUNCTION__, function() use ( $handle ) {
+    self::attempt_function( __FUNCTION__, function() use ( $handle ) {
 
       return rewind( $handle );
 
@@ -54,7 +57,7 @@ trait MudMixinFilesystemPublic {
 
   }
 
-  public function fwrite( $handle, string $data, ?int $length = null ) {
+  public function fwrite( $handle, string $data, ?int $length = null ) : int {
 
     return self::attempt_function( __FUNCTION__, function() use ( $handle, $data, $length ) {
 
@@ -64,9 +67,9 @@ trait MudMixinFilesystemPublic {
 
   }
 
-  public function fflush( $handle ) {
+  public function fflush( $handle ) : void {
 
-    return self::attempt_function( __FUNCTION__, function() use ( $handle ) {
+    self::attempt_function( __FUNCTION__, function() use ( $handle ) {
 
       return fflush( $handle );
 
@@ -74,9 +77,9 @@ trait MudMixinFilesystemPublic {
 
   }
 
-  public function fclose( $handle ) {
+  public function fclose( $handle ) : void {
 
-    return self::attempt_function( __FUNCTION__, function() use ( $handle ) {
+    self::attempt_function( __FUNCTION__, function() use ( $handle ) {
 
       return fclose( $handle );
 
