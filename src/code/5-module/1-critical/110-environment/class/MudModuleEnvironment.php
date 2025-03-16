@@ -24,6 +24,10 @@ class MudModuleEnvironment extends MudModuleCritical {
 
     static $map = [];
 
+    assert( $spec === strtoupper( $spec ) );
+    assert( $spec === trim( $spec ) );
+    assert( strlen( $spec ) > 0 );
+
     if ( ! array_key_exists( $spec, $map ) ) {
 
       $cfg_const = 'CFG_' . $spec;
