@@ -17,29 +17,36 @@ class MudModuleEnvironment extends MudModuleCritical {
   // 2024-02-08 jj5 - NOTE: we *do* cache the result of the following functions because it improves performance and the
   // values won't change over the course of a running program.
 
+  // 2025-03-17 jj5 - if you're going to support CFG_ constants then you need to make sure that they are defined before
+  // calling this function or the wrong value will be cached.
+  //
   public function get_const( string $spec ) : null|bool|int|float|string|array {
 
     static $map = [];
 
     if ( ! array_key_exists( $spec, $map ) ) {
 
-      $cfg = 'CFG_' . $spec;
-      $app = 'APP_' . $spec;
-      $mud = 'MUD_' . $spec;
+      $cfg_const = 'CFG_' . $spec;
+      $app_const = 'APP_' . $spec;
+      $mud_const = 'MUD_' . $spec;
 
-      if ( defined( $cfg ) ) {
+      if ( defined( $cfg_const ) ) {
 
-        $map[ $spec ] = constant( $cfg );
+        $map[ $spec ] = constant( $cfg_const );
 
       }
-      elseif ( defined( $app ) ) {
+      elseif ( defined( $app_const ) ) {
 
-        $map[ $spec ] = constant( $app );
+        $map[ $spec ] = constant( $app_const );
 
       }
       else {
 
-        $map[ $spec ] = constant( $mud );
+        // 2025-03-17 jj5 - if we land here then we require that the constant is defined in the mudball codebase...
+
+        assert( defined( $mud_const ) );
+
+        $map[ $spec ] = constant( $mud_const );
 
       }
     }
