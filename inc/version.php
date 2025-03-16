@@ -6,16 +6,16 @@
 define( 'MUDBALL_NAME', 'Mudball Web Framework' );
 define( 'MUDBALL_CODE', 'mudball' );
 
-//define( 'MUDBALL_VERSION', '0.6.1721' );
+//define( 'MUDBALL_VERSION', '0.6.1723' );
 define( 'MUDBALL_VERSION_MAJOR', 0 );
 define( 'MUDBALL_VERSION_MINOR', 6 );
-define( 'MUDBALL_VERSION_PATCH', 1721 );
+define( 'MUDBALL_VERSION_PATCH', 1723 );
 
 define(
   'MUDBALL_SVN_DATE',
-  '$Date: 2025-03-17 00:45:45 +1100 (Mon, 17 Mar 2025) $'
+  '$Date: 2025-03-17 00:48:07 +1100 (Mon, 17 Mar 2025) $'
 );
-define( 'MUDBALL_SVN_REVISION', '$Revision: 44714708 $' );
+define( 'MUDBALL_SVN_REVISION', '$Revision: 57720611 $' );
 define( 'MUDBALL_SVN_AUTHOR', '$Author: jj5 $' );
 
-define( 'MUDBALL_GIT_DATE', '2025-03-17 00:45:45 +1100 (Mon, 17 Mar 2025)' );
+define( 'MUDBALL_GIT_DATE', '2025-03-17 00:48:07 +1100 (Mon, 17 Mar 2025)' );
