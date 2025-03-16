@@ -19,6 +19,12 @@ require_once __DIR__ . '/class/MudModuleEnvironment.php';
 // 2024-02-08 jj5 - functional interface...
 //
 
+function mud_get_const( string $spec ) : null|bool|int|float|string|array {
+
+  return mud_module_environment()->get_const( $spec );
+
+}
+
 function mud_is_cli() : bool {
 
   return mud_module_environment()->is_cli();

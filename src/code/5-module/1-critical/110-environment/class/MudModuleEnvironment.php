@@ -17,6 +17,38 @@ class MudModuleEnvironment extends MudModuleCritical {
   // 2024-02-08 jj5 - NOTE: we *do* cache the result of the following functions because it improves performance and the
   // values won't change over the course of a running program.
 
+  public function get_const( string $spec ) : null|bool|int|float|string|array {
+
+    static $map = [];
+
+    if ( ! array_key_exists( $spec, $map ) ) {
+
+      $cfg = 'CFG_' . $spec;
+      $app = 'APP_' . $spec;
+      $mud = 'MUD_' . $spec;
+
+      if ( defined( $cfg ) ) {
+
+        $map[ $spec ] = constant( $cfg );
+
+      }
+      elseif ( defined( $app ) ) {
+
+        $map[ $spec ] = constant( $app );
+
+      }
+      else {
+
+        $map[ $spec ] = constant( $mud );
+
+      }
+    }
+
+    return $map[ $spec ];
+
+  }
+
+
   // 2018-06-17 jj5 - this function detects if we are running in a command-line interface or not...
   //
   // 2017-02-23 jj5 - SEE: CLI detection: http://www.binarytides.com/php-check-running-cli/

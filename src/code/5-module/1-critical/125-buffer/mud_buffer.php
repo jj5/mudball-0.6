@@ -5,6 +5,10 @@
 // 2021-02-27 jj5 - include dependencies...
 //
 
+require_once __DIR__ . '/../125-filesystem/mud_filesystem.php';
+require_once __DIR__ . '/../125-input/mud_input.php';
+require_once __DIR__ . '/../125-output/mud_output.php';
+
 require_once __DIR__ . '/../120-debug/mud_debug.php';
 
 
