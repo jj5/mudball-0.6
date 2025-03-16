@@ -2,11 +2,41 @@
 
 trait MudMixinFilesystemCommon {
 
+  protected static function get_attempt_limit() : int {
+
+    static $limit = null;
+
+    if ( $limit === null ) {
+
+      $limit = mud_get_const( 'FILESYSTEM_ATTEMPT_LIMIT' );
+
+      assert( is_int( $limit ) && $limit > 0 );
+
+    }
+
+    return $limit;
+
+  }
+
+  protected static function get_attempt_delay() : int {
+
+    static $delay = null;
+
+    if ( $delay === null ) {
+
+      $delay = mud_get_const( 'FILESYSTEM_ATTEMPT_DELAY' );
+
+      assert( is_int( $delay ) && $delay >= 0 );
+
+    }
+
+    return $delay;
+
+  }
+
   protected static function attempt_function( $function, $callback ) {
 
-    $limit = mud_get_const( 'FILESYSTEM_ATTEMPT_LIMIT' );
-
-    assert( is_int( $limit ) && $limit > 0 );
+    $limit = self::get_attempt_limit();
 
     for ( $attempt = 1; $attempt < $limit; $attempt++ ) {
 
@@ -14,7 +44,7 @@ trait MudMixinFilesystemCommon {
 
       if ( $result !== false ) { return $result; }
 
-      $delay = mud_get_const( 'FILESYSTEM_ATTEMPT_DELAY' );
+      $delay = self::get_attempt_delay();
 
       usleep( $delay );
 
