@@ -44,11 +44,11 @@ trait MudMixinFilesystemCommon {
 
       if ( $result !== false ) { return $result; }
 
+      mud_log_4_warning( "failed to '$function', attempt $attempt." );
+
       $delay = self::get_attempt_delay();
 
       usleep( $delay );
-
-      mud_log_4_warning( "failed to '$function', attempt $attempt." );
 
     }
 
