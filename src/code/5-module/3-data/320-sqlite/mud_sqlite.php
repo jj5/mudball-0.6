@@ -5,7 +5,7 @@
 // 2021-04-12 jj5 - include dependencies...
 //
 
-require_once __DIR__ . '/../315-database/mud_database.php';
+require_once __DIR__ . '/../315-connection/mud_connection.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

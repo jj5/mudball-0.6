@@ -1,6 +1,6 @@
 <?php
 
-class MudDatabaseException extends MudException {
+class MudConnectionException extends MudException {
 
   public function is_retryable() {
 

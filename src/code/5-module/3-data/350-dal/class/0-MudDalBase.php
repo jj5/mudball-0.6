@@ -7,7 +7,7 @@
 
 abstract class MudDalBase extends MudService {
 
-  use MudDatabaseTraits;
+  use MudConnectionTraits;
   //use MudDalHousekeeping;
   //use MudDalProcedures;
 

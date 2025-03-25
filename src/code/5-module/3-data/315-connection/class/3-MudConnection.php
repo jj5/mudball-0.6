@@ -6,9 +6,9 @@
 //
 //
 
-class MudDatabase extends MudGadget {
+class MudConnection extends MudGadget {
 
-  use MudDatabaseTraits;
+  use MudConnectionTraits;
 
 
   //
@@ -95,7 +95,7 @@ class MudDatabase extends MudGadget {
 
     parent::__construct();
 
-    $args = $args + mud_get_config( [ 'app', 'database', $connection_type ], [] );
+    $args = $args + mud_get_config( [ 'app', 'connection', $connection_type ], [] );
 
     $settings = self::GetSettings( $connection_type, $args );
 
@@ -1369,7 +1369,7 @@ class MudDatabase extends MudGadget {
 
 
       // 2021-04-06 jj5 - NOTE: I'm still thinking about this. I'm not sure if it's worth
-      // caching prepared statements or not. In cooperation with the MudDatabaseStatement class
+      // caching prepared statements or not. In cooperation with the MudConnectionStatement class
       // I can probably do some instrumentation to determine if caching is useful or not...
 
       //return $this->get_pdo()->prepare( $sql );
@@ -1506,7 +1506,7 @@ class MudDatabase extends MudGadget {
     $name = mud_get_error_name( $code );
     $hint = mud_get_error_name( $code );
 
-    throw new_mud_database_exception( $message, $code, $previous, $name, $hint, $data );
+    throw new_mud_connection_exception( $message, $code, $previous, $name, $hint, $data );
 
   }
 
@@ -2021,7 +2021,7 @@ class MudDatabase extends MudGadget {
       // version, but we don't export a mechanism for the caller to override this. If that
       // becomes useful or necessary we can make this setting configurable...
       //
-      PDO::ATTR_STATEMENT_CLASS           => [ MudDatabaseStatement::class, [ $this ] ],
+      PDO::ATTR_STATEMENT_CLASS           => [ MudConnectionStatement::class, [ $this ] ],
 
       // 2021-04-06 jj5 - SEE: MySQL specific attributes:
       // https://dev.mysql.com/doc/connectors/en/apis-php-pdo-mysql.html

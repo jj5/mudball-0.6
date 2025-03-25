@@ -1,6 +1,6 @@
 <?php
 
-trait MudDatabaseTraits {
+trait MudConnectionTraits {
 
   public function read_table_name(
     string $prefix,

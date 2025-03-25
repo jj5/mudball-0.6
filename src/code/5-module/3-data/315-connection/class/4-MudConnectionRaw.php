@@ -6,11 +6,11 @@
 //
 //
 
-class MudDatabaseTrn extends MudDatabase {
+class MudConnectionRaw extends MudConnection {
 
   public function __construct( array $args = [] ) {
 
-    parent::__construct( MUD_CONNECTION_TYPE_TRN, $args );
+    parent::__construct( MUD_CONNECTION_TYPE_RAW, $args );
 
   }
 }

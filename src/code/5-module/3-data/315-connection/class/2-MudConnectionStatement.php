@@ -4,7 +4,7 @@
 // fetchAll() to automatically closeCursor()... not sure if that's useful or wise. Otherwise at
 // the moment this class serves little purpose...
 
-class MudDatabaseStatement extends PDOStatement {
+class MudConnectionStatement extends PDOStatement {
 
   private static $count = 0;
 
@@ -54,7 +54,7 @@ class MudDatabaseStatement extends PDOStatement {
   //public function fetchAll( $fetch_style = null, $fetch_argument = null, $ctor_args = null ) {
   //
   // 2021-04-06 jj5 - OLD: I had this based on the PDOStatement documentation but got the error:
-  // Declaration of MudDatabaseStatement::fetchAll(int $fetch_style, mixed $fetch_argument, array $ctor_args = Array)
+  // Declaration of MudConnectionStatement::fetchAll(int $fetch_style, mixed $fetch_argument, array $ctor_args = Array)
   // should be compatible with PDOStatement::fetchAll($how = NULL, $class_name = NULL, $ctor_args = NULL)
   //
   //public function fetchAll( int $fetch_style, mixed $fetch_argument, array $ctor_args = [] ) {

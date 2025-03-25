@@ -5,7 +5,8 @@
 // 2024-09-29 jj5 - include dependencies...
 //
 
-require_once __DIR__ . '/../220-model/mud_model.php';
+//require_once __DIR__ . '/../220-model/mud_model.php';
+require_once __DIR__ . '/../215-object/mud_object.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

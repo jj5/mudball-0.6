@@ -6,11 +6,11 @@
 //
 //
 
-class MudDatabaseRaw extends MudDatabase {
+class MudConnectionEmu extends MudConnection {
 
   public function __construct( array $args = [] ) {
 
-    parent::__construct( MUD_CONNECTION_TYPE_RAW, $args );
+    parent::__construct( MUD_CONNECTION_TYPE_EMU, $args );
 
   }
 }
