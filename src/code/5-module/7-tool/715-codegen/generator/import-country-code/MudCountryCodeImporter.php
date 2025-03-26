@@ -335,6 +335,7 @@ class MudCountryCodeImporter extends MudGenerator {
     $this->gen_consts( $country_data );
     $this->gen_enum( $country_data );
     $this->gen_schema( $country_data );
+    $this->gen_loader();
 
 
     //
