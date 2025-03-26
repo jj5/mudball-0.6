@@ -510,7 +510,7 @@ define( 'MUD_TABLE_PATTERN_LOG',          'log'         );
 // 2020-03-20 jj5 - these are the possible index types...
 //
 
-//define( 'MUD_IDX_PRIMARY',  'IDX_PRIMARY' );
+define( 'MUD_IDX_PRIMARY',  'IDX_PRIMARY' );
 define( 'MUD_IDX_UNIQUE',   'IDX_UNIQUE'  );
 define( 'MUD_IDX_INDEX',    'IDX_INDEX'   );
 
@@ -868,37 +868,6 @@ define( 'MUD_DEFAULT_XSRF_TIMEOUT', 60 * 60 * 4 );
 // 2020-03-23 jj5 - XSRF expiry is rounded down to the hour...
 //
 define( 'MUD_DEFAULT_XSRF_ROUNDOFF', 60 * 60 );
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2020-03-25 jj5 - these are possible authentication event codes...
-//
-
-define( 'MUD_AUTH_EVENT_SIGNUP',      'signup'      );
-define( 'MUD_AUTH_EVENT_LOGIN',       'login'       );
-define( 'MUD_AUTH_EVENT_LOGOUT',      'logout'      );
-define( 'MUD_AUTH_EVENT_FORGOT',      'forgot'      );
-define( 'MUD_AUTH_EVENT_RESET',       'reset'       );
-define( 'MUD_AUTH_EVENT_DEACTIVATED', 'deactivated' );
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2020-03-25 jj5 - these are the possible connection type codes...
-//
-
-define( 'MUD_CONNECTION_TYPE_TRN', 'trn' );
-define( 'MUD_CONNECTION_TYPE_RAW', 'raw' );
-define( 'MUD_CONNECTION_TYPE_EMU', 'emu' );
-define( 'MUD_CONNECTION_TYPE_AUX', 'aux' );
-define( 'MUD_CONNECTION_TYPE_DBA', 'dba' );
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2020-03-25 jj5 - these are the possible cookie type codes...
-//
-
-define( 'MUD_COOKIE_TYPE_BROWSER', 'browser' );
-define( 'MUD_COOKIE_TYPE_SESSION', 'session' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
