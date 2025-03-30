@@ -14,6 +14,24 @@ define( 'MUD_AUTH_EVENT_RESET',       'reset'       );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2025-03-26 jj5 - PHP enum...
+//
+
+enum MudAuthEventEnum : int {
+
+  case LOGIN        = MudAuthEvent::LOGIN;
+  case SIGNUP       = MudAuthEvent::SIGNUP;
+
+  case LOGOUT       = MudAuthEvent::LOGOUT;
+  case DEACTIVATED  = MudAuthEvent::DEACTIVATED;
+
+  case FORGOT       = MudAuthEvent::FORGOT;
+  case RESET        = MudAuthEvent::RESET;
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2025-03-26 jj5 - enum class...
 //
 
@@ -41,23 +59,5 @@ abstract class MudAuthEvent extends MudEnum {
     MUD_AUTH_EVENT_FORGOT       => self::FORGOT,
     MUD_AUTH_EVENT_RESET        => self::RESET,
   ];
-
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2025-03-26 jj5 - PHP enum...
-//
-
-enum MudAuthEventEnum : int {
-
-  case LOGIN        = MudAuthEvent::LOGIN;
-  case SIGNUP       = MudAuthEvent::SIGNUP;
-
-  case LOGOUT       = MudAuthEvent::LOGOUT;
-  case DEACTIVATED  = MudAuthEvent::DEACTIVATED;
-
-  case FORGOT       = MudAuthEvent::FORGOT;
-  case RESET        = MudAuthEvent::RESET;
 
 }
