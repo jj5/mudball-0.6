@@ -35,11 +35,11 @@ abstract class MudConnectionType extends MudEnum {
 
   use MudEnumTraits;
 
-  const RAW = MudConnectionTypeEnum::RAW->value;
-  const TRN = MudConnectionTypeEnum::TRN->value;
-  const EMU = MudConnectionTypeEnum::EMU->value;
-  const AUX = MudConnectionTypeEnum::AUX->value;
-  const DBA = MudConnectionTypeEnum::DBA->value;
+  const RAW = 1;
+  const TRN = 2;
+  const EMU = 3;
+  const AUX = 4;
+  const DBA = 5;
 
   static $map = [
     MUD_CONNECTION_TYPE_RAW => self::RAW,

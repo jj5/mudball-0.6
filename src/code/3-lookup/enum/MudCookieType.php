@@ -31,9 +31,9 @@ abstract class MudCookieType extends MudEnum {
 
   use MudEnumTraits;
 
-  const SETTING = MudCookieTypeEnum::SETTING->value;
-  const SESSION = MudCookieTypeEnum::SESSION->value;
-  const BROWSER = MudCookieTypeEnum::BROWSER->value;
+  const SETTING = 1;
+  const SESSION = 2;
+  const BROWSER = 3;
 
   static $map = [
     MUD_COOKIE_TYPE_SETTING => self::SETTING,
