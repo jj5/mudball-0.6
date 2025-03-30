@@ -19,14 +19,14 @@ define( 'MUD_AUTH_EVENT_RESET',       'reset'       );
 
 enum MudAuthEventEnum : int {
 
-  case LOGIN        = MudAuthEvent::LOGIN;
-  case SIGNUP       = MudAuthEvent::SIGNUP;
+  case LOGIN        = 11;
+  case SIGNUP       = 12;
 
-  case LOGOUT       = MudAuthEvent::LOGOUT;
-  case DEACTIVATED  = MudAuthEvent::DEACTIVATED;
+  case LOGOUT       = 21;
+  case DEACTIVATED  = 22;
 
-  case FORGOT       = MudAuthEvent::FORGOT;
-  case RESET        = MudAuthEvent::RESET;
+  case FORGOT       = 31;
+  case RESET        = 32;
 
 }
 
@@ -39,14 +39,14 @@ abstract class MudAuthEvent extends MudEnum {
 
   use MudEnumTraits;
 
-  const LOGIN       = 11;
-  const SIGNUP      = 12;
+  const LOGIN       = MudAuthEventEnum::LOGIN;
+  const SIGNUP      = MudAuthEventEnum::SIGNUP;
 
-  const LOGOUT      = 21;
-  const DEACTIVATED = 22;
+  const LOGOUT      = MudAuthEventEnum::LOGOUT;
+  const DEACTIVATED = MudAuthEventEnum::DEACTIVATED;
 
-  const FORGOT      = 31;
-  const RESET       = 32;
+  const FORGOT      = MudAuthEventEnum::FORGOT;
+  const RESET       = MudAuthEventEnum::RESET;
 
   static $map = [
 
