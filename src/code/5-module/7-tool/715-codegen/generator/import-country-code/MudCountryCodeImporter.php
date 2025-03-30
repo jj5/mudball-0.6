@@ -568,10 +568,10 @@ class MudCountryCodeImporter extends MudGenerator {
     foreach ( $country_data as $spec ) :
 
       $name = $spec[ 'alpha_2' ];
-      $id = $spec[ 'enum' ];
+      $enum = $spec[ 'enum' ];
 
   ?>
-    case <?= $name ?> = MudCountry::<?= $name ?>; // '<?= $spec[ 'full_name' ] ?>'
+    case <?= $name ?> = <?= $enum ?>; // '<?= $spec[ 'full_name' ] ?>'
 <?php
 
     endforeach;
@@ -666,8 +666,8 @@ class MudCountryCodeImporter extends MudGenerator {
 ?>
 
 require_once __DIR__ . '/country-code-consts.php';
-require_once __DIR__ . '/country-code-enum-class.php';
 require_once __DIR__ . '/country-code-enum-php.php';
+require_once __DIR__ . '/country-code-enum-class.php';
 
 return include __DIR__ . '/country-code-spec.php';
 

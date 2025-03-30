@@ -39,14 +39,14 @@ abstract class MudAuthEvent extends MudEnum {
 
   use MudEnumTraits;
 
-  const LOGIN       = MudAuthEventEnum::LOGIN;
-  const SIGNUP      = MudAuthEventEnum::SIGNUP;
+  const LOGIN       = MudAuthEventEnum::LOGIN->value;
+  const SIGNUP      = MudAuthEventEnum::SIGNUP->value;
 
-  const LOGOUT      = MudAuthEventEnum::LOGOUT;
-  const DEACTIVATED = MudAuthEventEnum::DEACTIVATED;
+  const LOGOUT      = MudAuthEventEnum::LOGOUT->value;
+  const DEACTIVATED = MudAuthEventEnum::DEACTIVATED->value;
 
-  const FORGOT      = MudAuthEventEnum::FORGOT;
-  const RESET       = MudAuthEventEnum::RESET;
+  const FORGOT      = MudAuthEventEnum::FORGOT->value;
+  const RESET       = MudAuthEventEnum::RESET->value;
 
   static $map = [
 

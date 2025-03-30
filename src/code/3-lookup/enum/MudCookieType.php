@@ -11,6 +11,19 @@ define( 'MUD_COOKIE_TYPE_BROWSER', 'browser' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2025-03-26 jj5 - PHP enum...
+//
+
+enum MudCookieTypeEnum : int {
+
+  case SETTING = 1;
+  case SESSION = 2;
+  case BROWSER = 3;
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2025-03-26 jj5 - enum class...
 //
 
@@ -18,27 +31,14 @@ abstract class MudCookieType extends MudEnum {
 
   use MudEnumTraits;
 
-  const SETTING = 1;
-  const SESSION = 2;
-  const BROWSER = 3;
+  const SETTING = MudCookieTypeEnum::SETTING->value;
+  const SESSION = MudCookieTypeEnum::SESSION->value;
+  const BROWSER = MudCookieTypeEnum::BROWSER->value;
 
   static $map = [
     MUD_COOKIE_TYPE_SETTING => self::SETTING,
     MUD_COOKIE_TYPE_SESSION => self::SESSION,
     MUD_COOKIE_TYPE_BROWSER => self::BROWSER,
   ];
-
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2025-03-26 jj5 - PHP enum...
-//
-
-enum MudCookieTypeEnum : int {
-
-  case SETTING = MudCookieType::SETTING;
-  case SESSION = MudCookieType::SESSION;
-  case BROWSER = MudCookieType::BROWSER;
 
 }

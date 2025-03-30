@@ -13,6 +13,21 @@ define( 'MUD_CONNECTION_TYPE_DBA', 'dba' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2025-03-26 jj5 - PHP enum...
+//
+
+enum MudConnectionTypeEnum : int {
+
+  case RAW = 1;
+  case TRN = 2;
+  case EMU = 3;
+  case AUX = 4;
+  case DBA = 5;
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2025-03-26 jj5 - enum class...
 //
 
@@ -20,11 +35,11 @@ abstract class MudConnectionType extends MudEnum {
 
   use MudEnumTraits;
 
-  const RAW = 1;
-  const TRN = 2;
-  const EMU = 3;
-  const AUX = 4;
-  const DBA = 5;
+  const RAW = MudConnectionTypeEnum::RAW->value;
+  const TRN = MudConnectionTypeEnum::TRN->value;
+  const EMU = MudConnectionTypeEnum::EMU->value;
+  const AUX = MudConnectionTypeEnum::AUX->value;
+  const DBA = MudConnectionTypeEnum::DBA->value;
 
   static $map = [
     MUD_CONNECTION_TYPE_RAW => self::RAW,
@@ -33,20 +48,5 @@ abstract class MudConnectionType extends MudEnum {
     MUD_CONNECTION_TYPE_AUX => self::AUX,
     MUD_CONNECTION_TYPE_DBA => self::DBA,
   ];
-
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2025-03-26 jj5 - PHP enum...
-//
-
-enum MudConnectionTypeEnum : int {
-
-  case RAW = MudConnectionType::RAW;
-  case TRN = MudConnectionType::TRN;
-  case EMU = MudConnectionType::EMU;
-  case AUX = MudConnectionType::AUX;
-  case DBA = MudConnectionType::DBA;
 
 }
