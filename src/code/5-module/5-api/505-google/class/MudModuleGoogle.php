@@ -174,6 +174,10 @@ class MudModuleGoogle extends MudModuleService {
 
         return $this->sort_video_list_newest_first( $video_list );
 
+      case 'oldest-first':
+
+        return $this->sort_video_list_oldest_first( $video_list );
+
       default:
 
         return $video_list;
@@ -217,6 +221,18 @@ class MudModuleGoogle extends MudModuleService {
 
   }
 
+  public function sort_video_list_oldest_first( $video_list ) {
+
+    usort( $video_list, function( $a, $b ) {
+
+      return $this->get_video_timestamp( $a ) - $this->get_video_timestamp( $b );
+
+    });
+
+    return $video_list;
+
+  }
+
   public function get_sort_type( $playlist ) {
 
     static $by_number = [
@@ -226,6 +242,10 @@ class MudModuleGoogle extends MudModuleService {
     static $by_number_reverse = [
       'Channel News', 'Demo', 'Early Content', 'Electronics Project', 'Interlude', 'Mail Call', 'Mini Project',
       'New Book Teardown', 'Old Book Teardown', 'Unboxing',
+    ];
+
+    static $oldest_first = [
+      'Learning The Art of Electronics',
     ];
 
     $title = $playlist->getSnippet()->getTitle();
@@ -239,6 +259,12 @@ class MudModuleGoogle extends MudModuleService {
     foreach ( $by_number_reverse as $prefix ) {
 
       if ( strpos( $title, $prefix ) === 0 ) { return 'by-number-reverse'; }
+
+    }
+
+    foreach ( $oldest_first as $prefix ) {
+
+      if ( strpos( $title, $prefix ) === 0 ) { return 'oldest-first'; }
 
     }
 
