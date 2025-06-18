@@ -14,6 +14,7 @@ require_once __DIR__ . '/../210-stash/mud_stash.php';
 
 mud_define_error( 'MUD_ERR_OBJECT_FORMAT_LENGTH_UNEXPECTED', 'unexpected format length.' );
 mud_define_error( 'MUD_ERR_OBJECT_STATE_INVALID', 'object is in an invalid state.' );
+mud_define_error( 'MUD_ERR_OBJECT_CLASS_INVALID', 'class does not exists.' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -304,6 +304,12 @@ class MudModuleValue extends MudModuleBasic {
 
     if ( ! isset( $this->atom_map[ $class ][ $key ] ) ) {
 
+      if ( ! class_exists( $class ) ) {
+
+        mud_fail( MUD_ERR_OBJECT_CLASS_INVALID, [ 'class' => $class ] );
+
+      }
+
       $new_value = new $class( $value );
 
       $new_value->set_key( $key );
@@ -335,6 +341,12 @@ class MudModuleValue extends MudModuleBasic {
     $key = $this->get_composite_key( $value_list );
 
     if ( ! isset( $this->composite_map[ $class ][ $key ] ) ) {
+
+      if ( ! class_exists( $class ) ) {
+
+        mud_fail( MUD_ERR_OBJECT_CLASS_INVALID, [ 'class' => $class ] );
+
+      }
 
       $new_value = new $class( $value_list );
 
