@@ -120,7 +120,10 @@ class MudModuleGoogle extends MudModuleService {
 
     }
 
-    return $this->sort_video_list( $this->filter_public_video( $result ), $playlist );
+    // 2025-06-20 jj5 - NEW: don't filter out private videos here, we want to keep them for now
+    return $this->sort_video_list( $result, $playlist );
+    // 2025-06-20 jj5 - OLD:
+    //return $this->sort_video_list( $this->filter_public_video( $result ), $playlist );
 
   }
 
