@@ -128,7 +128,7 @@ class MudDatabaseConnector {
     // relax these requirements if necessary, but be careful with untrusted values.
     foreach ( [ $db_name, $db_host ] as $check_name ) {
 
-      if ( ka_is_valid_name( $check_name ) ) { continue; }
+      if ( mud_is_valid_table_name( $check_name ) ) { continue; }
 
       throw new Exception( "Invalid name '$check_name'." );
 
@@ -160,7 +160,7 @@ class MudDatabaseConnector {
 
     if ( defined( 'DEBUG' ) && DEBUG ) {
 
-      ka_validate_connection( $pdo, $isolation_level, $time_zone );
+      mud_validate_connection( $pdo, $isolation_level, $time_zone );
 
     }
 

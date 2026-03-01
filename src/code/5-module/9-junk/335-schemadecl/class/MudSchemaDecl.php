@@ -1435,14 +1435,14 @@ class MudSchemaDecl extends MudSchemaDeclBase {
 
         // 2019-10-16 jj5 - references don't auto_increment...
         //
-        case DBT_ID8  : return 'tinyint unsigned';
-        case DBT_ID16 : return 'smallint unsigned';
-        case DBT_ID24 : return 'mediumint unsigned';
-        case DBT_ID32 : return 'int unsigned';
+        case DBT_AID8  : return 'tinyint unsigned';
+        case DBT_AID16 : return 'smallint unsigned';
+        case DBT_AID24 : return 'mediumint unsigned';
+        case DBT_AID32 : return 'int unsigned';
 
         // 2023-11-05 jj5 - don't use signed 64-bit ints, PHP can't represent them...
         //
-        case DBT_ID64 : return 'bigint';
+        case DBT_AID64 : return 'bigint';
 
       }
     }
@@ -1453,14 +1453,14 @@ class MudSchemaDecl extends MudSchemaDeclBase {
 
       // 2019-10-16 jj5 - signed integers for IDs (auto-increment)...
       //
-      case DBT_ID8  : return 'tinyint unsigned auto_increment';
-      case DBT_ID16 : return 'smallint unsigned auto_increment';
-      case DBT_ID24 : return 'mediumint unsigned auto_increment';
-      case DBT_ID32 : return 'int unsigned auto_increment';
+      case DBT_AID8  : return 'tinyint unsigned auto_increment';
+      case DBT_AID16 : return 'smallint unsigned auto_increment';
+      case DBT_AID24 : return 'mediumint unsigned auto_increment';
+      case DBT_AID32 : return 'int unsigned auto_increment';
 
       // 2023-11-05 jj5 - don't use signed 64-bit ints, PHP can't represent them...
       //
-      case DBT_ID64 : return 'bigint auto_increment';
+      case DBT_AID64 : return 'bigint auto_increment';
 
       // 2019-09-22 jj5 - unsigned integers...
       //
@@ -1566,11 +1566,11 @@ class MudSchemaDecl extends MudSchemaDeclBase {
 
       // 2019-10-16 jj5 - unsigned integers for IDs (auto-increment)...
       //
-      case DBT_ID8  : return 0;
-      case DBT_ID16 : return 0;
-      case DBT_ID24 : return 0;
-      case DBT_ID32 : return 0;
-      case DBT_ID64 : return 0;
+      case DBT_AID8  : return 0;
+      case DBT_AID16 : return 0;
+      case DBT_AID24 : return 0;
+      case DBT_AID32 : return 0;
+      case DBT_AID64 : return 0;
 
       // 2019-09-22 jj5 - unsigned integers...
       //
@@ -1661,14 +1661,14 @@ class MudSchemaDecl extends MudSchemaDeclBase {
 
       // 2019-10-16 jj5 - unsigned integers for IDs (auto-increment)...
       //
-      case DBT_ID8  : return MUD_MAX_UINT8;
-      case DBT_ID16 : return MUD_MAX_UINT16;
-      case DBT_ID24 : return MUD_MAX_UINT24;
-      case DBT_ID32 : return MUD_MAX_UINT32;
+      case DBT_AID8  : return MUD_MAX_UINT8;
+      case DBT_AID16 : return MUD_MAX_UINT16;
+      case DBT_AID24 : return MUD_MAX_UINT24;
+      case DBT_AID32 : return MUD_MAX_UINT32;
 
       // 2023-11-05 jj5 - don't use signed 64-bit ints, PHP can't represent them...
       //
-      case DBT_ID64 : return MUD_MAX_INT64;
+      case DBT_AID64 : return MUD_MAX_INT64;
 
       // 2019-09-22 jj5 - unsigned integers...
       //

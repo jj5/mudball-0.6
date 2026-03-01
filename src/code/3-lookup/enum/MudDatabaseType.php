@@ -35,15 +35,15 @@ abstract class MudDatabaseType extends MudEnum {
   // 2020-03-26 jj5 - auto-incrementing unsigned integer keys of various
   // bit-lengths...
   //
-  const ID8   = 11;
-  const ID16  = 12;
-  const ID24  = 13;
-  const ID32  = 14;
+  const AID8   = 11;
+  const AID16  = 12;
+  const AID24  = 13;
+  const AID32  = 14;
 
   // 2020-03-26 jj5 - NOTE: PHP uses signed 64-bit values so not all
   // 64-bit unsigned identities can be represented in applications...
   //
-  const ID64  = 18;
+  const AID64  = 18;
 
 
   //
@@ -245,11 +245,11 @@ abstract class MudDatabaseType extends MudEnum {
 
     DBT_BOOL => self::BOOL,
 
-    DBT_ID8 => self::ID8,
-    DBT_ID16 => self::ID16,
-    DBT_ID24 => self::ID24,
-    DBT_ID32 => self::ID32,
-    DBT_ID64 => self::ID64,
+    DBT_AID8 => self::AID8,
+    DBT_AID16 => self::AID16,
+    DBT_AID24 => self::AID24,
+    DBT_AID32 => self::AID32,
+    DBT_AID64 => self::AID64,
 
     DBT_UINT8 => self::UINT8,
     DBT_UINT16 => self::UINT16,

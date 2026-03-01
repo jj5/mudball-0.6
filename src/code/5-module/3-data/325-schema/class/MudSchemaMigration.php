@@ -119,13 +119,13 @@ class MudSchemaMigration {
 
   }
 
-  public function apply( $dba ) {
+  public function apply( $dba, $vendor ) {
 
     $work = $dba->schema_work();
 
     foreach ( $this->op_list as $op ) {
 
-      $op->apply( $work );
+      $op->apply( $work, $vendor );
 
     }
 

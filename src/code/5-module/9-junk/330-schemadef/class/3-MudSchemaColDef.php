@@ -214,11 +214,11 @@ class MudSchemaColDef extends MudGadget {
 
       // 2019-10-16 jj5 - unsigned integers for IDs (auto-increment)...
       //
-      case DBT_ID8  :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 : return MUD_DATATYPE_INT;
+      case DBT_AID8  :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 : return MUD_DATATYPE_INT;
 
       // 2019-09-22 jj5 - unsigned integers...
       //
@@ -309,11 +309,11 @@ class MudSchemaColDef extends MudGadget {
 
       // 2019-10-16 jj5 - unsigned integers for IDs (auto-increment)...
       //
-      case DBT_ID8  :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 : return 'int';
+      case DBT_AID8  :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 : return 'int';
 
       // 2019-09-22 jj5 - unsigned integers...
       //
@@ -456,11 +456,11 @@ class MudSchemaColDef extends MudGadget {
 
       case DBT_BOOL   :
 
-      case DBT_ID8    :
-      case DBT_ID16   :
-      case DBT_ID24   :
-      case DBT_ID32   :
-      case DBT_ID64   :
+      case DBT_AID8    :
+      case DBT_AID16   :
+      case DBT_AID24   :
+      case DBT_AID32   :
+      case DBT_AID64   :
 
       case DBT_UINT8  :
       case DBT_UINT16 :
@@ -603,11 +603,11 @@ class MudSchemaColDef extends MudGadget {
         return MUD_STRING_TYPE_BINARY;
 
       case DBT_BOOL :
-      case DBT_ID8 :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 :
+      case DBT_AID8 :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 :
       case DBT_INT8 :
       case DBT_INT16 :
       case DBT_INT24 :
@@ -636,11 +636,11 @@ class MudSchemaColDef extends MudGadget {
 
     switch ( $this->get_type() ) {
 
-      case DBT_ID8 :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 : return true;
+      case DBT_AID8 :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 : return true;
 
       default : return false;
 

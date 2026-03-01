@@ -368,11 +368,11 @@ class MudSchemaCol extends MudGadget {
 
       case DBT_BOOL : return $value ? 1 : 0;
 
-      case DBT_ID8 :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 :
+      case DBT_AID8 :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 :
       case DBT_UINT8 :
       case DBT_UINT16 :
       case DBT_UINT24 :
@@ -492,11 +492,11 @@ class MudSchemaCol extends MudGadget {
 
         break;
 
-      case DBT_ID8 :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 :
+      case DBT_AID8 :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 :
       case DBT_UINT8 :
       case DBT_UINT16 :
       case DBT_UINT24 :
@@ -635,11 +635,11 @@ class MudSchemaCol extends MudGadget {
 
         break;
 
-      case DBT_ID8 :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 :
+      case DBT_AID8 :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 :
       case DBT_UINT8 :
       case DBT_UINT16 :
       case DBT_UINT24 :
@@ -771,11 +771,11 @@ class MudSchemaCol extends MudGadget {
 
         break;
 
-      case DBT_ID8 :
-      case DBT_ID16 :
-      case DBT_ID24 :
-      case DBT_ID32 :
-      case DBT_ID64 :
+      case DBT_AID8 :
+      case DBT_AID16 :
+      case DBT_AID24 :
+      case DBT_AID32 :
+      case DBT_AID64 :
       case DBT_UINT8 :
       case DBT_UINT16 :
       case DBT_UINT24 :

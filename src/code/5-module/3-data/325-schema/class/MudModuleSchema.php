@@ -1,11 +1,17 @@
 <?php
 
-class MudModuleSchema extends MudModuleBasic {
+class MudModuleSchema extends MudModuleData {
 
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2026-03-01 jj5 - public methods...
   //
+
+  function is_valid_table_name( string $name ) : bool {
+
+    return (bool)preg_match( '/^[a-z][[a-z0-9_]*$/i', $name );
+
+  }
 
   function validate_connection(
     PDO $pdo,
@@ -142,13 +148,13 @@ class MudModuleSchema extends MudModuleBasic {
 
   }
 
-  function add_key( $col_name, Kickass\ColType $col_type ) : MudSchemaAddition_ColumnKey {
+  function add_key( $col_name, $col_type ) : MudSchemaAddition_ColumnKey {
 
     return $this->get_migration()->curr_tab()->add_key( $col_name, $col_type );
 
   }
 
-  function add_col( $col_name, Kickass\ColType $col_type ) : MudSchemaAddition_Column {
+  function add_col( $col_name, $col_type ) : MudSchemaAddition_Column {
 
     return $this->get_migration()->curr_tab()->add_col( $col_name, $col_type );
 
@@ -163,12 +169,6 @@ class MudModuleSchema extends MudModuleBasic {
   function add_sproc( $sproc_sql ) : MudSchemaAddition_Sproc {
 
     return $this->get_migration()->add_sproc( $sproc_sql );
-
-  }
-
-  function is_valid_name( string $name ) : bool {
-
-    return (bool)preg_match( '/^[a-z][[a-z0-9_]*$/i', $name );
 
   }
 }

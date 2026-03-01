@@ -89,7 +89,9 @@ class MudSchemaDatabase {
 
   public function migrate() {
 
-    global $migration;
+    $vendor = new MudSchemaVendor_MySQL();
+
+    $migration = mud_get_migration();
 
     $connector = new MudDatabaseConnector();
 
@@ -106,7 +108,7 @@ class MudSchemaDatabase {
       echo 'Migrating: ' . $migration->get_code() . ' for ' .
         $migration->get_schema()->get_label() . PHP_EOL;
 
-      $migration->apply( $dba );
+      $migration->apply( $dba, $vendor );
 
       if ( $log === null ) {
 

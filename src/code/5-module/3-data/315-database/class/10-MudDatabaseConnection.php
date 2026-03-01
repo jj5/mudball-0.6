@@ -88,15 +88,15 @@ abstract class MudDatabaseConnection {
     $conn_id = $this->get_connection_id();
     $conn_tx = $this->get_isolation_level();
 
-    ka_stderr( "\n" );
-    ka_stderr( "class..: " . get_class( $this ) . "\n" );
-    ka_stderr( "id conn: $conn_id\n" );
-    ka_stderr( "db type: " . $this->get_connection_type()->name . "\n" );
-    ka_stderr( "db tran: " . ( $this->is_in_transaction() ? 'yes' : 'no' ) . "\n" );
-    ka_stderr( "db name: " . DB_NAME . "\n" );
-    ka_stderr( "db host: " . DB_HOST . "\n" );
-    ka_stderr( "db user: " . DB_USER . "\n" );
-    ka_stderr( "db conn: $conn_tx\n\n" );
+    mud_stderr( "\n" );
+    mud_stderr( "class..: " . get_class( $this ) . "\n" );
+    mud_stderr( "id conn: $conn_id\n" );
+    mud_stderr( "db type: " . $this->get_connection_type()->name . "\n" );
+    mud_stderr( "db tran: " . ( $this->is_in_transaction() ? 'yes' : 'no' ) . "\n" );
+    mud_stderr( "db name: " . DB_NAME . "\n" );
+    mud_stderr( "db host: " . DB_HOST . "\n" );
+    mud_stderr( "db user: " . DB_USER . "\n" );
+    mud_stderr( "db conn: $conn_tx\n\n" );
 
   }
   public function dedent( string $text ) : string {

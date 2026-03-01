@@ -19,6 +19,7 @@ require_once __DIR__ . '/../310-interaction/mud_interaction.php';
 //
 
 mud_load_files( __DIR__ . '/enum' );
+mud_load_files( __DIR__ . '/trait' );
 mud_load_files( __DIR__ . '/class' );
 
 

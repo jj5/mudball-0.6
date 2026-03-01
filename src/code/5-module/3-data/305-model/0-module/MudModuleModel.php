@@ -18,7 +18,7 @@ class MudModuleModel extends MudModuleBasic {
 
     if ( ! defined( 'DBT_AID' ) ) {
 
-      define( 'DBT_AID', DBT_ID32 );
+      define( 'DBT_AID', DBT_AID32 );
       define( 'DBT_AIDREF', DBT_UINT32 );
 
     }

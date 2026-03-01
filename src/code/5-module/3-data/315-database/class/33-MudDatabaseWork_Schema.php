@@ -8,7 +8,7 @@ class MudDatabaseWork_Schema extends MudDatabaseWork {
     $this->validate_name( $table_name );
     //$this->drop_foreign_keys( $table_name );
     $ddl = "drop table if exists $table_name";
-    $this->register_operation( new MudDatabaseExec( $this->connection, $ddl ) );
+    $this->register_operation( new MudDatabaseAction_Exec( $this->connection, $ddl ) );
   }
   public function drop_foreign_keys( string $table_name ) {
     $this->validate_name( $table_name );
@@ -68,22 +68,22 @@ class MudDatabaseWork_Schema extends MudDatabaseWork {
             $ddl = "ALTER TABLE `{$dbname}`.`{$table}` DROP FOREIGN KEY `{$fk}`";
             $this->register_operation(
               //new MudDatabaseSchema( $ddl, $this->get_pdo()->prepare( $ddl ) )
-              new MudDatabaseExec( $this->connection, $ddl )
+              new MudDatabaseAction_Exec( $this->connection, $ddl )
             );
         }
     }
   }
 
   public function create_table( string $ddl ) : void {
-    $this->register_operation( new MudDatabaseExec( $this->connection, $ddl ) );
+    $this->register_operation( new MudDatabaseAction_Exec( $this->connection, $ddl ) );
   }
 
   public function create_trigger( string $ddl ) : void {
-    $this->register_operation( new MudDatabaseExec( $this->connection, $ddl ) );
+    $this->register_operation( new MudDatabaseAction_Exec( $this->connection, $ddl ) );
   }
 
   public function create_sproc( string $ddl ) : void {
-    $this->register_operation( new MudDatabaseExec( $this->connection, $ddl ) );
+    $this->register_operation( new MudDatabaseAction_Exec( $this->connection, $ddl ) );
   }
 
   public function process() : void {

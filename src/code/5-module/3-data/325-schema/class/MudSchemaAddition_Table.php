@@ -87,15 +87,15 @@ class MudSchemaAddition_Table {
 
   }
 
-  public function apply( $work ) {
+  public function apply( $work, $vendor ) {
 
-    $sql = $this->get_sql();
+    $sql = $this->get_sql( $vendor );
 
     $work->create_table( $sql );
 
   }
 
-  public function get_sql() {
+  public function get_sql( $vendor ) {
 
     $key_col = null;
 
@@ -106,7 +106,7 @@ class MudSchemaAddition_Table {
 
       if ( $key_col === null ) { $key_col = $col; }
 
-      $spec_list[] = $col->get_sql();
+      $spec_list[] = $col->get_sql( $vendor );
 
     }
 
@@ -116,7 +116,7 @@ class MudSchemaAddition_Table {
 
       if ( ! $col->is_ref() ) { continue; }
 
-      $spec_list[] = $col->get_ref_sql();
+      $spec_list[] = $col->get_ref_sql( $vendor );
 
     }
 

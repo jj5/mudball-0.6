@@ -15,7 +15,7 @@ abstract class MudDatabaseWork {
     $this->note = $note;
   }
 
-  public function register_operation( MudDatabaseOperation $operation ) : void {
+  public function register_operation( MudDatabaseAction $operation ) : void {
     $this->operation_list[] = $operation;
   }
 

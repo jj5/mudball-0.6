@@ -19,27 +19,27 @@ abstract class MudSchemaDeclBase extends MudGadget {
     // should always be reversed or rolled back so we should never see a negative ID come out
     // of our database...
     //
-    DBT_ID8 => [
+    DBT_AID8 => [
       'datatype' => MUD_DATATYPE_INT,
       'min' => 0,
-      'max' => MUD_MAX_INT8,
+      'max' => MUD_MAX_UINT8,
     ],
-    DBT_ID16 => [
+    DBT_AID16 => [
       'datatype' => MUD_DATATYPE_INT,
       'min' => 0,
-      'max' => MUD_MAX_INT16,
+      'max' => MUD_MAX_UINT16,
     ],
-    DBT_ID24 => [
+    DBT_AID24 => [
       'datatype' => MUD_DATATYPE_INT,
       'min' => 0,
-      'max' => MUD_MAX_INT24,
+      'max' => MUD_MAX_UINT24,
     ],
-    DBT_ID32 => [
+    DBT_AID32 => [
       'datatype' => MUD_DATATYPE_INT,
       'min' => 0,
-      'max' => MUD_MAX_INT32,
+      'max' => MUD_MAX_UINT32,
     ],
-    DBT_ID64 => [
+    DBT_AID64 => [
       'datatype' => MUD_DATATYPE_INT,
       'min' => 0,
       'max' => MUD_MAX_INT64,
