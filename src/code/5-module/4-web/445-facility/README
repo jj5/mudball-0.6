@@ -26,18 +26,18 @@ Facility implementation file path:
 
 $type = one of [ api, dev, admin, util, content, ... ]
 
-src / code / 6-facility / $type / $entity / $verb / $type_$entity_$verb.php
+src / code / 8-facility / $type / $entity / $verb / $type_$entity_$verb.php
 
 or you can be deeper than simple $entity / $verb, as with e.g.
 
-src / code / 6-facility / $type / album / track-list / edit / $type_album_track_list_edit.php
+src / code / 8-facility / $type / album / track-list / edit / $type_album_track_list_edit.php
 
 Your Mud Ball application will automatically find and load your facilities based on their
 location in your project based on the above naming convention.
 
 But you can have even simpler facilities with just a verb, e.g.
 
-src / code / 6-facility / util / login / util_login.php
+src / code / 8-facility / util / login / util_login.php
 
 Verbs can be e.g.:
 
