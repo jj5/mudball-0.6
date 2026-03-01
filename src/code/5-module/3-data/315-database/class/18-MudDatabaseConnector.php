@@ -134,7 +134,7 @@ class MudDatabaseConnector {
 
     }
 
-    $connection_string = "mysql:dbname=$db_name;host=$db_host;charset=utf8mb4";
+    $connection_string = "mysql:dbname=$db_name;host=$db_host;charset=utf8mb4;collate=utf8mb4_uca1400_ai_ci";
 
     $pdo = new PDO( $connection_string, $db_user, $db_pass, $options );
 

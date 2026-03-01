@@ -16,9 +16,9 @@ class MudModuleSchema extends MudModuleData {
   function validate_connection(
     PDO $pdo,
     string $expected_isolation_level,
-    string|null $expected_time_zone = null,
-    string $expected_character_set = 'utf8mb4',
-    string $expected_collation = 'utf8mb4_unicode_520_ci',
+    string|null $expected_time_zone,
+    string $expected_character_set,
+    string $expected_collation,
   ) {
 
     // 2024-02-13 jj5 - first we check the transaction isolation level...

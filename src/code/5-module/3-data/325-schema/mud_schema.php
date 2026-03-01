@@ -36,7 +36,7 @@ function mud_validate_connection(
   string $expected_isolation_level,
   string|null $expected_time_zone = null,
   string $expected_character_set = 'utf8mb4',
-  string $expected_collation = 'utf8mb4_unicode_520_ci',
+  string $expected_collation = 'utf8mb4_uca1400_ai_ci',
 ) {
 
   return mud_module_schema()->validate_connection(
