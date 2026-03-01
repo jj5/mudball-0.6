@@ -1,6 +1,0 @@
-<?php
-
-enum MudSchemaIndexType : string {
-  case INDEX = 'index';
-  case UNIQUE = 'unique';
-}

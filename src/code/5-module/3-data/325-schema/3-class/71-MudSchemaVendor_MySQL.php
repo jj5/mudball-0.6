@@ -122,8 +122,8 @@ class MudSchemaVendor_MySQL extends MudSchemaVendor {
 
   public function get_col_sql( $col ) : string {
 
-    $name = $col->get_name();
-    $type = $col->get_type();
+    $name = $col->get_column_name();
+    $type = $col->get_column_type();
     $max_len = $col->get_max_len();
     $nullable = $col->is_nullable();
     $has_default = $col->has_default();
@@ -151,11 +151,11 @@ class MudSchemaVendor_MySQL extends MudSchemaVendor {
 
   public function get_ref_sql( $ref ) : string {
 
-    $name = $ref->get_name();
+    $name = $ref->get_column_name();
     $ref = $ref->get_ref_col();
 
-    $ref_table = $ref->get_table()->get_name();
-    $ref_col = $ref->get_name();
+    $ref_table = $ref->get_table()->get_table_name();
+    $ref_col = $ref->get_column_name();
 
     $sql = "foreign key ( {$name} ) references {$ref_table} ( {$ref_col} )";
 

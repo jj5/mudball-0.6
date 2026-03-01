@@ -15,7 +15,7 @@ class MudSchemaAddition_Table extends MudSchemaAddition implements IMudSchemaTab
     $this->table_name = $table_name;
     $this->table_type = $this->find_table_type( $table_name );
 
-    $this->table = new MudSchemaTable( $this->get_database(), $table_name, $this->table_type );
+    $this->table = new MudSchemaTable( $this->get_schema(), $table_name, $this->table_type );
 
     $this->get_database()->add_table( $this->table );
 
@@ -27,13 +27,13 @@ class MudSchemaAddition_Table extends MudSchemaAddition implements IMudSchemaTab
 
   }
 
-  public function get_schema() {
+  public function get_schema() : MudSchemaDefinition {
 
     return $this->get_migration()->get_schema();
 
   }
 
-  public function get_migration() {
+  public function get_migration() : MudSchemaMigration {
 
     return $this->migration;
 
@@ -51,7 +51,7 @@ class MudSchemaAddition_Table extends MudSchemaAddition implements IMudSchemaTab
 
   }
 
-  public function add_key( $column_name, $column_type ) {
+  public function add_key( string $column_name, MudSchemaColumnType $column_type ) : MudSchemaAddition_ColumnKey {
 
     $key = new MudSchemaAddition_ColumnKey( $this, $column_name, $column_type );
 
@@ -63,7 +63,7 @@ class MudSchemaAddition_Table extends MudSchemaAddition implements IMudSchemaTab
 
   }
 
-  public function add_col( $column_name, $column_type ) {
+  public function add_col( string $column_name, MudSchemaColumnType $column_type ) : MudSchemaAddition_Column {
 
     $col = new MudSchemaAddition_Column( $this, $column_name, $column_type );
 
@@ -75,7 +75,12 @@ class MudSchemaAddition_Table extends MudSchemaAddition implements IMudSchemaTab
 
   }
 
-  public function add_ref( $column_name, $ref_table, $ref_col ) {
+  public function add_ref(
+    string $column_name,
+    string $ref_table,
+    string $ref_col
+  )
+  : MudSchemaAddition_ColumnReference {
 
     $ref = new MudSchemaAddition_ColumnReference( $this, $column_name, $ref_table, $ref_col );
 
@@ -109,7 +114,7 @@ class MudSchemaAddition_Table extends MudSchemaAddition implements IMudSchemaTab
 
     }
 
-    $spec_list[] = "primary key ( {$key_col->get_name()} )";
+    $spec_list[] = "primary key ( {$key_col->get_column_name()} )";
 
     foreach ( $this->col_list as $col ) {
 

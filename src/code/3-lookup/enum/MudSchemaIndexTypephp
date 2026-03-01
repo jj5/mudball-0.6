@@ -1,0 +1,20 @@
+<?php
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2020-03-20 jj5 - these are the possible index types...
+//
+/*
+define( 'MUD_IDX_PRIMARY',  'IDX_PRIMARY' );
+define( 'MUD_IDX_UNIQUE',   'IDX_UNIQUE'  );
+define( 'MUD_IDX_INDEX',    'IDX_INDEX'   );
+*/
+
+enum MudSchemaIndexType : string {
+  case PRIMARY = 'primary';
+  case UNIQUE = 'unique';
+  case INDEX = 'index';
+}
+
+define( 'MUD_IDX_PRIMARY', MudSchemaIndexType::PRIMARY );
+define( 'MUD_IDX_UNIQUE', MudSchemaIndexType::UNIQUE );
+define( 'MUD_IDX_INDEX', MudSchemaIndexType::INDEX );

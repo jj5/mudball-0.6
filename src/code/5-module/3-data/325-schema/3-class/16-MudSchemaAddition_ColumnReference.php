@@ -1,11 +1,11 @@
 <?php
 
-class MudSchemaAddition_ColumnReference extends MudSchemaAddition {
+class MudSchemaAddition_ColumnReference extends MudSchemaAddition implements IMudSchemaColumn {
 
-  protected $table;
-  protected string $name;
-  protected string $ref_table;
-  protected string $ref_col;
+  protected IMudSchemaTable $table;
+  protected string $column_name;
+  protected string $ref_table_name;
+  protected string $ref_column_name;
 
   protected bool $nullable = false;
   protected bool $has_default = false;
@@ -13,18 +13,23 @@ class MudSchemaAddition_ColumnReference extends MudSchemaAddition {
 
   protected ?MudSchemaColumn $column = null;
 
-  public function __construct( $table, $name, $ref_table, $ref_col ) {
+  public function __construct(
+    IMudSchemaTable $table,
+    string $column_name,
+    string $ref_table_name,
+    string $ref_column_name
+  ) {
 
     $this->table = $table;
-    $this->name = $name;
-    $this->ref_table = $ref_table;
-    $this->ref_col = $ref_col;
+    $this->column_name = $column_name;
+    $this->ref_table_name = $ref_table_name;
+    $this->ref_column_name = $ref_column_name;
 
   }
 
   public function get_ref_col() {
 
-    return $this->get_database()->get_table( $this->ref_table )->get_column( $this->ref_col );
+    return $this->get_database()->get_table( $this->ref_table_name )->get_column( $this->ref_column_name );
 
   }
 
@@ -46,27 +51,27 @@ class MudSchemaAddition_ColumnReference extends MudSchemaAddition {
 
   }
 
-  public function get_name() {
+  public function get_column_name() : string {
 
-    return $this->name;
-
-  }
-
-  public function get_ref_table() {
-
-    return $this->ref_table;
+    return $this->column_name;
 
   }
 
-  public function get_ref_col_name() {
+  public function get_ref_table_name() : string {
 
-    return $this->ref_col;
+    return $this->ref_table_name;
 
   }
 
-  public function get_type() {
+  public function get_ref_column_name() : string {
 
-    $type = $this->get_ref_col()->get_type();
+    return $this->ref_column_name;
+
+  }
+
+  public function get_column_type() : MudSchemaColumnType {
+
+    $type = $this->get_ref_col()->get_column_type();
 
     switch ( $type ) {
       case DBT_AID8:
@@ -156,14 +161,14 @@ class MudSchemaAddition_ColumnReference extends MudSchemaAddition {
 
     if ( $this->column === null ) {
 
-      $ref = $this->get_database()->get_table( $this->ref_table )->get_column( $this->ref_col );
+      $ref = $this->get_database()->get_table( $this->ref_table_name )->get_column( $this->ref_column_name );
 
       $table = $this->get_database()->get_table( $this->table->get_table_name() );
 
       $column = new MudSchemaColumn(
         $table,
-        $this->name,
-        $this->get_type(),
+        $this->get_column_name(),
+        $this->get_column_type(),
         $ref->get_min_len(),
         $ref->get_max_len(),
         $this->nullable,

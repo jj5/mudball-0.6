@@ -1,10 +1,10 @@
 <?php
 
-class MudSchemaColumn {
+class MudSchemaColumn implements IMudSchemaColumn {
 
   protected MudSchemaTable $table;
-  protected string $name;
-  protected $type;
+  protected string $column_name;
+  protected MudSchemaColumnType $column_type;
 
   protected int $min_len = 0;
   protected int $max_len = 255;
@@ -16,8 +16,8 @@ class MudSchemaColumn {
 
   public function __construct(
     MudSchemaTable $table,
-    string $name,
-    $type,
+    string $column_name,
+    MudSchemaColumnType $column_type,
     int $min_len = 0,
     int $max_len = 255,
     bool $nullable = false,
@@ -26,8 +26,8 @@ class MudSchemaColumn {
   ) {
 
     $this->table = $table;
-    $this->name = $name;
-    $this->type = $type;
+    $this->column_name = $column_name;
+    $this->column_type = $column_type;
     $this->min_len = $min_len;
     $this->max_len = $max_len;
     $this->nullable = $nullable;
@@ -42,15 +42,15 @@ class MudSchemaColumn {
 
   }
 
-  public function get_name() {
+  public function get_column_name() : string {
 
-    return $this->name;
+    return $this->column_name;
 
   }
 
-  public function get_type() {
+  public function get_column_type() : MudSchemaColumnType {
 
-    return $this->type;
+    return $this->column_type;
 
   }
 

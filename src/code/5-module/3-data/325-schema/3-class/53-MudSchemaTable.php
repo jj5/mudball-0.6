@@ -1,54 +1,60 @@
 <?php
 
-class MudSchemaTable {
+class MudSchemaTable implements IMudSchemaTable {
 
-  protected $database;
-  protected $name;
-  protected $type;
+  protected MudSchemaDefinition $schema;
+  protected string $table_name;
+  protected MudSchemaTableType $table_type;
 
-  protected $col_map = [];
+  protected array $col_map = [];
 
-  public function __construct( $database, $name, $type ) {
+  public function __construct( MudSchemaDefinition $schema, string $table_name, MudSchemaTableType $table_type ) {
 
-    $this->database = $database;
-    $this->name = $name;
-    $this->type = $type;
-
-  }
-
-  public function get_database() {
-
-    return $this->database;
+    $this->schema = $schema;
+    $this->table_name = $table_name;
+    $this->table_type = $table_type;
 
   }
 
-  public function get_name() {
+  public function get_database() : MudSchemaDatabase {
 
-    return $this->name;
-
-  }
-
-  public function get_type() {
-
-    return $this->type;
+    return $this->schema->get_database();
 
   }
 
-  public function add_column( $column ) {
+  public function get_schema() : MudSchemaDefinition {
 
-    assert( ! isset( $this->col_map[ $column->get_name() ] ) );
+    return $this->schema;
 
-    $this->col_map[ $column->get_name() ] = $column;
+  }
+
+  public function get_table_name() : string {
+
+    return $this->table_name;
+
+  }
+
+  public function get_table_type() : MudSchemaTableType {
+
+    return $this->table_type;
+
+  }
+
+  public function add_column( MudSchemaColumn $column ) {
+
+    assert( ! isset( $this->col_map[ $column->get_column_name() ] ) );
+
+    $this->col_map[ $column->get_column_name() ] = $column;
 
     return $column;
 
   }
 
-  public function get_column( $name ) {
+  public function get_column( string $column_name ) : MudSchemaColumn {
 
-    assert( isset( $this->col_map[ $name ] ) );
+    assert( isset( $this->col_map[ $column_name ] ) );
 
-    return $this->col_map[ $name ];
+    return $this->col_map[ $column_name ];
 
   }
 }

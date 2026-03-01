@@ -1,10 +1,10 @@
 <?php
 
-class MudSchemaAddition_Column extends MudSchemaAddition {
+class MudSchemaAddition_Column extends MudSchemaAddition implements IMudSchemaColumn {
 
   protected IMudSchemaTable $table;
   protected string $column_name;
-  protected $type;
+  protected MudSchemaColumnType $column_type;
 
   protected int $min_len = 0;
   protected int $max_len = 255;
@@ -15,13 +15,13 @@ class MudSchemaAddition_Column extends MudSchemaAddition {
 
   protected ?MudSchemaColumn $column = null;
 
-  public function __construct( IMudSchemaTable $table, string $column_name, $type ) {
+  public function __construct( IMudSchemaTable $table, string $column_name, MudSchemaColumnType $column_type ) {
 
     $this->table = $table;
     $this->column_name = $column_name;
-    $this->type = $type;
+    $this->column_type = $column_type;
 
-    switch ( $type ) {
+    switch ( $column_type ) {
 
       case DBT_CREATED_ON:
         $this->default( 'current_timestamp' );
@@ -43,7 +43,7 @@ class MudSchemaAddition_Column extends MudSchemaAddition {
       $column = new MudSchemaColumn(
         $table,
         $this->column_name,
-        $this->type,
+        $this->column_type,
         $this->min_len,
         $this->max_len,
         $this->nullable,
@@ -77,15 +77,15 @@ class MudSchemaAddition_Column extends MudSchemaAddition {
 
   }
 
-  public function get_name() : string {
+  public function get_column_name() : string {
 
     return $this->column_name;
 
   }
 
-  public function get_type() {
+  public function get_column_type() : MudSchemaColumnType {
 
-    return $this->type;
+    return $this->column_type;
 
   }
 

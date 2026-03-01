@@ -15,13 +15,13 @@ class MudSchemaDatabase {
 
   }
 
-  public function get_name() {
+  public function get_name() : string {
 
     return $this->name;
 
   }
 
-  public function get_table( $name ) {
+  public function get_table( string $name ) : MudSchemaTable {
 
     assert( isset( $this->table_map[ $name ] ) );
 
@@ -31,15 +31,15 @@ class MudSchemaDatabase {
 
   public function add_table( MudSchemaTable $table ) {
 
-    assert( ! isset( $this->table_map[ $table->get_name() ] ) );
+    assert( ! isset( $this->table_map[ $table->get_table_name() ] ) );
 
-    $this->table_map[ $table->get_name() ] = $table;
+    $this->table_map[ $table->get_table_name() ] = $table;
 
     return $table;
 
   }
 
-  public function add_schema( $namespace, $path ) {
+  public function add_schema( string $namespace, string $path ) : self {
 
     $name = basename( $path );
 
@@ -59,7 +59,7 @@ class MudSchemaDatabase {
 
   }
 
-  public function add_migration( $migration ) {
+  public function add_migration( MudSchemaMigration $migration ) : self {
 
     $code = $migration->get_code();
 
