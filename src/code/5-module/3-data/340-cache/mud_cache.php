@@ -5,7 +5,7 @@
 // 2021-03-29 jj5 - include dependencies...
 //
 
-require_once __DIR__ . '/../320-sqlite/mud_sqlite.php';
+require_once __DIR__ . '/../325-schema/mud_schema.php';
 //require_once __DIR__ . '/../335-schemadecl/mud_schemadecl.php';
 
 
