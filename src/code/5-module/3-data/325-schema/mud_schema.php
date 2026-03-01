@@ -29,10 +29,8 @@ require_once __DIR__ . '/../320-sqlite/mud_sqlite.php';
 // 2026-03-01 jj5 - service locator...
 //
 
-/*
 function mud_module_schema() : MudModuleSchema {
 
   return mud_locator()->get_module( MudModuleSchema::class );
 
 }
-*/

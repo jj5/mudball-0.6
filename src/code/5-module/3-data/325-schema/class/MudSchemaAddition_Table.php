@@ -9,13 +9,13 @@ class MudSchemaAddition_Table {
   protected MudSchemaTable $table;
   protected $col_list = [];
 
-  public function __construct( $migration, $name, $type ) {
+  public function __construct( $migration, $name ) {
 
     $this->migration = $migration;
     $this->name = $name;
-    $this->type = $type;
+    $this->type = 'todo';
 
-    $this->table = new MudSchemaTable( $this->get_database(), $name, $type );
+    $this->table = new MudSchemaTable( $this->get_database(), $name, $this->type );
 
     $this->get_database()->add_table( $this->table );
 

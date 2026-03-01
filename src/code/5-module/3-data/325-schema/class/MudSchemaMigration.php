@@ -44,9 +44,9 @@ class MudSchemaMigration {
 
   }
 
-  public function add_tab( $name, $type ) : MudSchemaAddition_Table {
+  public function add_tab( $name ) : MudSchemaAddition_Table {
 
-    $this->current_table = new MudSchemaAddition_Table( $this, $name, $type );
+    $this->current_table = new MudSchemaAddition_Table( $this, $name );
 
     $this->op_list[] = $this->current_table;
 
