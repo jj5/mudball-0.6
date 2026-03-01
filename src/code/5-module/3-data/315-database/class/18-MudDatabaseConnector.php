@@ -2,35 +2,35 @@
 
 define( 'MUD_CONNECTION_OPTION', [
   MudDatabaseConnectionType::RAW->value => [
-    'connection_class' => PDO_RAW::class,
+    'connection_class' => MudDatabaseConnection_PDO_RAW::class,
     'isolation_level' => 'READ COMMITTED',
     'auto_commit' => true,
     'emulate_prepares' => false,
     'allow_multi_statements' => false,
   ],
   MudDatabaseConnectionType::TRN->value => [
-    'connection_class' => PDO_TRN::class,
+    'connection_class' => MudDatabaseConnection_PDO_TRN::class,
     'isolation_level' => 'SERIALIZABLE',
     'auto_commit' => false,
     'emulate_prepares' => false,
     'allow_multi_statements' => false,
   ],
   MudDatabaseConnectionType::AUX->value => [
-    'connection_class' => PDO_AUX::class,
+    'connection_class' => MudDatabaseConnection_PDO_AUX::class,
     'isolation_level' => 'READ COMMITTED',
     'auto_commit' => true,
     'emulate_prepares' => false,
     'allow_multi_statements' => false,
   ],
   MudDatabaseConnectionType::EMU->value => [
-    'connection_class' => PDO_EMU::class,
+    'connection_class' => MudDatabaseConnection_PDO_EMU::class,
     'isolation_level' => 'READ COMMITTED',
     'auto_commit' => true,
     'emulate_prepares' => true,
     'allow_multi_statements' => false,
   ],
   MudDatabaseConnectionType::DBA->value => [
-    'connection_class' => PDO_DBA::class,
+    'connection_class' => MudDatabaseConnection_PDO_DBA::class,
     'isolation_level' => 'READ COMMITTED',
     'auto_commit' => true,
     'emulate_prepares' => false,
@@ -50,7 +50,7 @@ class MudDatabaseConnector {
     return $this->connection_map[ $type->value ];
   }
 
-  public function get_raw() : MudDatabaseConnection_DO_RAW {
+  public function get_raw() : MudDatabaseConnection_PDO_RAW {
     return $this->get_connection( MudDatabaseConnectionType::RAW );
   }
 
