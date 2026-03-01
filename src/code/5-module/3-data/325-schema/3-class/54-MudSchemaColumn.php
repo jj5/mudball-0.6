@@ -4,7 +4,7 @@ class MudSchemaColumn {
 
   protected MudSchemaTable $table;
   protected string $name;
-  protected string $type;
+  protected $type;
 
   protected int $min_len = 0;
   protected int $max_len = 255;
@@ -17,7 +17,7 @@ class MudSchemaColumn {
   public function __construct(
     MudSchemaTable $table,
     string $name,
-    string $type,
+    $type,
     int $min_len = 0,
     int $max_len = 255,
     bool $nullable = false,

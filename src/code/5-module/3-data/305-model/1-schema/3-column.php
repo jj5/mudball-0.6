@@ -5,9 +5,9 @@
 class MudSchemaColumnNew {
 
   public string $name;
-  public string $type;
+  public $type;
 
-  public function __construct( string $name, string $type ) {
+  public function __construct( string $name, $type ) {
 
     $this->name = $name;
     $this->type = $type;

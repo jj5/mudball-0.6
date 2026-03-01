@@ -18,6 +18,7 @@ class MudSchemaVendor_MySQL extends MudSchemaVendor {
       case DBT_AID32:
         return 'int unsigned auto_increment';
       case DBT_AID64:
+        // 2026-03-01 jj5 - we don't use unsigned 64-bit identities because PHP can't represent them
         return 'bigint auto_increment';
 
       case DBT_UINT8:
@@ -128,21 +129,23 @@ class MudSchemaVendor_MySQL extends MudSchemaVendor {
     $has_default = $col->has_default();
     $default = $col->get_default();
 
-    $sql = "{$name} ";
+    $parts = [];
 
-    $sql .= $this->get_col_type( $type, $max_len );
+    $parts[] = $name;
+
+    $parts[] = $this->get_col_type( $type, $max_len );
 
     if ( $nullable ) {
-      $sql .= " null";
+      $parts[] = "null";
     } else {
-      $sql .= " not null";
+      $parts[] = "not null";
     }
 
     if ( $has_default ) {
-      $sql .= " default {$default}";
+      $parts[] = "default {$default}";
     }
 
-    return $sql;
+    return implode( ' ', $parts );
 
   }
 

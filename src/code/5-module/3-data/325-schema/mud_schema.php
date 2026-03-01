@@ -18,7 +18,9 @@ require_once __DIR__ . '/../320-sqlite/mud_sqlite.php';
 // 2026-03-01 jj5 - include components...
 //
 
-mud_load_files( __DIR__ . '/class' );
+mud_load_files( __DIR__ . '/1-enum' );
+mud_load_files( __DIR__ . '/2-interface' );
+mud_load_files( __DIR__ . '/3-class' );
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

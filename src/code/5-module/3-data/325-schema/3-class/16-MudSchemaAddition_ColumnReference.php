@@ -1,6 +1,6 @@
 <?php
 
-class MudSchemaAddition_ColumnReference {
+class MudSchemaAddition_ColumnReference extends MudSchemaAddition {
 
   protected $table;
   protected string $name;
@@ -158,7 +158,7 @@ class MudSchemaAddition_ColumnReference {
 
       $ref = $this->get_database()->get_table( $this->ref_table )->get_column( $this->ref_col );
 
-      $table = $this->get_database()->get_table( $this->table->get_name() );
+      $table = $this->get_database()->get_table( $this->table->get_table_name() );
 
       $column = new MudSchemaColumn(
         $table,

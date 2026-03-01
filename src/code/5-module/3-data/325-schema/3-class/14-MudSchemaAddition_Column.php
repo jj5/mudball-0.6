@@ -1,10 +1,10 @@
 <?php
 
-class MudSchemaAddition_Column {
+class MudSchemaAddition_Column extends MudSchemaAddition {
 
-  protected $table;
-  protected string $name;
-  protected string $type;
+  protected IMudSchemaTable $table;
+  protected string $column_name;
+  protected $type;
 
   protected int $min_len = 0;
   protected int $max_len = 255;
@@ -15,10 +15,10 @@ class MudSchemaAddition_Column {
 
   protected ?MudSchemaColumn $column = null;
 
-  public function __construct( $table, $name, string $type ) {
+  public function __construct( IMudSchemaTable $table, string $column_name, $type ) {
 
     $this->table = $table;
-    $this->name = $name;
+    $this->column_name = $column_name;
     $this->type = $type;
 
     switch ( $type ) {
@@ -38,11 +38,11 @@ class MudSchemaAddition_Column {
 
     if ( $this->column === null ) {
 
-      $table = $this->get_database()->get_table( $this->table->get_name() );
+      $table = $this->get_database()->get_table( $this->table->get_table_name() );
 
       $column = new MudSchemaColumn(
         $table,
-        $this->name,
+        $this->column_name,
         $this->type,
         $this->min_len,
         $this->max_len,
@@ -77,9 +77,9 @@ class MudSchemaAddition_Column {
 
   }
 
-  public function get_name() {
+  public function get_name() : string {
 
-    return $this->name;
+    return $this->column_name;
 
   }
 

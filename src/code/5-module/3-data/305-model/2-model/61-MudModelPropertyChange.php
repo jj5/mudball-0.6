@@ -3,10 +3,10 @@
 abstract class MudModelPropertyChange extends MudModelChange implements IMudModelProperty {
 
   public string $name;
-  public string $type;
+  public $type;
   public array $spec;
 
-  public function __construct( string $name, string $type, array $spec ) {
+  public function __construct( string $name, $type, array $spec ) {
 
     parent::__construct();
 

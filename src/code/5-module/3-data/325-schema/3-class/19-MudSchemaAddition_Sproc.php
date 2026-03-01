@@ -1,6 +1,6 @@
 <?php
 
-class MudSchemaAddition_Sproc {
+class MudSchemaAddition_Sproc extends MudSchemaAddition {
 
   protected $migration;
   protected $sql;

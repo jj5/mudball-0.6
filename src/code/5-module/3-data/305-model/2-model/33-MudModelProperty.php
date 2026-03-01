@@ -3,10 +3,10 @@
 class MudModelProperty {
 
   public string $name;
-  public string $type;
+  public $type;
   public array $spec;
 
-  public function __construct( string $name, string $type, array $spec ) {
+  public function __construct( string $name, $type, array $spec ) {
 
     $this->name = $name;
     $this->type = $type;

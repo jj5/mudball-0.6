@@ -32,7 +32,7 @@ abstract class MudModelObjectChange extends MudModelChange implements IMudModelO
 
   }
 
-  public function add_key( string $property_name, string $property_type, array $property_spec = [] ) {
+  public function add_key( string $property_name, $property_type, array $property_spec = [] ) {
 
     assert( ! isset( $this->property_map[ $property_name ] ) );
 
@@ -52,7 +52,7 @@ abstract class MudModelObjectChange extends MudModelChange implements IMudModelO
 
   }
 
-  public function add_col( string $property_name, string $property_type, array $property_spec = [] ) {
+  public function add_col( string $property_name, $property_type, array $property_spec = [] ) {
 
     assert( ! isset( $this->property_map[ $property_name ] ) );
 
