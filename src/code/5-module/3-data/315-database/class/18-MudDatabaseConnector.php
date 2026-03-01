@@ -1,6 +1,6 @@
 <?php
 
-define( 'CONNECTION_OPTION', [
+define( 'MUD_CONNECTION_OPTION', [
   MudDatabaseConnectionType::RAW->value => [
     'connection_class' => PDO_RAW::class,
     'isolation_level' => 'READ COMMITTED',
@@ -50,23 +50,23 @@ class MudDatabaseConnector {
     return $this->connection_map[ $type->value ];
   }
 
-  public function get_raw() : PDO_RAW {
+  public function get_raw() : MudDatabaseConnection_DO_RAW {
     return $this->get_connection( MudDatabaseConnectionType::RAW );
   }
 
-  public function get_trn() : PDO_TRN {
+  public function get_trn() : MudDatabaseConnection_PDO_TRN {
     return $this->get_connection( MudDatabaseConnectionType::TRN );
   }
 
-  public function get_aux() : PDO_AUX {
+  public function get_aux() : MudDatabaseConnection_PDO_AUX {
     return $this->get_connection( MudDatabaseConnectionType::AUX );
   }
 
-  public function get_emu() : PDO_EMU {
+  public function get_emu() : MudDatabaseConnection_PDO_EMU {
     return $this->get_connection( MudDatabaseConnectionType::EMU );
   }
 
-  public function get_dba() : PDO_DBA {
+  public function get_dba() : MudDatabaseConnection_PDO_DBA {
     return $this->get_connection( MudDatabaseConnectionType::DBA );
   }
 
@@ -83,12 +83,12 @@ class MudDatabaseConnector {
       'READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ', 'SERIALIZABLE',
     ];
 
-    $connection_class = CONNECTION_OPTION[ $type->value ]['connection_class'];
-    $isolation_level = CONNECTION_OPTION[ $type->value ]['isolation_level'];
-    $auto_commit = CONNECTION_OPTION[ $type->value ]['auto_commit'];
-    $emulate_prepares = CONNECTION_OPTION[ $type->value ]['emulate_prepares'] ?? false;
-    $allow_multi_statements = CONNECTION_OPTION[ $type->value ]['allow_multi_statements'];
-    $options = CONNECTION_OPTION[ $type->value ]['options'] ?? [];
+    $connection_class = MUD_CONNECTION_OPTION[ $type->value ]['connection_class'];
+    $isolation_level = MUD_CONNECTION_OPTION[ $type->value ]['isolation_level'];
+    $auto_commit = MUD_CONNECTION_OPTION[ $type->value ]['auto_commit'];
+    $emulate_prepares = MUD_CONNECTION_OPTION[ $type->value ]['emulate_prepares'] ?? false;
+    $allow_multi_statements = MUD_CONNECTION_OPTION[ $type->value ]['allow_multi_statements'];
+    $options = MUD_CONNECTION_OPTION[ $type->value ]['options'] ?? [];
 
     $db_user = \DB_USER;
     $db_pass = \DB_PASS;
