@@ -18,21 +18,39 @@ require_once __DIR__ . '/../310-interaction/mud_interaction.php';
 // 2026-03-01 jj5 - include components...
 //
 
+mud_load_files( __DIR__ . '/enum' );
+mud_load_files( __DIR__ . '/class' );
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2026-03-01 jj5 - factory methods...
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2026-03-01 jj5 - functional interface
 //
+
+function mud_is_ddl( string $sql ) : bool {
+
+  return mud_module_database()->is_ddl( $sql );
+
+}
+
+function mud_is_dcl( string $sql ) : bool {
+
+  return mud_module_database()->is_dcl( $sql );
+
+}
+
+function mud_is_dml( string $sql ) : bool {
+
+  return mud_module_database()->is_dml( $sql );
+
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2026-03-01 jj5 - service locator...
 //
 
-/*
 function mud_module_database() : MudModuleDatabase {
 
   return mud_locator()->get_module( MudModuleDatabase::class );
 
 }
-*/

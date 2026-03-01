@@ -607,13 +607,13 @@ define( 'MUD_DATABASE_CLASS_BINARY',    'binary'    );
 //
 define( 'DBT_BOOL', 'BOOL' );
 
-// 2019-10-16 jj5 - unsigned integers for IDs (auto-increment)...
+// 2026-03-01 jj5 - unsigned integers for IDs (auto-increment), AID64 is signed though.
 //
-define( 'DBT_ID8',  'ID8'  );
-define( 'DBT_ID16', 'ID16' );
-define( 'DBT_ID24', 'ID24' );
-define( 'DBT_ID32', 'ID32' );
-define( 'DBT_ID64', 'ID64' );
+define( 'DBT_AID8',  'AID8'  );
+define( 'DBT_AID16', 'AID16' );
+define( 'DBT_AID24', 'AID24' );
+define( 'DBT_AID32', 'AID32' );
+define( 'DBT_AID64', 'AID64' );
 
 // 2019-09-22 jj5 - unsigned integers...
 //
@@ -621,7 +621,8 @@ define( 'DBT_UINT8',  'UINT8'  );
 define( 'DBT_UINT16', 'UINT16' );
 define( 'DBT_UINT24', 'UINT24' );
 define( 'DBT_UINT32', 'UINT32' );
-define( 'DBT_UINT64', 'UINT64' );
+// 2026-03-01 jj5 - I removed this because PHP doesn't support unsigned 64 bit integers
+//define( 'DBT_UINT64', 'UINT64' );
 
 // 2019-09-22 jj5 - signed integers...
 //
