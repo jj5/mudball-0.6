@@ -78,6 +78,13 @@ class MudDatabaseWork_Schema extends MudDatabaseWork {
     $this->register_action( new MudDatabaseAction_Exec( $this->connection, $ddl ) );
   }
 
+  public function grant_permissions( $database, string $table_name, array $permissions ) : void {
+    $database_name = $database->get_name();
+    $permissions_str = implode( ', ', $permissions );
+    $ddl = "GRANT $permissions_str ON `$database_name`.`$table_name` TO " . DB_USER;
+    $this->register_action( new MudDatabaseAction_Exec( $this->connection, $ddl ) );
+  }
+
   public function create_trigger( string $ddl ) : void {
     $this->register_action( new MudDatabaseAction_Exec( $this->connection, $ddl ) );
   }

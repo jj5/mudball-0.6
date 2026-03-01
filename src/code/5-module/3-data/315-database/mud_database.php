@@ -55,3 +55,35 @@ function mud_module_database() : MudModuleDatabase {
   return mud_locator()->get_module( MudModuleDatabase::class );
 
 }
+
+function mud_raw() : MudDatabaseConnection_PDO_RAW {
+
+  return mud_module_database()->get_raw();
+
+}
+
+/*
+function mud_trn() : MudDalTrn {
+
+  return mud_locator()->get_service( MudDalTrn::class );
+
+}
+
+function mud_emu() : MudDalEmu {
+
+  return mud_locator()->get_service( MudDalEmu::class );
+
+}
+
+function mud_aux() : MudDalAux {
+
+  return mud_locator()->get_service( MudDalAux::class );
+
+}
+
+function mud_dba() : MudDalDba {
+
+  return mud_locator()->get_service( MudDalDba::class );
+
+}
+*/

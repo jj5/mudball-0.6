@@ -122,4 +122,9 @@ abstract class MudDatabaseConnection {
     }
     return trim( implode("\n", $lines) );
   }
+  public function has_table( string $table_name ) : bool {
+    $sql = "select 1 from information_schema.tables where table_schema = database() and table_name = :table_name";
+    $result = $this->fetch( $sql, [ ':table_name' => $table_name ] );
+    return count( $result ) > 0;
+  }
 }

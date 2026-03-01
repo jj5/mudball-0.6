@@ -139,6 +139,8 @@ class MudController extends MudService implements IMudController {
     }
     catch ( Throwable $ex ) {
 
+      if ( DEBUG ) { var_dump( $ex ); exit; }
+
       $this->is_online = false;
 
       throw new_mud_http_exception(

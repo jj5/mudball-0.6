@@ -48,6 +48,11 @@ function mud_module_url() : MudModuleUrl {
 
 function mud_url() : MudUrl {
 
-  return mud_locator()->get_service( MudUrl::class );
+  static $url = new MudUrl();
+
+  return $url;
+
+  //return mud_locator()->get_service( MudUrl::class );
 
 }
+

@@ -10,6 +10,7 @@ enum MudSchemaTableType : string {
   case PIECE = 'piece';
   case POT = 'pot';
   case PRODUCT = 'product';
+  case PROVINCE = 'province';
   case ENTITY = 'entity';
   case CONFIG = 'config';
   case FACTOR = 'factor';

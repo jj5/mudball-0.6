@@ -98,6 +98,53 @@ class MudSchemaAddition_Table extends MudSchemaAddition implements IMudSchemaTab
 
     $work->create_table( $sql );
 
+    $work->grant_permissions( $this->get_database(), $this->table_name, $this->get_permissions() );
+
+  }
+
+  public function get_permissions() : array {
+
+    switch ( $this->table_type ) {
+
+      // 2026-03-01 jj5 - read-only
+      //
+      case MudSchemaTableType::STATIC:
+      case MudSchemaTableType::PROVINCE:
+
+        return [ 'select' ];
+
+      // 2026-03-01 jj5 - insert-only
+      //
+      case MudSchemaTableType::ABINITIO:
+      case MudSchemaTableType::IDENT:
+      case MudSchemaTableType::PARTICLE:
+      case MudSchemaTableType::PIECE:
+      case MudSchemaTableType::POT:
+      case MudSchemaTableType::PRODUCT:
+      case MudSchemaTableType::EVENT:
+      case MudSchemaTableType::HISTORY:
+      case MudSchemaTableType::LOG:
+      case MudSchemaTableType::METRIC:
+      case MudSchemaTableType::TIDBIT:
+      case MudSchemaTableType::JOURNAL:
+
+        return [ 'select', 'insert' ];
+
+      case MudSchemaTableType::ABOUT:
+      case MudSchemaTableType::ENTITY:
+      case MudSchemaTableType::CONFIG:
+      case MudSchemaTableType::FACTOR:
+      case MudSchemaTableType::EPHEMERA:
+      case MudSchemaTableType::STATE:
+
+        return [ 'select', 'insert', 'update', 'delete' ];
+
+      default:
+
+        throw new Exception( "Unsupported table type '{$this->table_type->value}'" );
+
+    }
+
   }
 
   public function get_sql( $vendor ) {
