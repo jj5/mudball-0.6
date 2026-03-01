@@ -3,7 +3,7 @@
 = mudballdb =
 
 So this is the definition for the basic schema that comes with the framework. The mudball schema
-items are in the 'std' namespace, and your application schema items will typically be in the 'app'
+items are in the 'std' namespace, and your application schema items will typically be in the 'bus'
 namespace.
 
 == Upgrades ==
