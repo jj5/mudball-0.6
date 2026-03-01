@@ -7,7 +7,7 @@ class MudDatabaseWork_Data extends MudDatabaseWork {
   public function insert( string $sql, array $data ) : void {
     $stmt = $this->connection->get_pdo()->prepare( $sql );
     foreach ( $data as $row ) {
-      $this->register_operation( new MudDatabaseAction_Insert( $this->connection, $sql, $stmt, $row ) );
+      $this->register_action( new MudDatabaseAction_Insert( $this->connection, $sql, $stmt, $row ) );
     }
   }
 

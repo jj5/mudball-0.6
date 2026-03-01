@@ -4,7 +4,7 @@ abstract class MudDatabaseWork {
 
   protected MudDatabaseConnection $connection;
   protected string $note;
-  protected array $operation_list = [];
+  protected array $action_list = [];
 
   use MudDatabaseValidation;
 
@@ -15,39 +15,39 @@ abstract class MudDatabaseWork {
     $this->note = $note;
   }
 
-  public function register_operation( MudDatabaseAction $operation ) : void {
-    $this->operation_list[] = $operation;
+  public function register_action( MudDatabaseAction $action ) : void {
+    $this->action_list[] = $action;
   }
 
   protected function do_process() : void {
     // 2026-01-23 jj5 - TODO: count number of errors/successes and log them somewhere...
-    $operation_list = $this->operation_list;
+    $action_list = $this->action_list;
     $error_count = 0;
-    while ( $operation = array_shift( $operation_list ) ) {
+    while ( $action = array_shift( $action_list ) ) {
       try {
-        $operation->print();
-        $operation->execute();
+        $action->print();
+        $action->execute();
         $error_count = 0;
       }
       catch ( PDOException $ex ) {
         echo $ex->getMessage() . "\n\n";
         list( $code, $error, $message ) = $ex->errorInfo;
-        if ( ++$error_count > count( $operation_list ) ) {
+        if ( ++$error_count > count( $action_list ) ) {
           $this->report_foreign_keys( 't_place' ); exit;
           throw new RuntimeException(
-            "Could not complete all database operations due to constraint violations.",
+            "Could not complete all database actions due to constraint violations.",
             (int)$code,
             $ex
           );
         }
         if ( $code === "23000" && in_array( $error, [ 1451, 1452 ] ) ) {
-          // 2026-01-24 jj5 - foreign key constraint violation; re-queue the operation.
-          array_push( $operation_list, $operation );
+          // 2026-01-24 jj5 - foreign key constraint violation; re-queue the action.
+          array_push( $action_list, $action );
           continue;
         }
         if ( $code === "42S01" && in_array( $error, [ 1050 ] ) ) {
           // 2026-01-24 jj5 - table already exists
-          array_push( $operation_list, $operation );
+          array_push( $action_list, $action );
           continue;
         }
         var_dump(
@@ -56,7 +56,7 @@ abstract class MudDatabaseWork {
         throw $ex;
       }
     }
-    $this->operation_list = [];
+    $this->action_list = [];
   }
 
   protected function get_pdo() : PDO {

@@ -2,14 +2,14 @@
 
 abstract class MudDatabaseAction {
 
-  private static int $next_operation_id = 1;
+  private static int $next_action_id = 1;
 
-  protected int $operation_id;
+  protected int $action_id;
   protected MudDatabaseConnection $connection;
   protected string $sql;
 
   public function __construct( MudDatabaseConnection $connection, string $sql ) {
-    $this->operation_id = self::$next_operation_id++;
+    $this->action_id = self::$next_action_id++;
     $this->connection = $connection;
     $this->sql = $sql;
   }
@@ -18,7 +18,7 @@ abstract class MudDatabaseAction {
   public abstract function execute() : int|false;
 
   public function print() {
-    echo "Operation ID: " . $this->operation_id . "\n";
+    echo "Action ID: " . $this->action_id . "\n";
     echo "Type: " . $this->get_type()->name . "\n";
     echo "SQL: " . $this->trim_sql( $this->sql ) . "\n\n";
   }

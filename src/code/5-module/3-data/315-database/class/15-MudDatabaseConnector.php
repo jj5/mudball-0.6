@@ -3,7 +3,7 @@
 define( 'CONNECTION_OPTION', [
   MudDatabaseConnectionType::RAW->value => [
     'connection_class' => PDO_RAW::class,
-    'isolation_level' => 'REPEATABLE READ',
+    'isolation_level' => 'READ COMMITTED',
     'auto_commit' => true,
     'emulate_prepares' => false,
     'allow_multi_statements' => false,
@@ -17,14 +17,14 @@ define( 'CONNECTION_OPTION', [
   ],
   MudDatabaseConnectionType::AUX->value => [
     'connection_class' => PDO_AUX::class,
-    'isolation_level' => 'REPEATABLE READ',
+    'isolation_level' => 'READ COMMITTED',
     'auto_commit' => true,
     'emulate_prepares' => false,
     'allow_multi_statements' => false,
   ],
   MudDatabaseConnectionType::EMU->value => [
     'connection_class' => PDO_EMU::class,
-    'isolation_level' => 'REPEATABLE READ',
+    'isolation_level' => 'READ COMMITTED',
     'auto_commit' => true,
     'emulate_prepares' => true,
     'allow_multi_statements' => false,

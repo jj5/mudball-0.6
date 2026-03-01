@@ -5,5 +5,5 @@ enum MudDatabaseMutation : int {
   case UPDATE = 2;
   case DELETE = 3;
   case SCHEMA = 4;
-  case EXEC = 5;
+  case EXEC   = 5;
 }
