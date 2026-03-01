@@ -148,7 +148,7 @@ class MudDatabaseConnector {
 
     $pdo->exec( "set session transaction isolation level $isolation_level" );
 
-    $pdo->exec( 'set names utf8mb4 collate utf8mb4_unicode_520_ci' );
+    $pdo->exec( 'set names utf8mb4 collate utf8mb4_uca1400_ai_ci' );
 
     // 2024-09-13 jj5 - TODO: log the connection_id for this connection...
 
