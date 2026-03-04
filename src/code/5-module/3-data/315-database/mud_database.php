@@ -18,9 +18,12 @@ require_once __DIR__ . '/../310-interaction/mud_interaction.php';
 // 2026-03-01 jj5 - include components...
 //
 
+// 2026-03-04 jj5 - TEMP: put these back in...
+/*
 mud_load_files( __DIR__ . '/enum' );
 mud_load_files( __DIR__ . '/trait' );
 mud_load_files( __DIR__ . '/class' );
+*/
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
