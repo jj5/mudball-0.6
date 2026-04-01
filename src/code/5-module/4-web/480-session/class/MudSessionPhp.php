@@ -6,7 +6,7 @@ class MudSessionPhp extends MudSession {
 
     parent::__construct();
 
-    session_start();
+    if ( session_status() === PHP_SESSION_NONE ) { session_start(); }
 
   }
 
