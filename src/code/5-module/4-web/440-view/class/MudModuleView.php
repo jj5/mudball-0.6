@@ -92,6 +92,14 @@ class MudModuleView extends MudModuleWeb {
         }
         else {
 
+          $referrer = $args[ 'referrer' ] ?? null;
+
+          if ( $referrer ) {
+
+            tag_meta( 'referrer', $referrer );
+
+          }
+
           tag_meta( 'robots', $args[ 'robots' ] ?? [ 'index', 'follow' ] );
 
         }
