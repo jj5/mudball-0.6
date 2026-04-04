@@ -149,7 +149,9 @@ class MudModuleView extends MudModuleWeb {
         $search_action = $args[ 'search_action' ] ?? bom_get_utility_link( 'search' );
         */
 
-        foreach ( $args[ 'stylesheets' ] ?? [] as $url ) {
+        foreach ( $args[ 'stylesheets' ] ?? [] as $version => $url ) {
+
+          if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
 
           tag_link( 'text/css', 'stylesheet', $url );
 
@@ -161,7 +163,9 @@ class MudModuleView extends MudModuleWeb {
         //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/style' ) );
         //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/debug/style.css' ) );
 
-        foreach ( $args[ 'scripts' ] ?? [] as $url ) {
+        foreach ( $args[ 'scripts' ] ?? [] as $version => $url ) {
+
+          if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
 
           tag_bare( 'script', [ 'src' => $url ] );
 
@@ -255,7 +259,9 @@ class MudModuleView extends MudModuleWeb {
 
         }
 
-        foreach ( $args[ 'scripts' ] ?? [] as $url ) {
+        foreach ( $args[ 'scripts' ] ?? [] as $version => $url ) {
+
+          if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
 
           tag_bare( 'script', [ 'src' => $url ] );
 
