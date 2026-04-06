@@ -33,6 +33,7 @@ define( 'MUD_TAB_PARTICLE', MudSchemaTableType::PARTICLE );
 define( 'MUD_TAB_PIECE', MudSchemaTableType::PIECE );
 define( 'MUD_TAB_POT', MudSchemaTableType::POT );
 define( 'MUD_TAB_PRODUCT', MudSchemaTableType::PRODUCT );
+define( 'MUD_TAB_PROVINCE', MudSchemaTableType::PROVINCE );
 define( 'MUD_TAB_ENTITY', MudSchemaTableType::ENTITY );
 define( 'MUD_TAB_CONFIG', MudSchemaTableType::CONFIG );
 define( 'MUD_TAB_FACTOR', MudSchemaTableType::FACTOR );
