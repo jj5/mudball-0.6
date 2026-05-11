@@ -54,13 +54,19 @@ function mud_load_modules( $dir, $scope = 'mud' ) {
 
 function mud_load_files( $dir ) {
 
+  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+
   $dir = realpath( $dir );
 
+<<<<<<< HEAD
   if ( ! is_dir( $dir ) ) {
 
     mud_fail( 'invalid directory.', [ 'dir' => $dir ] );
 
   }
+=======
+  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+>>>>>>> 8a95637 (Work, work...)
 
   foreach ( scandir( $dir, SCANDIR_SORT_ASCENDING ) as $file ) {
 
@@ -68,7 +74,7 @@ function mud_load_files( $dir ) {
 
     $path = "{$dir}/{$file}";
 
-    assert( is_file( $path ) );
+    mud_verify( is_file( $path ), __FILE__, __LINE__, [ '$path' => $path ] );
 
     require_once $path;
 
@@ -77,9 +83,11 @@ function mud_load_files( $dir ) {
 
 function mud_load_deep( $dir ) {
 
+  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+
   $dir = realpath( $dir );
 
-  assert( is_dir( $dir ) );
+  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
 
   foreach ( scandir( $dir, SCANDIR_SORT_ASCENDING ) as $file ) {
 
@@ -94,7 +102,7 @@ function mud_load_deep( $dir ) {
     }
     else {
 
-      assert( is_file( $path ) );
+      mud_verify( is_file( $path ), __FILE__, __LINE__, [ '$path' => $path ] );
 
       require_once $path;
 
@@ -104,9 +112,11 @@ function mud_load_deep( $dir ) {
 
 function mud_load_deep_breadth_first( $dir ) {
 
+  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+
   $dir = realpath( $dir );
 
-  assert( is_dir( $dir ) );
+  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
 
   $queue = [ $dir ];
 
@@ -127,7 +137,7 @@ function mud_load_deep_breadth_first( $dir ) {
       }
       else {
 
-        assert( is_file( $path ) );
+        mud_verify( is_file( $path ), __FILE__, __LINE__, [ '$path' => $path ] );
 
         try {
 

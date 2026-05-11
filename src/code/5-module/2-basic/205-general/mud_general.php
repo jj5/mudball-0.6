@@ -16,6 +16,13 @@ require_once __DIR__ . '/class/MudModuleGeneral.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2026-05-11 jj5 - module errors...
+//
+
+mud_define_error( 'MUD_ERR_VERIFICATION_FAILED', 'verification failed.' );
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2021-02-24 jj5 - functional interface...
 //
 
@@ -40,6 +47,12 @@ function mud_is_missing( $value ) : bool {
 function mud_assert( $test, $error = MUD_ERR_GENERAL, $data = null ) {
 
   return mud_module_general()->assert( $test, $error, $data );
+
+}
+
+function mud_verify( bool $test, string $file, int $line, array $data = [] ) {
+
+  return mud_module_general()->verify( $test, $file, $line, $data );
 
 }
 

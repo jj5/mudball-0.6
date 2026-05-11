@@ -151,4 +151,15 @@ class MudModuleGeneral extends MudModuleBasic {
     mud_fail( $error, $data );
 
   }
+
+  public function verify( bool $test, string $file, int $line, array $data = [] ) {
+
+    if ( $test ) { return; }
+
+    mud_fail(
+      MUD_ERR_VERIFICATION_FAILED,
+      array_merge( [ 'file' => $file, 'line' => $line ], $data )
+    );
+
+  }
 }
