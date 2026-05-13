@@ -16,6 +16,8 @@ class MudModuleDatabase extends MudModuleBasic {
 
   function __construct() {
 
+    parent::__construct();
+
     $this->connector = new MudDatabaseConnector();
 
   }

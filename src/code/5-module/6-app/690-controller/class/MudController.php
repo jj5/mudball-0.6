@@ -76,7 +76,12 @@ class MudController extends MudService implements IMudController {
   // 2022-02-20 jj5 - protected methods...
   //
 
-  protected function init() {
+  protected function  init() {
+
+    // 2026-05-13 jj5 - TEMP: just for now. We're gonna have to think about how to handle
+    // non-standard database schemas...
+    //
+    $this->is_online = true;
 
     if ( $this->is_online !== null ) { return; }
 

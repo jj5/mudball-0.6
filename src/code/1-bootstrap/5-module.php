@@ -58,15 +58,13 @@ function mud_load_files( $dir ) {
 
   $dir = realpath( $dir );
 
-<<<<<<< HEAD
+  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+
   if ( ! is_dir( $dir ) ) {
 
     mud_fail( 'invalid directory.', [ 'dir' => $dir ] );
 
   }
-=======
-  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
->>>>>>> 8a95637 (Work, work...)
 
   foreach ( scandir( $dir, SCANDIR_SORT_ASCENDING ) as $file ) {
 
