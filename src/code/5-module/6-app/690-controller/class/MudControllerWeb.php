@@ -152,7 +152,11 @@ class MudControllerWeb extends MudController {
 
       }
 
-      mud_trn()->begin();
+      $request = mud_request();
+
+      // 2026-05-14 jj5 - OLD: we used to start the transaction here, but now we start it in
+      // the connection initializer.
+      //mud_trn()->begin();
 
       try {
 
@@ -186,7 +190,7 @@ class MudControllerWeb extends MudController {
 
     $response = new_mud_response();
 
-    mud_response( $response );
+    //mud_response( $response );
 
     $request_path_parts = $request->get_request_path_parts();
 

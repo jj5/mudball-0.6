@@ -18,6 +18,8 @@ class MudWebContext extends MudGadget implements IMudWebContext {
 
   public function __construct( $request, $response, $view_state ) {
 
+    parent::__construct();
+
     $this->request = $request;
     $this->response = $response;
     $this->view_state = $view_state;

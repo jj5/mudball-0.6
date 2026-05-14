@@ -18,6 +18,7 @@ require_once __DIR__ . '/../455-response/mud_response.php';
 // 2022-04-08 jj5 - include components...
 //
 
+require_once __DIR__ . '/class/MudModuleViewstate.php';
 require_once __DIR__ . '/class/MudViewState.php';
 
 

@@ -16,6 +16,8 @@ class MudViewState extends MudGadget implements ArrayAccess {
 
   public function __construct( array $state = [] ) {
 
+    parent::__construct();
+
     $this->state = $state;
 
   }

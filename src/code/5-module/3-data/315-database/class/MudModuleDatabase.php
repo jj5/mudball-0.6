@@ -32,6 +32,12 @@ class MudModuleDatabase extends MudModuleBasic {
 
   }
 
+  public function get_trn() : MudDatabaseConnection_PDO_TRN {
+
+    return $this->connector->get_trn();
+
+  }
+
   function is_dcl( $sql ) {
 
       // 2026-01-28 jj5 - NOTE: DCL = Data Control Language, these statements affect permissions
