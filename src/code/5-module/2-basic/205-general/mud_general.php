@@ -50,7 +50,14 @@ function mud_assert( $test, $error = MUD_ERR_GENERAL, $data = null ) {
 
 }
 
-function mud_verify( bool $test, string $file, int $line, array $data = [] ) {
+function mud_verify( bool $test, array $data = [] ) {
+
+  $trace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
+
+  $caller = $trace[ 1 ];
+
+  $file = $caller[ 'file' ];
+  $line = $caller[ 'line' ];
 
   return mud_module_general()->verify( $test, $file, $line, $data );
 

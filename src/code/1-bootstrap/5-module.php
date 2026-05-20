@@ -54,11 +54,11 @@ function mud_load_modules( $dir, $scope = 'mud' ) {
 
 function mud_load_files( $dir ) {
 
-  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+  mud_verify( is_dir( $dir ), [ '$dir' => $dir ] );
 
   $dir = realpath( $dir );
 
-  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+  mud_verify( is_dir( $dir ), [ '$dir' => $dir ] );
 
   if ( ! is_dir( $dir ) ) {
 
@@ -72,7 +72,7 @@ function mud_load_files( $dir ) {
 
     $path = "{$dir}/{$file}";
 
-    mud_verify( is_file( $path ), __FILE__, __LINE__, [ '$path' => $path ] );
+    mud_verify( is_file( $path ), [ '$path' => $path ] );
 
     require_once $path;
 
@@ -81,11 +81,11 @@ function mud_load_files( $dir ) {
 
 function mud_load_deep( $dir ) {
 
-  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+  mud_verify( is_dir( $dir ), [ '$dir' => $dir ] );
 
   $dir = realpath( $dir );
 
-  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+  mud_verify( is_dir( $dir ), [ '$dir' => $dir ] );
 
   foreach ( scandir( $dir, SCANDIR_SORT_ASCENDING ) as $file ) {
 
@@ -100,7 +100,7 @@ function mud_load_deep( $dir ) {
     }
     else {
 
-      mud_verify( is_file( $path ), __FILE__, __LINE__, [ '$path' => $path ] );
+      mud_verify( is_file( $path ), [ '$path' => $path ] );
 
       require_once $path;
 
@@ -110,11 +110,11 @@ function mud_load_deep( $dir ) {
 
 function mud_load_deep_breadth_first( $dir ) {
 
-  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+  mud_verify( is_dir( $dir ), [ '$dir' => $dir ] );
 
   $dir = realpath( $dir );
 
-  mud_verify( is_dir( $dir ), __FILE__, __LINE__, [ '$dir' => $dir ] );
+  mud_verify( is_dir( $dir ), [ '$dir' => $dir ] );
 
   $queue = [ $dir ];
 
@@ -135,7 +135,7 @@ function mud_load_deep_breadth_first( $dir ) {
       }
       else {
 
-        mud_verify( is_file( $path ), __FILE__, __LINE__, [ '$path' => $path ] );
+        mud_verify( is_file( $path ), [ '$path' => $path ] );
 
         try {
 
