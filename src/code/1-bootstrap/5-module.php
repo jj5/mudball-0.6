@@ -41,6 +41,8 @@ function mud_load_modules( $dir, $scope = 'mud' ) {
 
       //error_log( "including file: $path" );
 
+      if ( ! mud_is_php_file( $path ) ) { continue; }
+
       require_once $path;
 
     }
@@ -74,6 +76,8 @@ function mud_load_files( $dir ) {
 
     mud_verify( is_file( $path ), [ '$path' => $path ] );
 
+    if ( ! mud_is_php_file( $path ) ) { continue; }
+
     require_once $path;
 
   }
@@ -101,6 +105,8 @@ function mud_load_deep( $dir ) {
     else {
 
       mud_verify( is_file( $path ), [ '$path' => $path ] );
+
+      if ( ! mud_is_php_file( $path ) ) { continue; }
 
       require_once $path;
 
@@ -139,6 +145,8 @@ function mud_load_deep_breadth_first( $dir ) {
 
         try {
 
+          if ( ! mud_is_php_file( $path ) ) { continue; }
+
           require_once $path;
 
         }
@@ -154,6 +162,12 @@ function mud_load_deep_breadth_first( $dir ) {
       }
     }
   }
+}
+
+function mud_is_php_file( $path ) {
+
+  return is_file( $path ) && pathinfo( $path, PATHINFO_EXTENSION ) === 'php';
+
 }
 
 
