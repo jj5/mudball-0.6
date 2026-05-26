@@ -37,7 +37,7 @@ class MudModuleModel extends MudModuleBasic {
   function validate_connection(
     PDO $pdo,
     string $expected_isolation_level,
-    string|null $expected_time_zone,
+    string $expected_time_zone,
     string $expected_character_set,
     string $expected_collation,
   ) {
@@ -48,25 +48,31 @@ class MudModuleModel extends MudModuleBasic {
 
     $tx_isolation = str_replace( '-', ' ', $tx_isolation );
 
-    assert(
+    mud_verify(
       $tx_isolation === $expected_isolation_level,
-      "$tx_isolation === $expected_isolation_level",
+      [
+        'tx_isolation' => $tx_isolation,
+        'expected_isolation_level' => $expected_isolation_level,
+      ]
     );
 
     // 2024-02-13 jj5 - then we check the time zone setting...
 
-    if ( $expected_time_zone === null ) {
-
-      $expected_time_zone = date_default_timezone_get();
-
-    }
-
     $time_zone_setting = $pdo->query( 'select @@time_zone' )->fetchAll()[ 0 ][ '@@time_zone' ];
 
-    assert( strlen( $time_zone_setting ) > 0 );
-    assert(
+    mud_verify(
+      strlen( $time_zone_setting ) > 0,
+      [
+        'time_zone_setting' => $time_zone_setting,
+      ]
+    );
+
+    mud_verify(
       $time_zone_setting === $expected_time_zone,
-      "$time_zone_setting === $expected_time_zone",
+      [
+        'time_zone_setting' => $time_zone_setting,
+        'expected_time_zone' => $expected_time_zone,
+      ]
     );
 
     // 2024-02-13 jj5 - then we check the sql_mode settings...
@@ -85,9 +91,12 @@ class MudModuleModel extends MudModuleBasic {
 
     foreach ( $sql_mode_expected as $expected_item ) {
 
-      assert(
+      mud_verify(
         in_array( $expected_item, $sql_mode_array, $strict = true ),
-        "expected item '$expected_item' in sql_mode setting.",
+        [
+          'expected_item' => $expected_item,
+          'sql_mode_array' => $sql_mode_array,
+        ]
       );
 
     }
@@ -103,9 +112,12 @@ class MudModuleModel extends MudModuleBasic {
 
       $setting = $pdo->query( $sql )->fetchAll()[ 0 ][ 'value' ];
 
-      assert(
+      mud_verify(
         $setting === $expected_character_set,
-        "$setting === $expected_character_set",
+        [
+          'setting' => $setting,
+          'expected_character_set' => $expected_character_set,
+        ]
       );
 
     }
@@ -116,9 +128,12 @@ class MudModuleModel extends MudModuleBasic {
 
       $setting = $pdo->query( $sql )->fetchAll()[ 0 ][ 'value' ];
 
-      assert(
+      mud_verify(
         $setting === $expected_collation,
-        "$setting === $expected_collation",
+        [
+          'setting' => $setting,
+          'expected_collation' => $expected_collation,
+        ]
       );
 
     }
@@ -127,16 +142,22 @@ class MudModuleModel extends MudModuleBasic {
 
     $error_mode = $pdo->getAttribute( PDO::ATTR_ERRMODE );
 
-    assert(
+    mud_verify(
       $error_mode === PDO::ERRMODE_EXCEPTION,
-      "$error_mode === PDO::ERRMODE_EXCEPTION",
+      [
+        'error_mode' => $error_mode,
+        'expected_error_mode' => PDO::ERRMODE_EXCEPTION,
+      ]
     );
 
     $attr_case = $pdo->getAttribute( PDO::ATTR_CASE );
 
-    assert(
+    mud_verify(
       $attr_case === PDO::CASE_LOWER,
-      "$attr_case === PDO::CASE_LOWER",
+      [
+        'attr_case' => $attr_case,
+        'expected_attr_case' => PDO::CASE_LOWER,
+      ]
     );
 
   }
