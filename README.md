@@ -5,7 +5,3 @@ Hi there. This is the Mudball web framework and toolkit by John Elliot V.
 One day this will probably be an open-source / free software project but at the moment it is
 unlicensed because it is in an experimental state and I am not yet in a position to support
 others' use of the code base as it will change rapidly with no backward compatibility.
-
-The project has a home page, here:
-
- https://www.progclub.org/wiki/Mudball
