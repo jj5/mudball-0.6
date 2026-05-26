@@ -102,7 +102,10 @@ class MudDatabaseLite extends MudGadget {
           mud_fail( MUD_ERR_MODEL_UNSUPPORTED_CONNECTION_TYPE, [ 'type' => $type->value ] );
       }
 
-      $dsn = "mysql:host=$host;port=$port;dbname=$name;charset=utf8mb4;collate=utf8mb4_uca1400_ai_ci";
+      $charset = MUD_DATABASE_DEFAULT_CHARSET;
+      $collate = MUD_DATABASE_DEFAULT_COLLATION;
+
+      $dsn = "mysql:host=$host;port=$port;dbname=$name;charset=$charset;collate=$collate";
 
       $statement_class = class_exists( 'AppStatementLite' ) ? AppStatementLite::class : MudStatementLite::class;
 
@@ -137,7 +140,7 @@ class MudDatabaseLite extends MudGadget {
 
       $connection->exec( "set session transaction isolation level $isolation_level" );
 
-      $connection->exec( 'set names ' . MUD_DATABASE_DEFAULT_CHARSET . ' collate ' . MUD_DATABASE_DEFAULT_COLLATION );
+      $connection->exec( "set names $charset collate $collate" );
 
       // 2024-09-13 jj5 - TODO: log the connection_id for this connection...
 
