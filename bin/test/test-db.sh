@@ -1,7 +1,17 @@
 #!/bin/bash
 
-set -euo pipefail
+main() {
 
-ext/mudball/bin/db-drop.php
-ext/mudball/bin/db-create.php
-ext/mudball/bin/db-upgrade.php
+  set -euo pipefail
+
+  local DB_NAME="mudball_test";
+
+  sudo /home/jj5/bin/backup-mysql.sh "$DB_NAME";
+
+  sudo mariadb -e "drop database $DB_NAME;"
+
+  sudo mariadb -e "create database $DB_NAME;"
+
+}
+
+main "$@";
