@@ -68,10 +68,10 @@ abstract class MudWorkLite extends MudGadget {
     $dbname = DB_NAME;
     $sql = "
       select
-          rc.constraint_name,
-          rc.table_name,
-          rc.referenced_table_name,
-          kcu.ordinal_position
+        rc.constraint_name,
+        rc.table_name,
+        rc.referenced_table_name,
+        kcu.ordinal_position
       from information_schema.referential_constraints rc
       join information_schema.key_column_usage kcu
         on kcu.constraint_schema = rc.constraint_schema

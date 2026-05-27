@@ -49,6 +49,17 @@ require_once __DIR__ . '/3-class/4-pdo/5-MudPdoLite_DBA.php';
 require_once __DIR__ . '/3-class/5-statement/MudStatementLite.php';
 
 require_once __DIR__ . '/3-class/6-work/0-MudWorkLite.php';
+require_once __DIR__ . '/3-class/6-work/1-MudWorkLite_Data.php';
+require_once __DIR__ . '/3-class/6-work/2-MudWorkLite_Privilege.php';
+require_once __DIR__ . '/3-class/6-work/3-MudWorkLite_Schema.php';
+
+require_once __DIR__ . '/3-class/7-action/0-MudActionLite.php';
+require_once __DIR__ . '/3-class/7-action/1-MudActionLite_Exec.php';
+require_once __DIR__ . '/3-class/7-action/2-MudActionLite_Statement.php';
+require_once __DIR__ . '/3-class/7-action/3-MudActionLite_Insert.php';
+require_once __DIR__ . '/3-class/7-action/4-MudActionLite_Update.php';
+require_once __DIR__ . '/3-class/7-action/5-MudActionLite_Delete.php';
+require_once __DIR__ . '/3-class/7-action/6-MudActionLite_Schema.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
