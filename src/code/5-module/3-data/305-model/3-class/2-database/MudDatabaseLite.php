@@ -14,6 +14,7 @@ class MudDatabaseLite extends MudGadget {
   protected string $db_pass_dba;
 
   protected array $connection_map = [];
+  protected IMudElementAccessor $element_accessor;
 
   public function __construct(
     array   $schema_list,
@@ -40,6 +41,22 @@ class MudDatabaseLite extends MudGadget {
     $this->db_user_dba = $db_user_dba;
     $this->db_pass_dba = $db_pass_dba;
 
+    $this->set_element_accessor_strategy( MudElementAccessorStrategy::DIRECT );
+
+  }
+
+  public function set_element_accessor_strategy( MudElementAccessorStrategy $strategy ) : void {
+
+    switch ( $strategy ) {
+      case MudElementAccessorStrategy::DIRECT:
+        $this->element_accessor = new MudElementAccessorDirect( $this );
+        break;
+      case MudElementAccessorStrategy::CACHED:
+        $this->element_accessor = new MudElementAccessorCached( $this );
+        break;
+      default:
+        mud_fail( MUD_ERR_MODEL_UNSUPPORTED_ELEMENT_ACCESSOR_STRATEGY, [ 'strategy' => $strategy->value ] );
+    }
   }
 
   public function is_connected( MudConnectionTypeLite $type ) : bool {
@@ -176,6 +193,27 @@ class MudDatabaseLite extends MudGadget {
 
       }
 
+      switch ( $type ) {
+        case MudConnectionTypeLite::RAW:
+          if ( $this->is_connected( MudConnectionTypeLite::DBA ) ) {
+            $connection->set_a_std_interaction_rid( $this->get_dba()->get_a_std_interaction_rid() );
+          }
+          else {
+            $connection->exec( "call sp_std_new_interaction()" );
+          }
+          break;
+        case MudConnectionTypeLite::TRN:
+          break;
+        case MudConnectionTypeLite::EMU:
+          break;
+        case MudConnectionTypeLite::AUX:
+          break;
+        case MudConnectionTypeLite::DBA:
+          break;
+        default:
+          mud_fail( MUD_ERR_MODEL_UNSUPPORTED_CONNECTION_TYPE, [ 'type' => $type->value ] );
+      }
+
       $this->connection_map[ $type->value ] = $connection;
 
     }
@@ -246,7 +284,7 @@ class MudDatabaseLite extends MudGadget {
       $a_std_schema_name_rid = $this->get_dba()->query( $sql )[ 0 ][ 'a_std_schema_name_aid' ];
 
       $sql = "
-        insert into t_about_std_migration (
+        insert into t_journal_std_migration (
           a_std_migration_schema_name_rid,
           a_std_migration_revision
         )
@@ -257,6 +295,80 @@ class MudDatabaseLite extends MudGadget {
 
       $this->get_dba()->exec( $sql );
 
+      var_dump( MUDBALL_CODE );
+
+      $rid = $this->get_particle_rid(
+        't_particle_std_software_code',
+        'a_std_software_code_aid',
+        'a_std_software_code',
+        MUDBALL_CODE,
+      );
+
     }
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2026-05-27 jj5 - IMudElementAccessor passthrough methods... these just call the element accessor, which can be swapped
+  // out for different strategies (e.g. direct vs cached).
+  //
+
+  public function get_particle( string $table, string $aid_column, string $value_column, int $rid ) : string {
+
+    return $this->element_accessor->get_particle( $table, $aid_column, $value_column, $rid );
+
+  }
+
+  public function get_particle_rid( string $table, string $aid_column, string $value_column, mixed $value ) : int {
+
+    return $this->element_accessor->get_particle_rid( $table, $aid_column, $value_column, $value );
+
+  }
+
+  public function get_piece( string $table, string $aid_column, string $value_column, int $rid ) : string {
+
+    return $this->element_accessor->get_piece( $table, $aid_column, $value_column, $rid );
+
+  }
+
+  public function get_piece_rid( string $table, string $aid_column, string $hash_column, string $hash ) : int {
+
+    return $this->element_accessor->get_piece_rid( $table, $aid_column, $hash_column, $hash );
+
+  }
+
+  public function get_pot( string $table, string $aid_column, string $value_column, int $rid ) : string {
+
+    return $this->element_accessor->get_pot( $table, $aid_column, $value_column, $rid );
+
+  }
+
+  public function get_pot_rid( string $table, string $aid_column, string $value_column, string $value ) : int {
+
+    return $this->element_accessor->get_pot_rid( $table, $aid_column, $value_column, $value );
+
+  }
+
+  public function get_province( string $table, string $aid_column, string $value_column, int $rid ) : string {
+
+    return $this->element_accessor->get_province( $table, $aid_column, $value_column, $rid );
+
+  }
+
+  public function get_province_rid( string $table, string $aid_column, string $value_column, mixed $value ) : int {
+
+    return $this->element_accessor->get_province_rid( $table, $aid_column, $value_column, $value );
+
+  }
+
+  public function get_product( string $table, string $aid_column, array $value_column_list, int $rid ) : array {
+
+    return $this->element_accessor->get_product( $table, $aid_column, $value_column_list, $rid );
+
+  }
+
+  public function get_product_rid( string $table, string $aid_column, array $column_value_map ) : int {
+
+    return $this->element_accessor->get_product_rid( $table, $aid_column, $column_value_map );
+
   }
 }

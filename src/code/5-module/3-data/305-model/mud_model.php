@@ -19,13 +19,18 @@ mud_define_error( 'MUD_ERR_MODEL_INVALID_NAME', 'invalid name.' );
 mud_define_error( 'MUD_ERR_MODEL_DATABASE_NOT_SET', 'database not set.' );
 mud_define_error( 'MUD_ERR_MODEL_INVALID_TIMESTRING', 'invalid timestring.' );
 mud_define_error( 'MUD_ERR_MODEL_REVISION_FILE_MISSING', 'revision file not found.' );
+mud_define_error( 'MUD_ERR_MODEL_UNSUPPORTED_ELEMENT_ACCESSOR_STRATEGY', 'unsupported element accessor strategy.' );
+mud_define_error( 'MUD_ERR_MODEL_ELEMENT_NOT_FOUND', 'element not found.' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2026-05-27 jj5 - include components...
 //
 
+require_once __DIR__ . '/0-interface/IMudElementAccessor.php';
+
 require_once __DIR__ . '/1-enum/MudConnectionTypeLite.php';
+require_once __DIR__ . '/1-enum/MudElementAccessorStrategy.php';
 
 require_once __DIR__ . '/2-trait/MudValidationLite.php';
 
@@ -35,6 +40,8 @@ require_once __DIR__ . '/3-class/1-schema/1-MudSchemaLite.php';
 require_once __DIR__ . '/3-class/1-schema/2-MudRevisionLite.php';
 
 require_once __DIR__ . '/3-class/2-database/MudDatabaseLite.php';
+require_once __DIR__ . '/3-class/2-database/MudElementAccessorCached.php';
+require_once __DIR__ . '/3-class/2-database/MudElementAccessorDirect.php';
 
 require_once __DIR__ . '/3-class/3-connection/0-MudConnectionLite.php';
 require_once __DIR__ . '/3-class/3-connection/1-MudConnectionLite_RAW.php';

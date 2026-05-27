@@ -88,14 +88,14 @@ abstract class MudConnectionLite extends MudService {
     return MudWorkLite_Data::Create( $this );
   }
   protected function initialize() { ; }
-  public function set_a_std_interaction_aid( $a_std_interaction_aid ) {
-    $sql = "set @a_std_interaction_aid := $a_std_interaction_aid";
+  public function set_a_std_interaction_rid( $a_std_interaction_rid ) {
+    $sql = "set @a_std_interaction_rid := $a_std_interaction_rid";
     echo $sql . "\n";
     $this->exec( $sql );
   }
-  public function get_a_std_interaction_aid() {
-    $sql = "select @a_std_interaction_aid as a_std_interaction_aid";
-    return $this->query( $sql )[ 0 ][ 'a_std_interaction_aid' ];
+  public function get_a_std_interaction_rid() {
+    $sql = "select @a_std_interaction_rid as a_std_interaction_rid";
+    return $this->query( $sql )[ 0 ][ 'a_std_interaction_rid' ];
   }
   public function print_info() {
 
