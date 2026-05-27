@@ -42,6 +42,10 @@ class MudDatabaseLite extends MudGadget {
 
   }
 
+  public function is_connected( MudConnectionTypeLite $type ) : bool {
+    return isset( $this->connection_map[ $type->value ] );
+  }
+
   public function get_raw() : MudConnectionLite_RAW {
     return $this->get_connection( MudConnectionTypeLite::RAW );
   }
@@ -177,6 +181,20 @@ class MudDatabaseLite extends MudGadget {
     }
 
     return $this->connection_map[ $type->value ];
+
+  }
+
+  public function upgrade() {
+
+    $revision_list = [];
+
+    foreach ( $this->schema_list as $schema ) {
+
+      $revision_list = array_merge( $revision_list, $schema->get_revision_list() );
+
+    }
+
+    var_dump( $revision_list );
 
   }
 }

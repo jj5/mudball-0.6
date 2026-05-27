@@ -30,6 +30,8 @@ function main( $argv ) {
 
   var_dump( $row );
 
+  $db->upgrade();
+
 }
 
 main( $argv );
