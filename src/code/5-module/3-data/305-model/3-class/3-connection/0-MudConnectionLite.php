@@ -1,99 +1,5 @@
 <?php
 
-enum MudConnectionTypeLite : string {
-  case RAW = 'RAW';
-  case TRN = 'TRN';
-  case EMU = 'EMU';
-  case AUX = 'AUX';
-  case DBA = 'DBA';
-}
-
-define( 'MUD_CONNECTION_SETTING', [
-  MudConnectionTypeLite::RAW->value => [
-    'pdo_class' => MudPdoLite_RAW::class,
-    'connection_class' => MudConnectionLite_RAW::class,
-    'isolation_level' => 'READ COMMITTED',
-    'auto_commit' => true,
-    'emulate_prepares' => false,
-    'allow_multi_statements' => false,
-  ],
-  MudConnectionTypeLite::TRN->value => [
-    'pdo_class' => MudPdoLite_TRN::class,
-    'connection_class' => MudConnectionLite_TRN::class,
-    'isolation_level' => 'SERIALIZABLE',
-    'auto_commit' => false,
-    'emulate_prepares' => false,
-    'allow_multi_statements' => false,
-  ],
-  MudConnectionTypeLite::AUX->value => [
-    'pdo_class' => MudPdoLite_AUX::class,
-    'connection_class' => MudConnectionLite_AUX::class,
-    'isolation_level' => 'READ COMMITTED',
-    'auto_commit' => true,
-    'emulate_prepares' => false,
-    'allow_multi_statements' => false,
-  ],
-  MudConnectionTypeLite::EMU->value => [
-    'pdo_class' => MudPdoLite_EMU::class,
-    'connection_class' => MudConnectionLite_EMU::class,
-    'isolation_level' => 'READ COMMITTED',
-    'auto_commit' => true,
-    'emulate_prepares' => true,
-    'allow_multi_statements' => false,
-  ],
-  MudConnectionTypeLite::DBA->value => [
-    'pdo_class' => MudPdoLite_DBA::class,
-    'connection_class' => MudConnectionLite_DBA::class,
-    'isolation_level' => 'READ COMMITTED',
-    'auto_commit' => true,
-    'emulate_prepares' => false,
-    'allow_multi_statements' => true,
-  ],
-]);
-
-abstract class MudPdoLite extends PDO {
-
-  use MudCreationMixin;
-
-  abstract public function get_connection_type() : MudConnectionTypeLite;
-
-}
-
-class MudPdoLite_RAW extends MudPdoLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::RAW;
-  }
-}
-
-class MudPdoLite_TRN extends MudPdoLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::TRN;
-  }
-}
-
-class MudPdoLite_EMU extends MudPdoLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::EMU;
-  }
-}
-
-class MudPdoLite_AUX extends MudPdoLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::AUX;
-  }
-}
-
-class MudPdoLite_DBA extends MudPdoLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::DBA;
-  }
-}
-
 abstract class MudConnectionLite extends MudService {
 
   protected MudDatabaseLite $database;
@@ -172,14 +78,14 @@ abstract class MudConnectionLite extends MudService {
   public function rollback() {
     $this->get_pdo()->rollBack();
   }
-  public function schema_work() : MudDatabaseWork_Schema {
-    return new MudDatabaseWork_Schema( $this );
+  public function schema_work() : MudWorkLite_Schema {
+    return MudWorkLite_Schema::Create( $this );
   }
-  public function privilege_work() : MudDatabaseWork_Privilege {
-    return new MudDatabaseWork_Privilege( $this );
+  public function privilege_work() : MudWorkLite_Privilege {
+    return MudWorkLite_Privilege::Create( $this );
   }
-  public function data_work() : MudDatabaseWork_Data {
-    return new MudDatabaseWork_Data( $this );
+  public function data_work() : MudWorkLite_Data {
+    return MudWorkLite_Data::Create( $this );
   }
   protected function initialize() { ; }
   public function set_a_std_interaction_aid( $a_std_interaction_aid ) {
@@ -234,40 +140,5 @@ abstract class MudConnectionLite extends MudService {
     $sql = "select 1 from information_schema.tables where table_schema = database() and table_name = :table_name";
     $result = $this->fetch( $sql, [ ':table_name' => $table_name ] );
     return count( $result ) > 0;
-  }
-}
-
-class MudConnectionLite_RAW extends MudConnectionLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::RAW;
-  }
-}
-
-class MudConnectionLite_TRN extends MudConnectionLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::TRN;
-  }
-}
-
-class MudConnectionLite_EMU extends MudConnectionLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::EMU;
-  }
-}
-
-class MudConnectionLite_AUX extends MudConnectionLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::AUX;
-  }
-}
-
-class MudConnectionLite_DBA extends MudConnectionLite {
-
-  public function get_connection_type() : MudConnectionTypeLite {
-    return MudConnectionTypeLite::DBA;
   }
 }
