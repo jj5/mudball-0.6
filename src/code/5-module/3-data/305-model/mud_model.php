@@ -17,6 +17,8 @@ mud_define_error( 'MUD_ERR_MODEL_UNSUPPORTED_CONNECTION_TYPE', 'unsupported conn
 mud_define_error( 'MUD_ERR_MODEL_INVALID_ISOLATION_LEVEL', 'invalid isolation level.' );
 mud_define_error( 'MUD_ERR_MODEL_INVALID_NAME', 'invalid name.' );
 mud_define_error( 'MUD_ERR_MODEL_DATABASE_NOT_SET', 'database not set.' );
+mud_define_error( 'MUD_ERR_MODEL_INVALID_TIMESTRING', 'invalid timestring.' );
+mud_define_error( 'MUD_ERR_MODEL_REVISION_FILE_MISSING', 'revision file not found.' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +31,8 @@ require_once __DIR__ . '/2-trait/MudValidationLite.php';
 
 require_once __DIR__ . '/3-class/0-module/MudModuleModel.php';
 
-require_once __DIR__ . '/3-class/1-schema/MudSchemaLite.php';
+require_once __DIR__ . '/3-class/1-schema/1-MudSchemaLite.php';
+require_once __DIR__ . '/3-class/1-schema/2-MudRevisionLite.php';
 
 require_once __DIR__ . '/3-class/2-database/MudDatabaseLite.php';
 

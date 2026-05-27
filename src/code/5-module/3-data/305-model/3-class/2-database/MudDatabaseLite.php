@@ -194,7 +194,36 @@ class MudDatabaseLite extends MudGadget {
 
     }
 
+    usort( $revision_list, function ( MudRevisionLite $a, MudRevisionLite $b ) {
+
+      if ( $a->get_timestamp() < $b->get_timestamp() ) { return -1; }
+      if ( $a->get_timestamp() > $b->get_timestamp() ) { return 1; }
+      return 0;
+
+    } );
+
     var_dump( $revision_list );
 
+    foreach ( $revision_list as $revision ) {
+
+      $path = $revision->get_path();
+
+      echo "applying revision: " . $path . "\n";
+
+      switch ( $revision->get_type() ) {
+        case 'sql':
+          $sql = file_get_contents( $path );
+          if ( $sql === false ) {
+            mud_fail( MUD_ERR_MODEL_REVISION_FILE_MISSING, [ 'name' => $path ] );
+          }
+          $this->get_dba()->exec( $sql );
+          break;
+        case 'php' :
+          require $path;
+          break;
+        default:
+          echo "skipping unsupported revision type: " . $revision->get_type() . "\n";
+      }
+    }
   }
 }
