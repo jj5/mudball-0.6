@@ -43,4 +43,16 @@ class MudSchemaLite extends MudGadget {
     return $revision_list;
 
   }
+
+  public function get_namespace() : string {
+    return $this->namespace;
+  }
+
+  public function get_name() : string {
+    return $this->name;
+  }
+
+  public function get_path() : string {
+    return $this->path;
+  }
 }

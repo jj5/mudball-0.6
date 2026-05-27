@@ -2,6 +2,7 @@
 
 class MudRevisionLite extends MudGadget {
 
+  protected MudSchemaLite $schema;
   protected string $timestring;
   protected DateTimeImmutable $datetime;
   protected string $path;
@@ -30,11 +31,24 @@ class MudRevisionLite extends MudGadget {
 
     $timestamp = $matches[1] . '-' . $matches[2] . '-' . $matches[3] . 'T' . $matches[4] . ':' . $matches[5] . ':' . $matches[6];
 
+    $this->schema = $schema;
     $this->timestring = $timestring;
     $this->datetime = new DateTimeImmutable( $timestamp, new DateTimeZone( MUD_DATABASE_DEFAULT_TIME_ZONE ) );
     $this->path = $path;
     $this->file_type = $file_type;
 
+  }
+
+  public function get_schema() : MudSchemaLite {
+    return $this->schema;
+  }
+
+  public function get_timestring() : string {
+    return $this->timestring;
+  }
+
+  public function get_datetime( string $format ) : string {
+    return $this->datetime->format( $format );
   }
 
   public function get_timestamp() : int {

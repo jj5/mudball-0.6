@@ -224,6 +224,39 @@ class MudDatabaseLite extends MudGadget {
         default:
           echo "skipping unsupported revision type: " . $revision->get_type() . "\n";
       }
+
+      $sql = "
+        insert ignore into t_particle_std_schema_name (
+          a_std_schema_name
+        )
+        values (
+          " . $this->get_dba()->quote( $revision->get_schema()->get_name() ) . "
+        )";
+
+      $this->get_dba()->exec( $sql );
+
+      $sql = "
+        select
+          a_std_schema_name_aid
+        from
+          t_particle_std_schema_name
+        where
+          a_std_schema_name = " . $this->get_dba()->quote( $revision->get_schema()->get_name() );
+
+      $a_std_schema_name_rid = $this->get_dba()->query( $sql )[ 0 ][ 'a_std_schema_name_aid' ];
+
+      $sql = "
+        insert into t_about_std_migration (
+          a_std_migration_schema_name_rid,
+          a_std_migration_revision
+        )
+        values (
+          " . $this->get_dba()->quote( $a_std_schema_name_rid ) . ",
+          " . $this->get_dba()->quote( $revision->get_datetime( 'Y-m-d H:i:s' ) ) . "
+        )";
+
+      $this->get_dba()->exec( $sql );
+
     }
   }
 }
