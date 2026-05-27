@@ -121,6 +121,8 @@ class MudControllerWeb extends MudController {
 
     mud_url();
 
+    app_declare_database();
+
     $facility = mud_request()->get_facility();
     //$facility = $this->get_facility( $request );
 
@@ -161,6 +163,8 @@ class MudControllerWeb extends MudController {
       try {
 
         ob_start();
+
+        mud_trn()->begin();
 
         $this->try_process( $request );
 
@@ -355,7 +359,7 @@ class MudControllerWeb extends MudController {
 
   protected function redirect( $path, $query = null ) {
 
-    $url = mud_url()->get_abs( $path, $query );
+    $url = APP_URL_BASE . $path . ( $query ? '?' . http_build_query( $query ) : '' );
 
     return mud_response()->redirect( $url );
 

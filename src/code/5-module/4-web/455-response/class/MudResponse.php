@@ -63,7 +63,9 @@ class MudResponse extends MudService implements IMudResponse {
       //'context' => app_request()->get_context(),
     ];
 
-    throw new_mud_http_exception( $http_status_code, $location, $data );
+    $http_status_message = HTTP_RESPONSE_EXPLANATION[ $http_status_code ] ?? HTTP_RESPONSE_EXPLANATION_DEFAULT;
+
+    throw new_mud_http_exception( $http_status_code, $http_status_message, $location, $data );
 
   }
 

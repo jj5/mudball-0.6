@@ -28,6 +28,25 @@ function new_mud_response() {
 
 }
 
+function mud_response( MudResponse|false $set = false ) : MudResponse {
+
+  static $instance = false;
+
+  if ( $set !== false ) {
+
+    $instance = $set;
+
+  }
+  else if ( $instance === false ) {
+
+    $instance = MudResponse::Create();
+
+  }
+
+  return $instance;
+
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2024-02-08 jj5 - service locator...

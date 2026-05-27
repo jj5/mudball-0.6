@@ -17,12 +17,7 @@ function main( $argv ) {
     }
   }
 
-  $std = mud_declare_schema( 'std', 'mudballdb', __DIR__ . '/../../src/code/6-schema/mudballdb' );
-  $bus = mud_declare_schema( 'bus', 'demodb', __DIR__ . '/../../src/code/6-schema/demodb' );
-
-  $db = mud_declare_database( [ $std, $bus ] );
-
-  mud_set_database( $db );
+  app_declare_database();
 
   $connection = $db->get_connection( MudConnectionTypeLite::DBA );
 

@@ -203,10 +203,13 @@ class MudDatabaseLite extends MudGadget {
           }
           break;
         case MudConnectionTypeLite::TRN:
+          $connection->set_a_std_interaction_rid( $this->get_raw()->get_a_std_interaction_rid() );
           break;
         case MudConnectionTypeLite::EMU:
+          $connection->set_a_std_interaction_rid( $this->get_raw()->get_a_std_interaction_rid() );
           break;
         case MudConnectionTypeLite::AUX:
+          $connection->set_a_std_interaction_rid( $this->get_raw()->get_a_std_interaction_rid() );
           break;
         case MudConnectionTypeLite::DBA:
           break;
@@ -264,7 +267,7 @@ class MudDatabaseLite extends MudGadget {
       }
 
       $sql = "
-        insert ignore into t_particle_std_schema_name (
+        insert ignore into t_particle_std__schema_name (
           a_std_schema_name
         )
         values (
@@ -277,14 +280,14 @@ class MudDatabaseLite extends MudGadget {
         select
           a_std_schema_name_aid
         from
-          t_particle_std_schema_name
+          t_particle_std__schema_name
         where
           a_std_schema_name = " . $this->get_dba()->quote( $revision->get_schema()->get_name() );
 
       $a_std_schema_name_rid = $this->get_dba()->query( $sql )[ 0 ][ 'a_std_schema_name_aid' ];
 
       $sql = "
-        insert into t_journal_std_migration (
+        insert into t_journal_std__migration (
           a_std_migration_schema_name_rid,
           a_std_migration_revision
         )
@@ -298,7 +301,7 @@ class MudDatabaseLite extends MudGadget {
       var_dump( MUDBALL_CODE );
 
       $rid = $this->get_particle_rid(
-        't_particle_std_software_code',
+        't_particle_std__software_code',
         'a_std_software_code_aid',
         'a_std_software_code',
         MUDBALL_CODE,

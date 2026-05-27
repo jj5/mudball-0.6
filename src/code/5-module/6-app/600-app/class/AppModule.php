@@ -2,9 +2,9 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2021-08-24 jj5 - class definition...
+// 2026-05-27 jj5 - class definition...
 //
 
-abstract class MudModuleApp extends MudModule {
+abstract class AppModule extends MudModule {
 
 }

@@ -18,11 +18,11 @@ class mud_facility_util_user_credential_forgot extends MudFacility {
 
     tag_open( 'form', [ 'method' => 'POST' ] );
 
-      $this->render_input_hidden( $context, APP_INPUT_ACTION_DEFAULT, ACTION_UTIL_USER_CREDENTIAL_FORGOT );
+      $this->render_input_hidden( $context, APP_INPUT_ACTION_DEFAULT, APP_ACTION_UTIL_USER_CREDENTIAL_FORGOT );
 
       $this->render_input_email( $context, APP_INPUT_EMAIL_ADDRESS );
 
-      $this->render_button_submit( $context, ACTION_UTIL_USER_CREDENTIAL_FORGOT );
+      $this->render_button_submit( $context, APP_ACTION_UTIL_USER_CREDENTIAL_FORGOT );
 
     tag_shut( 'form' );
 

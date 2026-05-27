@@ -25,37 +25,14 @@ require_once __DIR__ . '/../../../inc/version.php';
 //
 
 define( 'MUDBALL_PATH', realpath( __DIR__ . '/../../../' ) );
+define( 'MUDBALL_DEBUG_FILE', 'debug.php' );
+define( 'MUDBALL_DEBUG_PATH', MUDBALL_PATH . '/' . MUDBALL_DEBUG_FILE );
 define( 'MUDBALL_CONFIG_FILE', 'config.php' );
 define( 'MUDBALL_CONFIG_PATH', MUDBALL_PATH . '/' . MUDBALL_CONFIG_FILE );
 
 (function() {
 
-  if ( file_exists( MUDBALL_CONFIG_PATH ) ) { require_once MUDBALL_CONFIG_PATH; }
-
-  // 2024-07-07 jj5 - NOTE: we load the debug config file here, if it exists. This is so that we can get access to
-  // DEBUG and DEV constants while we are loading...
-
-  $app_dir = realpath( __DIR__ . '/../../../../../' );
-  $app_config = $app_dir . '/debug.php';
-
-  if ( file_exists( $app_config ) ) { require_once $app_config; }
-
-  // 2024-07-07 jj5 - having now loaded both of the debug config file (if it exists) we can now define the DEBUG and DEV
-  // constants if they haven't already been defined...
-
-  /* 2024-12-23 jj5 - I'm not sure if we need this but I hope not!
-
-  if ( ! defined( 'DEBUG' ) ) { define( 'DEBUG',  false ); }
-
-  if ( ! defined( 'DEV'   ) ) { define( 'DEV',    false ); }
-
-  if ( ! defined( 'BETA'  ) ) { define( 'BETA',   false ); }
-
-  if ( ! defined( 'PROD'  ) ) { define( 'PROD',   ( ! DEV ) && ( ! BETA ) ); }
-
-  if ( ! defined( 'TEST'  ) ) { define( 'TEST',   false ); }
-
-  */
+  if ( file_exists( MUDBALL_DEBUG_PATH ) ) { require_once MUDBALL_DEBUG_PATH; }
 
 })();
 
