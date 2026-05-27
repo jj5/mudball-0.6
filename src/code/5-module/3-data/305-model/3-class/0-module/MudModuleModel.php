@@ -2,6 +2,20 @@
 
 class MudModuleModel extends MudModuleBasic {
 
+  protected ?MudDatabaseLite $database = null;
+
+  public function set_database( MudDatabaseLite $database ) : self {
+    $this->database = $database;
+    return $this;
+  }
+
+  public function get_database() : MudDatabaseLite {
+    if ( $this->database === null ) {
+      mud_fail( MUD_ERR_MODEL_DATABASE_NOT_SET );
+    }
+    return $this->database;
+  }
+
   public function declare_schema( string $namespace, string $name, string $path ) : MudSchemaLite {
 
     return MudSchemaLite::Create( $namespace, $name, $path );

@@ -42,7 +42,29 @@ class MudDatabaseLite extends MudGadget {
 
   }
 
-  public function get_connection( MudConnectionTypeLite $type, array $options = [] ) : MudConnectionLite {
+  public function get_raw() : MudConnectionLite_RAW {
+    return $this->get_connection( MudConnectionTypeLite::RAW );
+  }
+
+  public function get_trn() : MudConnectionLite_TRN {
+    return $this->get_connection( MudConnectionTypeLite::TRN );
+  }
+
+  public function get_emu() : MudConnectionLite_EMU {
+    return $this->get_connection( MudConnectionTypeLite::EMU );
+  }
+
+  public function get_aux() : MudConnectionLite_AUX {
+    return $this->get_connection( MudConnectionTypeLite::AUX );
+  }
+
+  public function get_dba() : MudConnectionLite_DBA {
+    return $this->get_connection( MudConnectionTypeLite::DBA );
+  }
+
+  public function get_connection( MudConnectionTypeLite $type ) : MudConnectionLite {
+
+    $options = [];
 
     static $isolation_levels = [
       'READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ', 'SERIALIZABLE',

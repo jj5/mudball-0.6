@@ -16,6 +16,7 @@ mud_define_error( 'MUD_ERR_MODEL_CERTIFICATE_MISSING', 'database certificate not
 mud_define_error( 'MUD_ERR_MODEL_UNSUPPORTED_CONNECTION_TYPE', 'unsupported connection type.' );
 mud_define_error( 'MUD_ERR_MODEL_INVALID_ISOLATION_LEVEL', 'invalid isolation level.' );
 mud_define_error( 'MUD_ERR_MODEL_INVALID_NAME', 'invalid name.' );
+mud_define_error( 'MUD_ERR_MODEL_DATABASE_NOT_SET', 'database not set.' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,6 +166,48 @@ function mud_validate_connection_lite(
     $expected_character_set,
     $expected_collation,
   );
+
+}
+
+function mud_set_database( MudDatabaseLite $database ) : void {
+
+  mud_module_model()->set_database( $database );
+
+}
+
+function mud_database() : MudDatabaseLite {
+
+  return mud_module_model()->get_database();
+
+}
+
+function mud_raw() : MudConnectionLite_RAW {
+
+  return mud_database()->get_raw();
+
+}
+
+function mud_trn() : MudConnectionLite_TRN {
+
+  return mud_database()->get_trn();
+
+}
+
+function mud_emu() : MudConnectionLite_EMU {
+
+  return mud_database()->get_emu();
+
+}
+
+function mud_aux() : MudConnectionLite_AUX {
+
+  return mud_database()->get_aux();
+
+}
+
+function mud_dba() : MudConnectionLite_DBA {
+
+  return mud_database()->get_dba();
 
 }
 

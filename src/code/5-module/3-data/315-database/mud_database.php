@@ -58,6 +58,7 @@ function mud_module_database() : MudModuleDatabase {
 
 }
 
+/*
 function mud_raw() : MudDatabaseConnection_PDO_RAW {
 
   return mud_module_database()->get_raw();
@@ -87,3 +88,4 @@ function mud_dba() : MudDalDba {
   return mud_locator()->get_service( MudDalDba::class );
 
 }
+*/

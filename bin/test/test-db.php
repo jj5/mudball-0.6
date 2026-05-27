@@ -22,6 +22,8 @@ function main( $argv ) {
 
   $db = mud_declare_database( [ $std, $bus ] );
 
+  mud_set_database( $db );
+
   $connection = $db->get_connection( MudConnectionTypeLite::DBA );
 
   $row = $connection->query( "show status like 'Ssl_cipher'" );
