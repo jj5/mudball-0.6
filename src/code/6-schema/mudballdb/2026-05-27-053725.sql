@@ -18,6 +18,13 @@ create table t_abinitio_std_time_zone (
   unique key ( a_std_time_zone_name )
 );
 
+create trigger bu_t_abinitio_std_time_zone
+before update on t_abinitio_std_time_zone
+for each row
+begin
+  signal sqlstate '45000' set message_text = 'updates are not allowed.';
+end;
+
 create table t_abinitio_std_interaction (
   a_std_interaction_aid int unsigned not null auto_increment,
   -- 2026-05-27 jj5 - it's hard to get good info about what the best datatype to use here is,
