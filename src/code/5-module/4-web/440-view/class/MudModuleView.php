@@ -193,7 +193,7 @@ class MudModuleView extends MudModuleWeb {
 
           $this->container_id = $args[ 'container_id' ] ?? 'main';
 
-          tag_open( 'div', [ 'id' => $this->container_id ] );
+          tag_open( 'main', [ 'id' => $this->container_id ] );
 
             if ( ! $iframe ) {
 
@@ -241,15 +241,26 @@ class MudModuleView extends MudModuleWeb {
 
         $iframe = $args[ 'iframe' ] ?? false;
 
-        tag_shut( 'div', [ 'id' => $this->container_id ] );
+        tag_shut( 'main', [ 'id' => $this->container_id ] );
 
         if ( ! $iframe ) {
 
-          tag_open( 'p' );
+          tag_open( 'footer' );
 
-            tag_text( 'span', APP_SLUG . ' with ' . MUD_SLUG );
+            tag_bare( 'hr' );
 
-          tag_shut( 'p' );
+            if ( APP_SLUG === MUD_SLUG ) {
+
+              tag_text( 'span', APP_SLUG );
+
+            }
+            else {
+
+              tag_text( 'span', APP_SLUG . ' with ' . MUD_SLUG );
+
+            }
+
+          tag_shut( 'footer' );
 
         }
 

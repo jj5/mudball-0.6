@@ -90,7 +90,7 @@ abstract class MudConnectionLite extends MudService {
   protected function initialize() { ; }
   public function set_a_std_interaction_rid( $a_std_interaction_rid ) {
     $sql = "set @a_std_interaction_rid := $a_std_interaction_rid";
-    echo $sql . "\n";
+    //echo $sql . "\n";
     $this->exec( $sql );
   }
   public function get_a_std_interaction_rid() {

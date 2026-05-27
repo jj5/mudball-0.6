@@ -9,7 +9,7 @@
 -- bus -> mudballdb
 -- std -> myappdb
 
-create table t_abinitio_std__time_zone (
+create table t_abinitio__std_time_zone (
   a_std_time_zone_aid smallint unsigned not null auto_increment,
   a_std_time_zone_name varchar( 255 ) collate ascii_bin not null default ( @@session.time_zone ),
   a_std_time_zone_created_on datetime( 6 ) not null default current_timestamp( 6 ),
@@ -17,14 +17,14 @@ create table t_abinitio_std__time_zone (
   unique key ( a_std_time_zone_name )
 );
 
-create trigger bu_t_abinitio_std__time_zone
-before update on t_abinitio_std__time_zone
+create trigger bu_t_abinitio__std_time_zone
+before update on t_abinitio__std_time_zone
 for each row
 begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';
 end;
 
-create table t_abinitio_std__interaction (
+create table t_abinitio__std_interaction (
   a_std_interaction_aid int unsigned not null auto_increment,
   -- 2026-05-27 jj5 - it's hard to get good info about what the best datatype to use here is,
   -- and I don't like using bigint unsigned because PHP can't represent it natively
@@ -33,13 +33,13 @@ create table t_abinitio_std__interaction (
   a_std_interaction_created_on datetime( 6 ) not null default current_timestamp( 6 ),
   primary key ( a_std_interaction_aid ),
   foreign key ( a_std_interaction_time_zone_rid )
-    references t_abinitio_std__time_zone ( a_std_time_zone_aid )
+    references t_abinitio__std_time_zone ( a_std_time_zone_aid )
     on update restrict
     on delete restrict
 );
 
-create trigger bu_t_abinitio_std__interaction
-before update on t_abinitio_std__interaction
+create trigger bu_t_abinitio__std_interaction
+before update on t_abinitio__std_interaction
 for each row
 begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';
@@ -52,7 +52,7 @@ begin
 
   set var_time_zone = @@session.time_zone;
 
-  insert ignore into t_abinitio_std__time_zone (
+  insert ignore into t_abinitio__std_time_zone (
     a_std_time_zone_name
   )
   values (
@@ -60,10 +60,10 @@ begin
   );
 
   set @a_std_time_zone_rid = (
-    select a_std_time_zone_aid from t_abinitio_std__time_zone where a_std_time_zone_name = var_time_zone
+    select a_std_time_zone_aid from t_abinitio__std_time_zone where a_std_time_zone_name = var_time_zone
   );
 
-  insert into t_abinitio_std__interaction ( a_std_interaction_time_zone_rid ) values ( @a_std_time_zone_rid );
+  insert into t_abinitio__std_interaction ( a_std_interaction_time_zone_rid ) values ( @a_std_time_zone_rid );
 
   set @a_std_interaction_rid = last_insert_id();
 
@@ -71,7 +71,7 @@ end;
 
 call sp_std_new_interaction();
 
-create table t_particle_std__schema_name (
+create table t_particle__std_schema_name (
   a_std_schema_name_aid smallint unsigned not null auto_increment,
   a_std_schema_name varchar( 255 ) collate ascii_bin not null,
   a_std_schema_name_created_in int unsigned not null default ( @a_std_interaction_rid ),
@@ -79,19 +79,19 @@ create table t_particle_std__schema_name (
   primary key ( a_std_schema_name_aid ),
   unique key ( a_std_schema_name ),
   foreign key ( a_std_schema_name_created_in )
-    references t_abinitio_std__interaction ( a_std_interaction_aid )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
     on update restrict
     on delete restrict
 );
 
-create trigger bu_t_particle_std__schema_name
-before update on t_particle_std__schema_name
+create trigger bu_t_particle__std_schema_name
+before update on t_particle__std_schema_name
 for each row
 begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';
 end;
 
-create table t_journal_std__schema_migration (
+create table t_journal__std_schema_migration (
   a_std_schema_migration_aid int unsigned not null auto_increment,
   a_std_schema_migration_schema_name_rid smallint unsigned not null,
   a_std_schema_migration_revision datetime not null,
@@ -100,33 +100,33 @@ create table t_journal_std__schema_migration (
   primary key ( a_std_schema_migration_aid ),
   unique key ( a_std_schema_migration_schema_name_rid, a_std_schema_migration_revision ),
   foreign key ( a_std_schema_migration_created_in )
-    references t_abinitio_std__interaction ( a_std_interaction_aid )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
     on update restrict
     on delete restrict
 );
 
--- create trigger bu_t_about_std__schema_migration
--- before update on t_about_std__schema_migration
+-- create trigger bu_t_about__std_schema_migration
+-- before update on t_about__std_schema_migration
 -- for each row
 -- begin
 --   set new.a_std_schema_migration_updated_in = @a_std_interaction_rid;
 -- end;
 
-create trigger bu_t_journal_std__schema_migration
-before update on t_journal_std__schema_migration
+create trigger bu_t_journal__std_schema_migration
+before update on t_journal__std_schema_migration
 for each row
 begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';
 end;
 
-create trigger bd_t_journal_std__schema_migration
-before delete on t_journal_std__schema_migration
+create trigger bd_t_journal__std_schema_migration
+before delete on t_journal__std_schema_migration
 for each row
 begin
   signal sqlstate '45000' set message_text = 'deletes are not allowed.';
 end;
 
-create table t_particle_std__software_code (
+create table t_particle__std_software_code (
   a_std_software_code_aid smallint unsigned not null auto_increment,
   a_std_software_code varchar( 255 ) collate ascii_bin not null,
   a_std_software_code_created_in int unsigned not null default ( @a_std_interaction_rid ),
@@ -134,13 +134,13 @@ create table t_particle_std__software_code (
   primary key ( a_std_software_code_aid ),
   unique key ( a_std_software_code ),
   foreign key ( a_std_software_code_created_in )
-    references t_abinitio_std__interaction ( a_std_interaction_aid )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
     on update restrict
     on delete restrict
 );
 
-create trigger bu_t_particle_std__software_code
-before update on t_particle_std__software_code
+create trigger bu_t_particle__std_software_code
+before update on t_particle__std_software_code
 for each row
 begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';

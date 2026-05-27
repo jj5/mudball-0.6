@@ -243,13 +243,13 @@ class MudDatabaseLite extends MudGadget {
 
     } );
 
-    var_dump( $revision_list );
+    //var_dump( $revision_list );
 
     foreach ( $revision_list as $revision ) {
 
       $path = $revision->get_path();
 
-      echo "applying revision: " . $path . "\n";
+      mud_stderr( "applying revision: " . $path . "\n" );
 
       switch ( $revision->get_type() ) {
         case 'sql':
@@ -263,11 +263,11 @@ class MudDatabaseLite extends MudGadget {
           require $path;
           break;
         default:
-          echo "skipping unsupported revision type: " . $revision->get_type() . "\n";
+          mud_stderr( "skipping unsupported revision type: " . $revision->get_type() . "\n" );
       }
 
       $sql = "
-        insert ignore into t_particle_std__schema_name (
+        insert ignore into t_particle__std_schema_name (
           a_std_schema_name
         )
         values (
@@ -280,16 +280,16 @@ class MudDatabaseLite extends MudGadget {
         select
           a_std_schema_name_aid
         from
-          t_particle_std__schema_name
+          t_particle__std_schema_name
         where
           a_std_schema_name = " . $this->get_dba()->quote( $revision->get_schema()->get_name() );
 
       $a_std_schema_name_rid = $this->get_dba()->query( $sql )[ 0 ][ 'a_std_schema_name_aid' ];
 
       $sql = "
-        insert into t_journal_std__migration (
-          a_std_migration_schema_name_rid,
-          a_std_migration_revision
+        insert into t_journal__std_schema_migration (
+          a_std_schema_migration_schema_name_rid,
+          a_std_schema_migration_revision
         )
         values (
           " . $this->get_dba()->quote( $a_std_schema_name_rid ) . ",
@@ -298,10 +298,10 @@ class MudDatabaseLite extends MudGadget {
 
       $this->get_dba()->exec( $sql );
 
-      var_dump( MUDBALL_CODE );
+      //var_dump( MUDBALL_CODE );
 
       $rid = $this->get_particle_rid(
-        't_particle_std__software_code',
+        't_particle__std_software_code',
         'a_std_software_code_aid',
         'a_std_software_code',
         MUDBALL_CODE,

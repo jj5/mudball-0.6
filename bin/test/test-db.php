@@ -17,13 +17,11 @@ function main( $argv ) {
     }
   }
 
-  app_declare_database();
+  $db = app_declare_database();
 
-  $connection = $db->get_connection( MudConnectionTypeLite::DBA );
-
-  $row = $connection->query( "show status like 'Ssl_cipher'" );
-
-  var_dump( $row );
+  //$connection = $db->get_connection( MudConnectionTypeLite::DBA );
+  //$row = $connection->query( "show status like 'Ssl_cipher'" );
+  //var_dump( $row );
 
   $db->upgrade();
 
