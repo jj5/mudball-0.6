@@ -252,7 +252,7 @@ class MudDatabaseLite extends MudGadget {
         )
         values (
           " . $this->get_dba()->quote( $a_std_schema_name_rid ) . ",
-          " . $this->get_dba()->quote( $revision->get_datetime( 'Y-m-d H:i:s' ) ) . "
+          " . $this->get_dba()->quote( $revision->get_datestring( 'Y-m-d H:i:s' ) ) . "
         )";
 
       $this->get_dba()->exec( $sql );

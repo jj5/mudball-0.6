@@ -47,7 +47,7 @@ class MudRevisionLite extends MudGadget {
     return $this->timestring;
   }
 
-  public function get_datetime( string $format ) : string {
+  public function get_datestring( string $format ) : string {
     return $this->datetime->format( $format );
   }
 
