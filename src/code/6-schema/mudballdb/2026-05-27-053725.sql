@@ -13,7 +13,6 @@ create table t_abinitio_std_time_zone (
   a_std_time_zone_aid smallint unsigned not null auto_increment,
   a_std_time_zone_name varchar( 255 ) collate ascii_bin not null default ( @@session.time_zone ),
   a_std_time_zone_created_on datetime( 6 ) not null default current_timestamp( 6 ),
-  a_std_time_zone_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
   primary key ( a_std_time_zone_aid ),
   unique key ( a_std_time_zone_name )
 );
@@ -32,13 +31,19 @@ create table t_abinitio_std_interaction (
   a_std_interaction_connection_id bigint unsigned not null default ( connection_id() ),
   a_std_interaction_time_zone_rid smallint unsigned not null,
   a_std_interaction_created_on datetime( 6 ) not null default current_timestamp( 6 ),
-  a_std_interaction_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
   primary key ( a_std_interaction_aid ),
   foreign key ( a_std_interaction_time_zone_rid )
     references t_abinitio_std_time_zone ( a_std_time_zone_aid )
     on update restrict
     on delete restrict
 );
+
+create trigger bu_t_abinitio_std_interaction
+before update on t_abinitio_std_interaction
+for each row
+begin
+  signal sqlstate '45000' set message_text = 'updates are not allowed.';
+end;
 
 create procedure sp_std_new_interaction()
 begin
@@ -78,6 +83,13 @@ create table t_particle_std_schema_name (
     on update restrict
     on delete restrict
 );
+
+create trigger bu_t_particle_std_schema_name
+before update on t_particle_std_schema_name
+for each row
+begin
+  signal sqlstate '45000' set message_text = 'updates are not allowed.';
+end;
 
 create table t_about_std_migration (
   a_std_migration_aid int unsigned not null auto_increment,
