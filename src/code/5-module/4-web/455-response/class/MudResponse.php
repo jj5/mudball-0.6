@@ -83,13 +83,37 @@ class MudResponse extends MudService implements IMudResponse {
 
     $error = $this->errors[ $key ];
 
+    if ( is_array( $error ) ) { $error = array_values( $error )[ 0 ]; }
+
+    return true;
+
+  }
+
+  public function has_list_error( string $key, int $index, &$error = null ) {
+
+    $error = null;
+
+    if ( ! array_key_exists( $key, $this->errors ) ) { return false; }
+
+    if ( ! array_key_exists( $index, $this->errors[ $key ] ) ) { return false; }
+
+    $error = $this->errors[ $key ][ $index ];
+
     return true;
 
   }
 
   public function set_error( $key, $problem ) {
 
-    $error = $this->errors[ $key ] = $problem;
+    $this->errors[ $key ] = $problem;
+
+    return $this;
+
+  }
+
+  public function set_list_error( $key, $index, $problem ) {
+
+    $this->errors[ $key ][ $index ] = $problem;
 
     return $this;
 

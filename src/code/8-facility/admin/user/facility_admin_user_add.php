@@ -103,8 +103,8 @@ class mud_facility_admin_user_add extends AppFacility {
 
           tag_open( 'tr' );
 
-            tag_text( 'th', 'Contact Method:' );
-            tag_text( 'th', 'Details:' );
+            tag_text( 'th', 'Contact Method' );
+            tag_text( 'th', 'Details' );
             tag_text( 'th', 'Add/Remove' );
 
           tag_shut( 'tr' );
@@ -118,7 +118,7 @@ class mud_facility_admin_user_add extends AppFacility {
             $method = $context->get_list_value( 'contact-method-type', $index );
             $detail = $context->get_list_value( 'contact-method-detail', $index );
 
-            $this->render_contact_method_row( $index, $id, $method, $detail );
+            $this->render_contact_method_row( $context, $index, $id, $method, $detail );
 
           }
 
@@ -132,7 +132,7 @@ class mud_facility_admin_user_add extends AppFacility {
 
   }
 
-  protected function render_contact_method_row( $index, $id, $method, $detail ) {
+  protected function render_contact_method_row( $context, $index, $id, $method, $detail ) {
 
     tag_open( 'tr' );
 
@@ -140,7 +140,7 @@ class mud_facility_admin_user_add extends AppFacility {
 
         tag_bare( 'input', [ 'type' => 'hidden', 'name' => 'contact-method-id[]', 'value' => $id ] );
 
-        tag_open( 'select', [ 'name' => 'contact-method[]' ] );
+        tag_open( 'select', [ 'name' => 'contact-method-type[]' ] );
 
           tag_text( 'option', 'Email', [ 'value' => 'email', 'selected' => $method === 'email' ? true : false ] );
 
@@ -154,7 +154,21 @@ class mud_facility_admin_user_add extends AppFacility {
 
       tag_open( 'td' );
 
-        tag_bare( 'input', [ 'type' => 'text', 'name' => 'contact-detail[]', 'value' => $detail ] );
+        tag_bare(
+          'input',
+          [
+            'type' => 'text',
+            'name' => 'contact-method-detail[]',
+            'value' => $detail,
+            'placeholder' => 'Contact details...',
+          ]
+        );
+
+        if ( $context->has_list_error( 'contact-method-detail', $index, $error ) ) {
+
+          tag_text( 'div', $error, [ 'class' => 'error' ] );
+
+        }
 
       tag_shut( 'td' );
 

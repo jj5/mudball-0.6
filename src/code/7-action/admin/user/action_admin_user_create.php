@@ -10,6 +10,8 @@ class mud_action_admin_user_create extends MudAction {
 
     }
 
+    $response->set_list_error( 'contact-method-detail', 2, 'contact method details are required.' );
+
     if ( $response->has_errors() ) {
 
       return $request->get_submission();

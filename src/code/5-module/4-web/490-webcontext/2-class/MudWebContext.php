@@ -94,9 +94,14 @@ class MudWebContext extends MudGadget implements IMudWebContext {
   public function reply( int $http_status_code, $location = null ) { return $this->get_response()->reply( $http_status_code, $location ); }
   public function has_errors() { return $this->get_response()->has_errors(); }
   public function has_error( string $key, &$error = null ) { return $this->get_response()->has_error( $key, $error ); }
+  public function has_list_error( string $key, int $index, &$error = null ) { return $this->get_response()->has_list_error( $key, $index, $error ); }
   public function set_error( $key, $problem ) { return $this->get_response()->set_error( $key, $problem ); }
   public function get_errors() { return $this->get_response()->get_errors(); }
 
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2026-05-28 jj5 - IWebContext interface...
+  //
 
   public function get_value( $key, $default = null ) { return $this->view_state[ $key ] ?? $default; }
   public function get_list_value( $key, $index, $default = null ) { return $this->view_state[ $key ][ $index ] ?? $default; }
