@@ -149,31 +149,15 @@ class MudModuleView extends MudModuleWeb {
         $search_action = $args[ 'search_action' ] ?? bom_get_utility_link( 'search' );
         */
 
-        foreach ( $args[ 'stylesheets' ] ?? [] as $version => $url ) {
-
-          if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
-
-          tag_link( 'text/css', 'stylesheet', $url );
-
-        }
-
-        //tag_link( 'text/css', 'stylesheet', 'https://www.staticmagic.net/global/table.css' );
-        tag_link( 'text/css', 'stylesheet', 'https://d27cckvuinr11o.cloudfront.net/global/table.css' );
-
-        //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/style' ) );
-        //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/debug/style.css' ) );
-
-        foreach ( $args[ 'scripts' ] ?? [] as $version => $url ) {
-
-          if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
-
-          tag_bare( 'script', [ 'src' => $url ] );
-
-        }
+        $this->render_stylesheets( $context, $args );
+        $this->render_head_scripts( $context, $args );
 
         tag_shut( 'head' );
 
         tag_open( 'body' );
+
+// 2026-05-28 jj5 - taking this out for now
+/*
 
           if ( BETA ) {
 
@@ -232,6 +216,7 @@ class MudModuleView extends MudModuleWeb {
 
               }
             }
+*/
 
   }
 
@@ -241,7 +226,10 @@ class MudModuleView extends MudModuleWeb {
 
         $iframe = $args[ 'iframe' ] ?? false;
 
+// 2026-05-28 jj5 - taking this out for now
+/*
         tag_shut( 'main', [ 'id' => $this->container_id ] );
+*/
 
         if ( ! $iframe ) {
 
@@ -270,18 +258,7 @@ class MudModuleView extends MudModuleWeb {
 
         }
 
-        foreach ( $args[ 'scripts' ] ?? [] as $version => $url ) {
-
-          if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
-
-          tag_bare( 'script', [ 'src' => $url ] );
-
-        }
-
-        //tag_bare( 'script', [ 'src' => app_url()->res( '/res/script' ) ] );
-
-        tag_bare( 'script', [ 'src' => 'https://d27cckvuinr11o.cloudfront.net/global/table.js' ]  );
-
+        $this->render_foot_scripts( $context, $args );
 
       tag_shut( 'body' );
 
@@ -340,6 +317,85 @@ class MudModuleView extends MudModuleWeb {
     //$debug = defined( 'DEBUG' ) && DEBUG;
 
     tag_shut( 'form' );
+
+  }
+
+  public function render_stylesheets( $context = null, $args = [] ) {
+
+    foreach ( $args[ 'stylesheets' ] ?? [] as $version => $url ) {
+
+      if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
+
+      tag_link( 'text/css', 'stylesheet', $url );
+
+    }
+
+    //tag_link( 'text/css', 'stylesheet', 'https://www.staticmagic.net/global/table.css' );
+    //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/style' ) );
+    //tag_link( 'text/css', 'stylesheet', app_url()->res( '/res/debug/style.css' ) );
+
+    tag_link( 'text/css', 'stylesheet', 'https://d27cckvuinr11o.cloudfront.net/global/table.css' );
+
+  }
+
+  public function render_head_scripts( $context = null, $args = [] ) {
+
+    foreach ( $args[ 'scripts' ] ?? [] as $version => $url ) {
+
+      if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
+
+      tag_bare( 'script', [ 'src' => $url ] );
+
+    }
+  }
+
+  public function render_foot_scripts( $context = null, $args = [] ) {
+
+    foreach ( $args[ 'scripts' ] ?? [] as $version => $url ) {
+
+      if ( ! is_int( $version ) ) { $url .= '?v=' . $version; }
+
+      tag_bare( 'script', [ 'src' => $url ] );
+
+    }
+
+    tag_bare( 'script', [ 'src' => 'https://d27cckvuinr11o.cloudfront.net/global/table.js' ]  );
+
+  }
+
+  public function render_style_html( $path, $res_dir = null ) {
+
+    if ( $res_dir === null ) { $res_dir = APP_PATH . '/src/web/res'; }
+
+    $file = rtrim( $res_dir, '/' ) . '/' . $path;
+
+    if ( ! file_exists( $file ) ) {
+
+      mud_fail( MUD_ERR_VIEW_STYLESHEET_NOT_FOUND, [ 'path' => $path, 'file' => $file ] );
+
+    }
+
+    $md5 = md5_file( $file );
+
+    tag_link( 'text/css', 'stylesheet', APP_URL_BASE . '/res/' . $path . '?v=' . $md5 );
+
+  }
+
+  public function render_script_html( $path, $res_dir = null ) {
+
+    if ( $res_dir === null ) { $res_dir = APP_PATH . '/src/web/res'; }
+
+    $file = rtrim( $res_dir, '/' ) . '/' . $path;
+
+    if ( ! file_exists( $file ) ) {
+
+      mud_fail( MUD_ERR_VIEW_SCRIPT_NOT_FOUND, [ 'path' => $path, 'file' => $file ] );
+
+    }
+
+    $md5 = md5_file( $file );
+
+    tag_bare( 'script', [ 'src' => APP_URL_BASE . '/res/' . $path . '?v=' . $md5 ] );
 
   }
 }

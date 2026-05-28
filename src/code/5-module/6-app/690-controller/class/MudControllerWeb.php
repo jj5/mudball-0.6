@@ -162,15 +162,11 @@ class MudControllerWeb extends MudController {
 
       $request = mud_request();
 
-      // 2026-05-14 jj5 - OLD: we used to start the transaction here, but now we start it in
-      // the connection initializer.
-      //mud_trn()->begin();
+      mud_trn()->begin();
 
       try {
 
         ob_start();
-
-        mud_trn()->begin();
 
         $this->try_process( $request );
 
@@ -184,6 +180,8 @@ class MudControllerWeb extends MudController {
       catch ( MudDatabaseException $ex ) {
 
         //var_dump( $ex->getMessage() ); exit;
+
+        while ( ob_get_level() ) { ob_end_clean(); }
 
         $last_exception = $ex;
 

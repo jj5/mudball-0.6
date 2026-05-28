@@ -13,7 +13,7 @@ require_once __DIR__ . '/../../5-api/599-top/include.php';
 //
 
 require_once __DIR__ . '/class/AppModule.php';
-
+require_once __DIR__ . '/class/AppModuleView.php';
 require_once __DIR__ . '/class/AppRequest.php';
 
 

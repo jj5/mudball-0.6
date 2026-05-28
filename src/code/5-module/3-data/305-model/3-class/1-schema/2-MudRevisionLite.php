@@ -21,7 +21,7 @@ class MudRevisionLite extends MudGadget {
     $file_name = basename( $path );
     $timestring = pathinfo( $file_name, PATHINFO_FILENAME );
 
-    if ( ! preg_match( '/^(\d{4})-(\d{2})-(\d{2})-(\d{2})(\d{2})(\d{2})/', $file_name, $matches ) ) {
+    if ( ! preg_match( '/^(\d{4})-(\d{2})-(\d{2})-(\d{2})(\d{2})(\d{2})$/', $file_name, $matches ) ) {
 
       mud_fail( MUD_ERR_MODEL_INVALID_TIMESTRING, [ 'timestring' => $timestring ] );
 
@@ -58,6 +58,8 @@ class MudRevisionLite extends MudGadget {
 
   public function apply( $db ) {
 
+    mud_stderr( "applying revision: " . $this->get_timestring() . "\n" );
+
     $dir = $this->get_path() . '/rev';
 
     $files = array_filter( scandir( $dir ), fn( $file ) => $file !== '.' && $file !== '..' );
@@ -75,7 +77,7 @@ class MudRevisionLite extends MudGadget {
 
   protected function apply_revision_file( $db, string $path ) {
 
-    mud_stderr( "applying revision: " . $path . "\n" );
+    mud_stderr( "applying revision file: " . $path . "\n" );
 
     $extension = pathinfo( $path, PATHINFO_EXTENSION );
 

@@ -39,11 +39,23 @@ class MudModuleLoader extends MudModuleBasic {
 
   protected function find_facility( array $request_path_parts, &$selector ) {
 
+    static $resource_facility = null;
+
     if ( ! self::IsValidSelector( $request_path_parts ) ) { return false; }
 
     $root = $request_path_parts[ 0 ] ?? null;
 
-    if ( $root === 'res' ) { return new_mud_resource_facility(); }
+    if ( $root === 'res' ) {
+
+      if ( $resource_facility === null ) {
+
+        $resource_facility = MudResourceFacility::Create();
+
+      }
+
+      return $resource_facility;
+
+    }
 
     static $base_path_list = [
       APP_PATH . '/src/code/8-facility',

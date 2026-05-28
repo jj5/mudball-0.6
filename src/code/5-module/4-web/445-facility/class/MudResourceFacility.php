@@ -97,7 +97,17 @@ class MudResourceFacility extends MudFacility {
     // 2021-09-05 jj5 - process mudball path first so we can override from app path if
     // necessary...
     //
-    $dir_list = [ MUDBALL_PATH . "/src/web/$path", APP_PATH . "/src/web/$path" ];
+
+    if ( MUDBALL_PATH !== APP_PATH ) {
+
+      $dir_list = [ MUDBALL_PATH . "/src/web/$path", APP_PATH . "/src/web/$path" ];
+
+    }
+    else {
+
+      $dir_list = [ MUDBALL_PATH . "/src/web/$path" ];
+
+    }
 
     foreach ( $dir_list as $dir ) {
 
