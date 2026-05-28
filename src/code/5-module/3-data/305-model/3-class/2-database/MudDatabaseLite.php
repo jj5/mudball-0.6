@@ -349,6 +349,8 @@ class MudDatabaseLite extends MudGadget {
 
       try {
 
+        // 2026-05-28 jj5 - you can use this to test the duplicate entry handling...
+        //
         if ( false && DEBUG && $attempt === 1 ) {
 
           $args = [ ':from' => 0, ':thru' => 0, ':created_in' => $interaction_id ];
@@ -384,6 +386,8 @@ class MudDatabaseLite extends MudGadget {
 
           error_log( "duplicate entry detected during iid allocation, retrying..." );
 
+          $this->random_delay();
+
           continue;
 
         }
@@ -394,6 +398,22 @@ class MudDatabaseLite extends MudGadget {
     }
 
     mud_fail( MUD_ERR_MODEL_COULD_NOT_ALLOCATE_IID, [ 'attempts' => $attempt ] );
+
+  }
+
+  public function random_delay() {
+
+    // 2022-04-10 jj5 - call this to delay a random amount of time before retrying a
+    // transaction... the idea is to prevent a whole bunch of connections retrying at the same
+    // time...
+
+    $usleep = random_int( 100, 10_000 );
+
+    $formatted = number_format( $usleep / 1000.0, 2 );
+
+    mud_log_6_info( "sleeping for $formatted milliseconds..." );
+
+    usleep( $usleep );
 
   }
 }
