@@ -71,7 +71,7 @@ trait MudViewMixin {
 
   }
 
-  public function render_input(
+  public function                     render_input(
     $context,
     string $type,
     string $name,

@@ -20,24 +20,37 @@ class MudSchemaLite extends MudGadget {
 
     $revision_list = [];
 
-    $iterator = new DirectoryIterator( $this->path );
+    $month_iterator = new DirectoryIterator( $this->path );
 
-    foreach ( $iterator as $fileinfo ) {
+    foreach ( $month_iterator as $month_fileinfo ) {
 
-      if ( $fileinfo->isFile() ) {
+      if ( $month_fileinfo->isDir() ) {
 
-        $path = $fileinfo->getPathname();
+        $month_path = $month_fileinfo->getPathname();
 
-        if ( preg_match( '/^\d{4}-\d{2}-\d{2}-\d{6}/', $fileinfo->getFilename() ) ) {
+        if ( preg_match( '/^\d{4}-\d{2}$/', $month_fileinfo->getFilename() ) ) {
 
-          $revision_list[] = new MudRevisionLite( $this, $path );
+          $rev_iterator = new DirectoryIterator( $month_path );
 
+          foreach ( $rev_iterator as $rev_fileinfo ) {
+
+            if ( $rev_fileinfo->isDir() ) {
+
+              $rev_path = $rev_fileinfo->getPathname();
+
+              if ( preg_match( '/^\d{4}-\d{2}-\d{2}-\d{6}/', $rev_fileinfo->getFilename() ) ) {
+
+                $revision_list[] = new MudRevisionLite( $this, $rev_path );
+
+              }
+            }
+          }
         }
       }
     }
 
     usort( $revision_list, function ( MudRevisionLite $a, MudRevisionLite $b ) {
-      return strcmp( $a->datetime->format( 'Y-m-d\TH-i-s\Z' ), $b->datetime->format( 'Y-m-d\TH-i-s\Z' ) );
+      return strcmp( $a->get_datestring( 'Y-m-d\TH-i-s\Z' ), $b->get_datestring( 'Y-m-d\TH-i-s\Z' ) );
     } );
 
     return $revision_list;

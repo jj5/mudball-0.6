@@ -27,8 +27,9 @@ end;
 create table t_abinitio__std_interaction (
   a_std_interaction_aid int unsigned not null auto_increment,
   -- 2026-05-27 jj5 - it's hard to get good info about what the best datatype to use here is,
-  -- and I don't like using bigint unsigned because PHP can't represent it natively
-  a_std_interaction_connection_id bigint unsigned not null default ( connection_id() ),
+  -- and I don't like using bigint unsigned because PHP can't represent it natively. the numbers I see for
+  -- connection_id() are in the tens of thousands, so signed 64-bit int should be safe enough.
+  a_std_interaction_connection_id bigint not null default ( connection_id() ),
   a_std_interaction_time_zone_rid smallint unsigned not null,
   a_std_interaction_created_on datetime( 6 ) not null default current_timestamp( 6 ),
   primary key ( a_std_interaction_aid ),
@@ -47,6 +48,9 @@ end;
 
 create procedure sp_std_new_interaction()
 begin
+
+  -- 2026-05-28 jj5 - THINK: if we already allocated an interaction id do we still want to allocate a new one if asked?
+  -- for now we do.
 
   declare var_time_zone varchar( 255 ) collate ascii_bin;
 

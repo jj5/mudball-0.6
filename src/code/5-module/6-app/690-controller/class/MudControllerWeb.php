@@ -31,6 +31,8 @@ class MudControllerWeb extends MudController {
 
         header( 'Location: ' . $ex->get_location(), $replace = true, $http_status_code );
 
+        return;
+
       }
       elseif ( $http_status_code >= 400 ) {
 
@@ -125,14 +127,18 @@ class MudControllerWeb extends MudController {
 
     $facility = mud_request()->get_facility();
     //$facility = $this->get_facility( $request );
+    //var_dump( $facility ); exit;
 
     $session_token = mud_session()->get_session_token();
+    //var_dump( $session_token ); exit;
 
     assert( $session_token ? true : false );
 
     mud_xsrf_configure( $session_token );
 
     $last_exception = null;
+
+    //var_dump( $this->is_online() ); exit;
 
     if ( ! $this->is_online() ) {
 
@@ -177,6 +183,8 @@ class MudControllerWeb extends MudController {
       }
       catch ( MudDatabaseException $ex ) {
 
+        //var_dump( $ex->getMessage() ); exit;
+
         $last_exception = $ex;
 
         mud_trn()->rollback();
@@ -216,13 +224,13 @@ class MudControllerWeb extends MudController {
 
         }
 
-        mud_require( mud_user()->is_admin() );
+        mud_verify( mud_user()->is_admin() );
 
         break;
 
       case MUD_WEB_CATEGORY_DEV :
 
-        mud_require( DEV );
+        mud_verify( DEV );
 
         break;
 
@@ -230,9 +238,13 @@ class MudControllerWeb extends MudController {
 
     $facility = $request->get_facility();
 
+    //var_dump( $facility ); exit;
+
     if ( mud_is_missing( $facility ) ) { $response->reply_404_not_found(); }
 
     $is_submission = $request->is_submission();
+
+    //var_dump( $is_submission ); exit;
 
     $view_state = null;
 
@@ -248,19 +260,21 @@ class MudControllerWeb extends MudController {
         $action_args
       );
 
+      //var_dump( $processor ); exit;
+
       $action_category = mud_get_action_category( $action );
 
       switch ( $action_category ) {
 
         case MUD_WEB_CATEGORY_ADMIN :
 
-          mud_require( mud_user()->is_admin() );
+          mud_verify( mud_user()->is_admin() );
 
           break;
 
         case MUD_WEB_CATEGORY_DEV :
 
-          mud_require( DEV );
+          mud_verify( DEV );
 
           break;
 
@@ -297,7 +311,7 @@ class MudControllerWeb extends MudController {
 
     if ( ! $facility->can_query( $request ) ) {
 
-      if ( ! user()->is_logged_in() ) {
+      if ( ! mud_user()->is_logged_in() ) {
 
         $this->redirect( '/util/login', [ 'goto' => $request->get_url() ] );
 

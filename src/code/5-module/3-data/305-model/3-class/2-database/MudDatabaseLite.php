@@ -247,65 +247,7 @@ class MudDatabaseLite extends MudGadget {
 
     foreach ( $revision_list as $revision ) {
 
-      $path = $revision->get_path();
-
-      mud_stderr( "applying revision: " . $path . "\n" );
-
-      switch ( $revision->get_type() ) {
-        case 'sql':
-          $sql = file_get_contents( $path );
-          if ( $sql === false ) {
-            mud_fail( MUD_ERR_MODEL_REVISION_FILE_MISSING, [ 'name' => $path ] );
-          }
-          $this->get_dba()->exec( $sql );
-          break;
-        case 'php' :
-          require $path;
-          break;
-        default:
-          mud_stderr( "skipping unsupported revision type: " . $revision->get_type() . "\n" );
-      }
-
-      $sql = "
-        insert ignore into t_particle__std_schema_name (
-          a_std_schema_name
-        )
-        values (
-          " . $this->get_dba()->quote( $revision->get_schema()->get_name() ) . "
-        )";
-
-      $this->get_dba()->exec( $sql );
-
-      $sql = "
-        select
-          a_std_schema_name_aid
-        from
-          t_particle__std_schema_name
-        where
-          a_std_schema_name = " . $this->get_dba()->quote( $revision->get_schema()->get_name() );
-
-      $a_std_schema_name_rid = $this->get_dba()->query( $sql )[ 0 ][ 'a_std_schema_name_aid' ];
-
-      $sql = "
-        insert into t_journal__std_schema_migration (
-          a_std_schema_migration_schema_name_rid,
-          a_std_schema_migration_revision
-        )
-        values (
-          " . $this->get_dba()->quote( $a_std_schema_name_rid ) . ",
-          " . $this->get_dba()->quote( $revision->get_datestring( 'Y-m-d H:i:s' ) ) . "
-        )";
-
-      $this->get_dba()->exec( $sql );
-
-      //var_dump( MUDBALL_CODE );
-
-      $rid = $this->get_particle_rid(
-        't_particle__std_software_code',
-        'a_std_software_code_aid',
-        'a_std_software_code',
-        MUDBALL_CODE,
-      );
+      $revision->apply( $this );
 
     }
   }

@@ -403,6 +403,8 @@ class MudRequest extends MudService implements IMudRequest {
 
   public function get_criterion( $key, $default = null ) { return $this->criteria[ $key ] ?? $default; }
 
+  public function get_input( $key, $default = null ) { return $this->submission[ $key ] ?? $default; }
+
   public function get_submission() { return $this->submission; }
 
   public function get_value( $key, $default = null ) { return $this->submission[ $key ] ?? $default; }

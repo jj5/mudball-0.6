@@ -1,10 +1,12 @@
 <?php
 
-class mud_facility_admin_user_add extends MudFacility {
+class mud_facility_admin_user_list extends MudFacility {
 
   public function get_selector_spec() { return []; }
 
   public function render( $context ) {
+
+    //var_dump( $context ); exit;
 
     /*
     // 2021-10-20 jj5 - TODO: log this context (the full context) and also the actual output
@@ -40,6 +42,8 @@ class mud_facility_admin_user_add extends MudFacility {
 
     var_dump( $_SERVER ); exit;
     */
+
+    //var_dump( app_request() ); exit;
 
     $description = 'Add User';
     $keywords = [ 'user', 'add', ];
@@ -86,11 +90,11 @@ class mud_facility_admin_user_add extends MudFacility {
 
       $this->render_input_password( $context, 'password', 'Password:', 'Password...' );
 
-      $this->render_button_submit( $context, APP_ACTION_ADMIN_USER_CREATE );
+      $this->render_button_submit( $context, ACTION_DEFAULT_ADMIN_USER_ADD::class );
 
     tag_shut( 'form' );
 
   }
 }
 
-return new mud_facility_admin_user_add();
+return new mud_facility_admin_user_list();
