@@ -132,7 +132,7 @@ class mud_facility_admin_user_add extends AppFacility {
 
   }
 
-  protected function render_contact_method_row( $context, $index, $id, $method, $detail ) {
+  protected function render_contact_method_row( IMudWebContext $context, $index, $id, $method, $detail ) {
 
     tag_open( 'tr' );
 

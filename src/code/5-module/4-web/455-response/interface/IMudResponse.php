@@ -18,7 +18,9 @@ interface IMudResponse {
   public function reply( int $http_status_code, $location = null );
   public function has_errors();
   public function has_error( string $key, &$error = null );
+  public function has_list_error( string $key, int $index, &$error = null );
   public function set_error( $key, $problem );
+  public function set_list_error( $key, $index, $problem );
   public function get_errors();
 
 }

@@ -4,6 +4,7 @@
 -- IID - internal ID
 -- RID - foreign key pointing to AID or IID
 -- XID - external ID
+-- HID - historical ID
 
 -- 2026-05-27 jj5 - namespace -> schema
 -- bus -> mudballdb
@@ -150,3 +151,130 @@ begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';
 end;
 
+create table t_history__std_user (
+  a_std_user_hid int unsigned not null auto_increment,
+  a_std_user_iid int unsigned not null,
+  a_std_user_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
+  primary key ( a_std_user_hid ),
+  foreign key ( a_std_user_hid )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_created_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_updated_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict
+);
+
+create table t_entity__std_user (
+  a_std_user_iid int unsigned not null,
+  a_std_user_rowversion int unsigned not null,
+  a_std_user_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
+  a_std_user_deleted_in int unsigned null default null,
+  a_std_user_deleted_on datetime( 6 ) null default null,
+  primary key ( a_std_user_iid ),
+  foreign key ( a_std_user_rowversion )
+    references t_history__std_user ( a_std_user_hid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_created_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_updated_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict
+);
+
+create trigger bi_t_entity__std_user
+before insert on t_entity__std_user
+for each row
+begin
+
+  insert into t_history__std_user (
+    a_std_user_iid,
+    a_std_user_username,
+    a_std_user_created_in,
+    a_std_user_created_on,
+    a_std_user_updated_in,
+    a_std_user_updated_on
+  )
+  values (
+    new.a_std_user_iid,
+    new.a_std_user_username,
+    new.a_std_user_created_in,
+    new.a_std_user_created_on,
+    new.a_std_user_updated_in,
+    new.a_std_user_updated_on
+  );
+
+  set new.a_std_user_rowversion = last_insert_id();
+
+end;
+
+create trigger bu_t_entity__std_user
+before update on t_entity__std_user
+for each row
+begin
+
+  insert into t_history__std_user (
+    a_std_user_iid,
+    a_std_user_username,
+    a_std_user_created_in,
+    a_std_user_created_on,
+    a_std_user_updated_in,
+    a_std_user_updated_on
+  )
+  values (
+    new.a_std_user_iid,
+    new.a_std_user_username,
+    new.a_std_user_created_in,
+    new.a_std_user_created_on,
+    new.a_std_user_updated_in,
+    new.a_std_user_updated_on
+  );
+
+  set new.a_std_user_rowversion = last_insert_id();
+
+end;
+
+create trigger bd_t_entity__std_user
+before delete on t_entity__std_user
+for each row
+begin
+
+  insert into t_history__std_user (
+    a_std_user_iid,
+    a_std_user_username,
+    a_std_user_created_in,
+    a_std_user_created_on,
+    a_std_user_updated_in,
+    a_std_user_updated_on,
+    a_std_user_deleted_in,
+    a_std_user_deleted_on
+  )
+  values (
+    old.a_std_user_iid,
+    old.a_std_user_username,
+    old.a_std_user_created_in,
+    old.a_std_user_created_on,
+    old.a_std_user_updated_in,
+    old.a_std_user_updated_on,
+    @a_std_interaction_rid,
+    current_timestamp( 6 )
+  );
+
+end;
