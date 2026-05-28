@@ -10,16 +10,16 @@
 -- bus -> mudballdb
 -- std -> myappdb
 
-create table t_abinitio__std_time_zone (
-  a_std_time_zone_aid smallint unsigned not null auto_increment,
-  a_std_time_zone_name varchar( 255 ) collate ascii_bin not null default ( @@session.time_zone ),
-  a_std_time_zone_created_on datetime( 6 ) not null default current_timestamp( 6 ),
-  primary key ( a_std_time_zone_aid ),
-  unique key ( a_std_time_zone_name )
+create table t_abinitio__std_interaction_time_zone (
+  a_std_interaction_time_zone_aid smallint unsigned not null auto_increment,
+  a_std_interaction_time_zone_name varchar( 255 ) collate ascii_bin not null default ( @@session.time_zone ),
+  a_std_interaction_time_zone_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  primary key ( a_std_interaction_time_zone_aid ),
+  unique key ( a_std_interaction_time_zone_name )
 );
 
-create trigger bu_t_abinitio__std_time_zone
-before update on t_abinitio__std_time_zone
+create trigger bu_t_abinitio__std_interaction_time_zone
+before update on t_abinitio__std_interaction_time_zone
 for each row
 begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';
@@ -31,11 +31,11 @@ create table t_abinitio__std_interaction (
   -- and I don't like using bigint unsigned because PHP can't represent it natively. the numbers I see for
   -- connection_id() are in the tens of thousands, so signed 64-bit int should be safe enough.
   a_std_interaction_connection_id bigint not null default ( connection_id() ),
-  a_std_interaction_time_zone_rid smallint unsigned not null,
+  a_std_interaction_interaction_time_zone_rid smallint unsigned not null,
   a_std_interaction_created_on datetime( 6 ) not null default current_timestamp( 6 ),
   primary key ( a_std_interaction_aid ),
-  foreign key ( a_std_interaction_time_zone_rid )
-    references t_abinitio__std_time_zone ( a_std_time_zone_aid )
+  foreign key ( a_std_interaction_interaction_time_zone_rid )
+    references t_abinitio__std_interaction_time_zone ( a_std_interaction_time_zone_aid )
     on update restrict
     on delete restrict
 );
@@ -53,22 +53,24 @@ begin
   -- 2026-05-28 jj5 - THINK: if we already allocated an interaction id do we still want to allocate a new one if asked?
   -- for now we do.
 
-  declare var_time_zone varchar( 255 ) collate ascii_bin;
+  declare var_interaction_time_zone varchar( 255 ) collate ascii_bin;
 
-  set var_time_zone = @@session.time_zone;
+  set var_interaction_time_zone = @@session.time_zone;
 
-  insert ignore into t_abinitio__std_time_zone (
-    a_std_time_zone_name
-  )
-  values (
-    var_time_zone
+  insert ignore into t_abinitio__std_interaction_time_zone ( a_std_interaction_time_zone_name )
+  values ( var_interaction_time_zone );
+
+  set @a_std_interaction_time_zone_rid = (
+    select
+      a_std_interaction_time_zone_aid
+    from
+      t_abinitio__std_interaction_time_zone
+    where
+      a_std_interaction_time_zone_name = var_interaction_time_zone
   );
 
-  set @a_std_time_zone_rid = (
-    select a_std_time_zone_aid from t_abinitio__std_time_zone where a_std_time_zone_name = var_time_zone
-  );
-
-  insert into t_abinitio__std_interaction ( a_std_interaction_time_zone_rid ) values ( @a_std_time_zone_rid );
+  insert into t_abinitio__std_interaction ( a_std_interaction_interaction_time_zone_rid )
+  values ( @a_std_interaction_time_zone_rid );
 
   set @a_std_interaction_rid = last_insert_id();
 
