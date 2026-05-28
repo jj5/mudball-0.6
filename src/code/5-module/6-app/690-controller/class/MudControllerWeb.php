@@ -134,6 +134,8 @@ class MudControllerWeb extends MudController {
 
     assert( $session_token ? true : false );
 
+    //var_dump( $session_token ); exit;
+
     mud_xsrf_configure( $session_token );
 
     $last_exception = null;

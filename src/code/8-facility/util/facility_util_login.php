@@ -1,6 +1,6 @@
 <?php
 
-class mud_facility_util_login extends MudFacility {
+class mud_facility_util_login extends AppFacility {
 
   public function get_selector_spec() { return []; }
 

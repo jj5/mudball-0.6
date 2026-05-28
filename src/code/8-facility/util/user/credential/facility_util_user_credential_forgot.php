@@ -1,6 +1,6 @@
 <?php
 
-class mud_facility_util_user_credential_forgot extends MudFacility {
+class mud_facility_util_user_credential_forgot extends AppFacility {
 
   public function get_selector_spec() { return []; }
 

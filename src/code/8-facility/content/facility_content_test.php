@@ -1,12 +1,12 @@
 <?php
 
-class mud_facility_content_test extends MudFacility {
+class mud_facility_content_test extends AppFacility {
 
   public function get_selector_spec() { return []; }
 
   public function render( $context ) {
 
-    $this->render_head( $context, [ 'title' => 'Just testing...' ] );
+    $this->render_head( $context, [ 'title' => 'Mudball Test Facility' ] );
 
       $this->render_nav_header( $context );
 

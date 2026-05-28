@@ -67,7 +67,9 @@ class MudWebContext extends MudGadget implements IMudWebContext {
   public function get_criteria() { return $this->get_request()->get_criteria(); }
   public function get_criterion( $key, $default = null ) { return $this->get_request()->get_criterion( $key, $default ); }
   public function get_submission() { return $this->get_request()->get_submission(); }
-  public function get_value( $key, $default = null ) { $this->get_request()->get_value( $key, $default ); }
+  // 2026-05-28 jj5 - get inputs from the view state, see below...
+  //public function get_value( $key, $default = null ) { return $this->get_request()->get_value( $key, $default ); }
+  //public function get_list_value( $key, $index, $default = null ) { return $this->get_request()->get_list_value( $key, $index, $default ); }
   public function get_action_code() { return $this->get_request()->get_action_code(); }
   public function get_action_args() { return $this->get_request()->get_action_args(); }
   public function get_files() { return $this->get_request()->get_files(); }
@@ -94,6 +96,10 @@ class MudWebContext extends MudGadget implements IMudWebContext {
   public function has_error( string $key, &$error = null ) { return $this->get_response()->has_error( $key, $error ); }
   public function set_error( $key, $problem ) { return $this->get_response()->set_error( $key, $problem ); }
   public function get_errors() { return $this->get_response()->get_errors(); }
+
+
+  public function get_value( $key, $default = null ) { return $this->view_state[ $key ] ?? $default; }
+  public function get_list_value( $key, $index, $default = null ) { return $this->view_state[ $key ][ $index ] ?? $default; }
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

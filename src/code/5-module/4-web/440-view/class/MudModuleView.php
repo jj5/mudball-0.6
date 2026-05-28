@@ -260,6 +260,12 @@ class MudModuleView extends MudModuleWeb {
 
         $this->render_foot_scripts( $context, $args );
 
+        tag_open( 'script' );
+
+          out_text( 'window.g_mud_client_id = ' . json_encode( mud_get_client_id() ) . ';' );
+
+        tag_shut( 'script' );
+
       tag_shut( 'body' );
 
     tag_shut( 'html' );
@@ -367,15 +373,24 @@ class MudModuleView extends MudModuleWeb {
 
     if ( $res_dir === null ) { $res_dir = APP_PATH . '/src/web/res'; }
 
-    $file = rtrim( $res_dir, '/' ) . '/' . $path;
+    if ( strpos( $path, 'style/' ) !== false ) {
 
-    if ( ! file_exists( $file ) ) {
-
-      mud_fail( MUD_ERR_VIEW_STYLESHEET_NOT_FOUND, [ 'path' => $path, 'file' => $file ] );
+      $md5 = $this->get_res_dir_version( 'style' );
 
     }
+    else {
 
-    $md5 = md5_file( $file );
+      $file = rtrim( $res_dir, '/' ) . '/' . $path;
+
+      if ( ! file_exists( $file ) ) {
+
+        mud_fail( MUD_ERR_VIEW_STYLESHEET_NOT_FOUND, [ 'path' => $path, 'file' => $file ] );
+
+      }
+
+      $md5 = md5_file( $file );
+
+    }
 
     tag_link( 'text/css', 'stylesheet', APP_URL_BASE . '/res/' . $path . '?v=' . $md5 );
 
@@ -383,19 +398,70 @@ class MudModuleView extends MudModuleWeb {
 
   public function render_script_html( $path, $res_dir = null ) {
 
-    if ( $res_dir === null ) { $res_dir = APP_PATH . '/src/web/res'; }
+    if ( strpos( $path, 'script/' ) !== false ) {
 
-    $file = rtrim( $res_dir, '/' ) . '/' . $path;
+      $md5 = $this->get_res_dir_version( 'script' );
 
-    if ( ! file_exists( $file ) ) {
+    }
+    else {
 
-      mud_fail( MUD_ERR_VIEW_SCRIPT_NOT_FOUND, [ 'path' => $path, 'file' => $file ] );
+      $file = rtrim( $res_dir, '/' ) . '/' . $path;
+
+      if ( ! file_exists( $file ) ) {
+
+        mud_fail( MUD_ERR_VIEW_STYLESHEET_NOT_FOUND, [ 'path' => $path, 'file' => $file ] );
+
+      }
+
+      $md5 = md5_file( $file );
 
     }
 
-    $md5 = md5_file( $file );
-
     tag_bare( 'script', [ 'src' => APP_URL_BASE . '/res/' . $path . '?v=' . $md5 ] );
+
+  }
+
+  public function get_res_dir_version( $dir ) {
+
+    $result = '';
+
+    // 2026-05-28 jj5 - Mudball is usually used as a library, but for testing purposes the Mudball library can be the
+    // application too... when Mudball is the application we don't want to include two copies of the scripts...
+    //
+    if ( MUDBALL_PATH !== APP_PATH ) {
+
+      $dir_list = [ MUDBALL_PATH . "/src/web/$dir", APP_PATH . "/src/web/$dir" ];
+
+    }
+    else {
+
+      $dir_list = [ MUDBALL_PATH . "/src/web/$dir" ];
+
+    }
+
+    foreach ( $dir_list as $dir ) {
+
+      if ( ! is_dir( $dir ) ) { continue; }
+
+      // 2026-05-28 jj5 - the scandir() function will sort the results in the same order each time, so as long as the same
+      // files are in the directory this version number should be stable.
+      //
+      foreach ( scandir( $dir ) as $rel_path ) {
+
+        $abs_path = "$dir/$rel_path";
+
+        if ( is_dir( $abs_path ) ) { continue; }
+
+        // 2026-05-28 jj5 - this will get a bit long but shouldn't be a problem...
+        //
+        $result .= md5_file( $abs_path );
+
+      }
+    }
+
+    // 2026-05-28 jj5 - if the same files are processed in the same order this version number should be stable.
+    //
+    return md5( $result );
 
   }
 }

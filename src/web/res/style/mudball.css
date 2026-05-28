@@ -16,3 +16,7 @@
 .flash {
   color: green;
 }
+
+button.add, button.remove {
+  width: 25px;
+}

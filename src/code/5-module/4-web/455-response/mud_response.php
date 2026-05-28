@@ -47,6 +47,18 @@ function mud_response( MudResponse|false $set = false ) : MudResponse {
 
 }
 
+function mud_new_client_id() {
+
+  return mud_module_response()->new_client_id();
+
+}
+
+function mud_get_client_id() {
+
+  return mud_module_response()->get_client_id();
+
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2024-02-08 jj5 - service locator...

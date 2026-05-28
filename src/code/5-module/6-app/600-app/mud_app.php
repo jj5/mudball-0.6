@@ -12,6 +12,7 @@ require_once __DIR__ . '/../../5-api/599-top/include.php';
 // 2022-02-23 jj5 - include components...
 //
 
+require_once __DIR__ . '/class/AppFacility.php';
 require_once __DIR__ . '/class/AppModule.php';
 require_once __DIR__ . '/class/AppModuleView.php';
 require_once __DIR__ . '/class/AppRequest.php';

@@ -1,6 +1,6 @@
 <?php
 
-class mud_facility_dev_complex_idea_test extends MudFacility {
+class mud_facility_dev_complex_idea_test extends AppFacility {
 
   public function get_selector_spec() { return []; }
 

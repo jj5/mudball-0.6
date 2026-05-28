@@ -76,6 +76,8 @@ class MudModuleXsrf extends MudModuleWeb {
 
     if ( $expected_suffix === $suffix ) { return true; }
 
+    var_dump( $token_hash_base64 ); exit;
+
     mud_fail( MUD_ERR_XSRF_TOKEN_INVALID );
 
   }

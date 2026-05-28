@@ -12,10 +12,21 @@ abstract class MudFacility extends MudGadget implements IMudFacility {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2026-05-28 jj5 - public fields...
+  //
+
+  // 2026-05-28 jj5 - TODO: this should be handled differently...
+  //
+  public $errors = [];
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 2021-09-05 jj5 - public instance methods...
   //
 
   abstract function get_selector_spec();
+
+  abstract function render_nav_header( $context, $args = [] );
 
   public function can_query( $request ) { return true; }
 

@@ -1,6 +1,6 @@
 <?php
 
-class mud_facility_util_user_credential_reset extends MudFacility {
+class mud_facility_util_user_credential_reset extends AppFacility {
 
   public function get_selector_spec() { return [ APP_INPUT_TOKEN ]; }
 

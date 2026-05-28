@@ -9,6 +9,8 @@ class MudResourceFacility extends MudFacility {
 
   function get_selector_spec() { return []; }
 
+  function render_nav_header( $context, $args = [] ) { ; }
+
   public function render( $context ) {
 
     // 2021-09-05 jj5 - FIXME: this map is shit, use t_lookup_std_file_type instead...

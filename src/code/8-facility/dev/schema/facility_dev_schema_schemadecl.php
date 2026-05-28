@@ -1,6 +1,6 @@
 <?php
 
-class mud_facility_dev_schema_schemadecl extends MudFacility {
+class mud_facility_dev_schema_schemadecl extends AppFacility {
 
   public function get_selector_spec() { return []; }
 
