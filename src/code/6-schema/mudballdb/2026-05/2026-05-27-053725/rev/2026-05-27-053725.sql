@@ -309,52 +309,50 @@ begin
 end;
 
 create table t_history__std_user_pii (
-  a_std_user_hid int unsigned not null auto_increment,
-  a_std_user_iid int unsigned not null,
-  a_std_user_username varchar( 255 ) collate ascii_bin not null,
-  a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
-  a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
-  a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
-  a_std_user_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
-  primary key ( a_std_user_hid ),
-  foreign key ( a_std_user_hid )
+  a_std_user_pii_hid int unsigned not null auto_increment,
+  a_std_user_pii_iid int unsigned not null,
+  a_std_user_pii_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_pii_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_pii_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  a_std_user_pii_updated_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_pii_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
+  primary key ( a_std_user_pii_hid ),
+  index idx_a_std_user_pii_iid ( a_std_user_pii_iid ),
+  index idx_a_std_user_pii_username ( a_std_user_pii_username ),
+  foreign key ( a_std_user_pii_created_in )
     references t_abinitio__std_interaction ( a_std_interaction_aid )
     on update restrict
     on delete restrict,
-  foreign key ( a_std_user_created_in )
-    references t_abinitio__std_interaction ( a_std_interaction_aid )
-    on update restrict
-    on delete restrict,
-  foreign key ( a_std_user_updated_in )
+  foreign key ( a_std_user_pii_updated_in )
     references t_abinitio__std_interaction ( a_std_interaction_aid )
     on update restrict
     on delete restrict
 );
 
 create table t_entity__std_user_pii (
-  a_std_user_iid int unsigned not null,
-  a_std_user_rowversion int unsigned not null,
-  a_std_user_username varchar( 255 ) collate ascii_bin not null,
-  a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
-  a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
-  a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
-  a_std_user_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
-  a_std_user_deleted_in int unsigned null default null,
-  a_std_user_deleted_on datetime( 6 ) null default null,
-  primary key ( a_std_user_iid ),
-  foreign key ( a_std_user_iid )
+  a_std_user_pii_iid int unsigned not null,
+  a_std_user_pii_rowversion int unsigned not null,
+  a_std_user_pii_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_pii_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_pii_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  a_std_user_pii_updated_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_pii_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
+  a_std_user_pii_deleted_in int unsigned null default null,
+  a_std_user_pii_deleted_on datetime( 6 ) null default null,
+  primary key ( a_std_user_pii_iid ),
+  foreign key ( a_std_user_pii_iid )
     references t_entity__std_user ( a_std_user_iid )
     on update restrict
     on delete restrict,
-  foreign key ( a_std_user_rowversion )
+  foreign key ( a_std_user_pii_rowversion )
     references t_history__std_user_pii ( a_std_user_hid )
     on update restrict
     on delete restrict,
-  foreign key ( a_std_user_created_in )
+  foreign key ( a_std_user_pii_created_in )
     references t_abinitio__std_interaction ( a_std_interaction_aid )
     on update restrict
     on delete restrict,
-  foreign key ( a_std_user_updated_in )
+  foreign key ( a_std_user_pii_updated_in )
     references t_abinitio__std_interaction ( a_std_interaction_aid )
     on update restrict
     on delete restrict
