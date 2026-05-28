@@ -316,4 +316,84 @@ class MudDatabaseLite extends MudGadget {
     return $this->element_accessor->get_product_rid( $table, $aid_column, $column_value_map );
 
   }
+
+  protected $iid = 0;
+  protected $iid_limit = 0;
+  protected $iid_counter = 0;
+
+  public function new_iid() : int {
+
+    if ( $this->iid ) {
+
+      if ( $this->iid < $this->iid_limit ) {
+
+        $this->iid++;
+
+        return $this->iid;
+
+      }
+    }
+
+    $interaction_id = $this->get_raw()->get_a_std_interaction_rid();
+
+    $sql_select = "select max( a_std_iid_thru ) as max_iid from t_ident__std_iid";
+
+    $sql_insert = "
+      insert into t_ident__std_iid ( a_std_iid_from, a_std_iid_thru, a_std_iid_created_in )
+      values ( :from, :thru, :created_in )
+    ";
+
+    $this->iid_counter++;
+
+    for ( $attempt = 1; $attempt < 10; $attempt++ ) {
+
+      try {
+
+        if ( false && DEBUG && $attempt === 1 ) {
+
+          $args = [ ':from' => 0, ':thru' => 0, ':created_in' => $interaction_id ];
+
+          $this->get_raw()->execute( $sql_insert, $args );
+
+        }
+
+        $max_iid = $this->get_raw()->query( $sql_select )[ 0 ][ 'max_iid' ];
+
+        $from_iid = $max_iid + 1;
+        $thru_iid = $from_iid + ( pow( 2, $this->iid_counter - 1 ) - 1 );
+
+        $args = [ ':from' => $from_iid, ':thru' => $thru_iid, ':created_in' => $interaction_id ];
+
+        $this->get_raw()->execute( $sql_insert, $args );
+
+        $this->iid = $from_iid;
+        $this->iid_limit = $thru_iid;
+
+        error_log( "allocated iid range: $from_iid - $thru_iid" );
+
+        return $from_iid;
+
+      }
+      catch ( PDOException $ex ) {
+
+        error_log( "iid allocation attempt $attempt failed: " . $ex->getMessage() );
+
+        // 2026-05-28 jj5 - duplicate entry, try again.
+        //
+        if ( $ex->errorInfo[ 1 ] === 1062 ) {
+
+          error_log( "duplicate entry detected during iid allocation, retrying..." );
+
+          continue;
+
+        }
+
+        throw $ex;
+
+      }
+    }
+
+    mud_fail( MUD_ERR_MODEL_COULD_NOT_ALLOCATE_IID, [ 'attempts' => $attempt ] );
+
+  }
 }

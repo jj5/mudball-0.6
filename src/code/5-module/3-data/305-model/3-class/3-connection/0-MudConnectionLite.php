@@ -49,6 +49,13 @@ abstract class MudConnectionLite extends MudService {
     $sql = $this->dedent( $sql );
     return $this->get_pdo()->prepare( $sql, $options );
   }
+  public function execute( string $sql, array $args = [], array $options = [], $mode = PDO::FETCH_ASSOC ) : array {
+    $stmt = $this->prepare( $sql, $options );
+    $stmt->execute( $args );
+    $result = $stmt->fetchAll( $mode );
+    $stmt->closeCursor();
+    return $result;
+  }
   public function fetch(
     string $sql,
     array $args = [],

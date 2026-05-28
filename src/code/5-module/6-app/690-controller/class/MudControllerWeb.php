@@ -148,6 +148,10 @@ class MudControllerWeb extends MudController {
 
     }
 
+    //$interaction_id = mud_database()->new_interaction();
+
+    //var_dump( $interaction_id ); exit;
+
     // 2022-04-10 jj5 - fail fast during debugging, time is money baby.
     //
     $attempts = DEBUG ? 3 : 10;

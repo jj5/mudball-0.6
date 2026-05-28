@@ -151,10 +151,37 @@ begin
   signal sqlstate '45000' set message_text = 'updates are not allowed.';
 end;
 
+create table t_ident__std_iid (
+  a_std_iid_from int unsigned not null primary key,
+  a_std_iid_thru int unsigned not null unique key,
+  a_std_iid_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_iid_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  foreign key ( a_std_iid_created_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict
+);
+
+create trigger bu_t_ident__std_iid
+before update on t_ident__std_iid
+for each row
+begin
+  signal sqlstate '45000' set message_text = 'updates are not allowed.';
+end;
+
+create trigger bd_t_ident__std_iid
+before delete on t_ident__std_iid
+for each row
+begin
+  signal sqlstate '45000' set message_text = 'deletes are not allowed.';
+end;
+
+insert into t_ident__std_iid ( a_std_iid_from, a_std_iid_thru ) values ( 0, 0 );
+
 create table t_history__std_user (
   a_std_user_hid int unsigned not null auto_increment,
   a_std_user_iid int unsigned not null,
-  a_std_user_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_password_hash varchar( 255 ) collate ascii_bin not null,
   a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
   a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
   a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
@@ -177,7 +204,7 @@ create table t_history__std_user (
 create table t_entity__std_user (
   a_std_user_iid int unsigned not null,
   a_std_user_rowversion int unsigned not null,
-  a_std_user_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_password_hash varchar( 255 ) collate ascii_bin not null,
   a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
   a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
   a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
@@ -206,7 +233,7 @@ begin
 
   insert into t_history__std_user (
     a_std_user_iid,
-    a_std_user_username,
+    a_std_user_password_hash,
     a_std_user_created_in,
     a_std_user_created_on,
     a_std_user_updated_in,
@@ -214,7 +241,7 @@ begin
   )
   values (
     new.a_std_user_iid,
-    new.a_std_user_username,
+    new.a_std_user_password_hash,
     new.a_std_user_created_in,
     new.a_std_user_created_on,
     new.a_std_user_updated_in,
@@ -231,6 +258,112 @@ for each row
 begin
 
   insert into t_history__std_user (
+    a_std_user_iid,
+    a_std_user_password_hash,
+    a_std_user_created_in,
+    a_std_user_created_on,
+    a_std_user_updated_in,
+    a_std_user_updated_on
+  )
+  values (
+    new.a_std_user_iid,
+    new.a_std_user_password_hash,
+    new.a_std_user_created_in,
+    new.a_std_user_created_on,
+    new.a_std_user_updated_in,
+    new.a_std_user_updated_on
+  );
+
+  set new.a_std_user_rowversion = last_insert_id();
+
+end;
+
+create trigger bd_t_entity__std_user
+before delete on t_entity__std_user
+for each row
+begin
+
+  insert into t_history__std_user (
+    a_std_user_iid,
+    a_std_user_password_hash,
+    a_std_user_created_in,
+    a_std_user_created_on,
+    a_std_user_updated_in,
+    a_std_user_updated_on,
+    a_std_user_deleted_in,
+    a_std_user_deleted_on
+  )
+  values (
+    old.a_std_user_iid,
+    old.a_std_user_password_hash,
+    old.a_std_user_created_in,
+    old.a_std_user_created_on,
+    old.a_std_user_updated_in,
+    old.a_std_user_updated_on,
+    @a_std_interaction_rid,
+    current_timestamp( 6 )
+  );
+
+end;
+
+create table t_history__std_user_pii (
+  a_std_user_hid int unsigned not null auto_increment,
+  a_std_user_iid int unsigned not null,
+  a_std_user_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
+  primary key ( a_std_user_hid ),
+  foreign key ( a_std_user_hid )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_created_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_updated_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict
+);
+
+create table t_entity__std_user_pii (
+  a_std_user_iid int unsigned not null,
+  a_std_user_rowversion int unsigned not null,
+  a_std_user_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  a_std_user_updated_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_user_updated_on datetime( 6 ) not null default current_timestamp( 6 ) on update current_timestamp( 6 ),
+  a_std_user_deleted_in int unsigned null default null,
+  a_std_user_deleted_on datetime( 6 ) null default null,
+  primary key ( a_std_user_iid ),
+  foreign key ( a_std_user_iid )
+    references t_entity__std_user ( a_std_user_iid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_rowversion )
+    references t_history__std_user_pii ( a_std_user_hid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_created_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict,
+  foreign key ( a_std_user_updated_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict
+);
+
+create trigger bi_t_entity__std_user_pii
+before insert on t_entity__std_user_pii
+for each row
+begin
+
+  insert into t_history__std_user_pii (
     a_std_user_iid,
     a_std_user_username,
     a_std_user_created_in,
@@ -251,12 +384,38 @@ begin
 
 end;
 
-create trigger bd_t_entity__std_user
-before delete on t_entity__std_user
+create trigger bu_t_entity__std_user_pii
+before update on t_entity__std_user_pii
 for each row
 begin
 
-  insert into t_history__std_user (
+  insert into t_history__std_user_pii (
+    a_std_user_iid,
+    a_std_user_username,
+    a_std_user_created_in,
+    a_std_user_created_on,
+    a_std_user_updated_in,
+    a_std_user_updated_on
+  )
+  values (
+    new.a_std_user_iid,
+    new.a_std_user_username,
+    new.a_std_user_created_in,
+    new.a_std_user_created_on,
+    new.a_std_user_updated_in,
+    new.a_std_user_updated_on
+  );
+
+  set new.a_std_user_rowversion = last_insert_id();
+
+end;
+
+create trigger bd_t_entity__std_user_pii
+before delete on t_entity__std_user_pii
+for each row
+begin
+
+  insert into t_history__std_user_pii (
     a_std_user_iid,
     a_std_user_username,
     a_std_user_created_in,
