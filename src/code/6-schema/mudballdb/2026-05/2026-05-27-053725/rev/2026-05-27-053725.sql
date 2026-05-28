@@ -345,7 +345,7 @@ create table t_entity__std_user_pii (
     on update restrict
     on delete restrict,
   foreign key ( a_std_user_pii_rowversion )
-    references t_history__std_user_pii ( a_std_user_hid )
+    references t_history__std_user_pii ( a_std_user_pii_hid )
     on update restrict
     on delete restrict,
   foreign key ( a_std_user_pii_created_in )
@@ -364,23 +364,23 @@ for each row
 begin
 
   insert into t_history__std_user_pii (
-    a_std_user_iid,
-    a_std_user_username,
-    a_std_user_created_in,
-    a_std_user_created_on,
-    a_std_user_updated_in,
-    a_std_user_updated_on
+    a_std_user_pii_iid,
+    a_std_user_pii_username,
+    a_std_user_pii_created_in,
+    a_std_user_pii_created_on,
+    a_std_user_pii_updated_in,
+    a_std_user_pii_updated_on
   )
   values (
-    new.a_std_user_iid,
-    new.a_std_user_username,
-    new.a_std_user_created_in,
-    new.a_std_user_created_on,
-    new.a_std_user_updated_in,
-    new.a_std_user_updated_on
+    new.a_std_user_pii_iid,
+    new.a_std_user_pii_username,
+    new.a_std_user_pii_created_in,
+    new.a_std_user_pii_created_on,
+    new.a_std_user_pii_updated_in,
+    new.a_std_user_pii_updated_on
   );
 
-  set new.a_std_user_rowversion = last_insert_id();
+  set new.a_std_user_pii_rowversion = last_insert_id();
 
 end;
 
@@ -390,23 +390,23 @@ for each row
 begin
 
   insert into t_history__std_user_pii (
-    a_std_user_iid,
-    a_std_user_username,
-    a_std_user_created_in,
-    a_std_user_created_on,
-    a_std_user_updated_in,
-    a_std_user_updated_on
+    a_std_user_pii_iid,
+    a_std_user_pii_username,
+    a_std_user_pii_created_in,
+    a_std_user_pii_created_on,
+    a_std_user_pii_updated_in,
+    a_std_user_pii_updated_on
   )
   values (
-    new.a_std_user_iid,
-    new.a_std_user_username,
-    new.a_std_user_created_in,
-    new.a_std_user_created_on,
-    new.a_std_user_updated_in,
-    new.a_std_user_updated_on
+    new.a_std_user_pii_iid,
+    new.a_std_user_pii_username,
+    new.a_std_user_pii_created_in,
+    new.a_std_user_pii_created_on,
+    new.a_std_user_pii_updated_in,
+    new.a_std_user_pii_updated_on
   );
 
-  set new.a_std_user_rowversion = last_insert_id();
+  set new.a_std_user_pii_rowversion = last_insert_id();
 
 end;
 
@@ -416,22 +416,22 @@ for each row
 begin
 
   insert into t_history__std_user_pii (
-    a_std_user_iid,
-    a_std_user_username,
-    a_std_user_created_in,
-    a_std_user_created_on,
-    a_std_user_updated_in,
-    a_std_user_updated_on,
-    a_std_user_deleted_in,
-    a_std_user_deleted_on
+    a_std_user_pii_iid,
+    a_std_user_pii_username,
+    a_std_user_pii_created_in,
+    a_std_user_pii_created_on,
+    a_std_user_pii_updated_in,
+    a_std_user_pii_updated_on,
+    a_std_user_pii_deleted_in,
+    a_std_user_pii_deleted_on
   )
   values (
-    old.a_std_user_iid,
-    old.a_std_user_username,
-    old.a_std_user_created_in,
-    old.a_std_user_created_on,
-    old.a_std_user_updated_in,
-    old.a_std_user_updated_on,
+    old.a_std_user_pii_iid,
+    old.a_std_user_pii_username,
+    old.a_std_user_pii_created_in,
+    old.a_std_user_pii_created_on,
+    old.a_std_user_pii_updated_in,
+    old.a_std_user_pii_updated_on,
     @a_std_interaction_rid,
     current_timestamp( 6 )
   );
