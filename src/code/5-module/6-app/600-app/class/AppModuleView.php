@@ -37,28 +37,4 @@ class AppModuleView extends MudModuleView {
     $this->render_script_html( 'script/mudball.js' );
 
   }
-
-  public function render_nav_header( $context, $args = [] ) {
-
-    // 2022-02-19 jj5 - TODO: make this more robust and flexible...
-
-    tag_open( 'header', [ 'id' => 'page-header' ] );
-
-      tag_open( 'nav', [ 'id' => 'top-nav' ] );
-
-        tag_open( 'ul' );
-
-          tag_open( 'li' );
-
-            tag_text( 'a', 'Home', [ 'href' => APP_URL_BASE . '/test' ] );
-
-          tag_shut( 'li' );
-
-        tag_shut( 'ul' );
-
-      tag_shut( 'nav' );
-
-    tag_shut( 'header' );
-
-  }
 }

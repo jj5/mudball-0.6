@@ -323,6 +323,8 @@ class MudDatabaseLite extends MudGadget {
   protected $iid = 0;
   protected $iid_limit = 0;
   protected $iid_counter = 0;
+  protected $iid_select = null;
+  protected $iid_insert = null;
 
   public function new_iid() : int {
 
@@ -341,6 +343,8 @@ class MudDatabaseLite extends MudGadget {
 
     $sql_select = "select max( a_std_iid_thru ) as max_iid from t_ident__std_iid";
 
+    $this->iid_select = $this->iid_select ?? $this->get_raw()->prepare( $sql_select );
+
     $sql_insert = "
       insert into t_ident__std_iid ( a_std_iid_from, a_std_iid_thru, a_std_iid_created_in )
       values ( :from, :thru, :created_in )
@@ -348,7 +352,7 @@ class MudDatabaseLite extends MudGadget {
 
     $this->iid_counter++;
 
-    for ( $attempt = 1; $attempt < 10; $attempt++ ) {
+    for ( $attempt = 1; $attempt < 50; $attempt++ ) {
 
       try {
 
@@ -358,30 +362,44 @@ class MudDatabaseLite extends MudGadget {
 
           $args = [ ':from' => 0, ':thru' => 0, ':created_in' => $interaction_id ];
 
-          $this->get_raw()->execute( $sql_insert, $args );
+          $this->iid_insert = $this->iid_insert ?? $this->get_raw()->prepare( $sql_insert );
+          $this->iid_insert->execute( $args );
 
         }
 
-        $max_iid = $this->get_raw()->query( $sql_select )[ 0 ][ 'max_iid' ];
+        if ( $this->iid_select->execute() ) {
 
-        $from_iid = $max_iid + 1;
-        $thru_iid = $from_iid + ( pow( 2, $this->iid_counter - 1 ) - 1 );
+          $max_iid = $this->iid_select->fetchAll( PDO::FETCH_ASSOC )[ 0 ][ 'max_iid' ];
 
-        $args = [ ':from' => $from_iid, ':thru' => $thru_iid, ':created_in' => $interaction_id ];
+          $this->iid_select->closeCursor();
 
-        $this->get_raw()->execute( $sql_insert, $args );
+          $from_iid = $max_iid + 1;
+          $thru_iid = $from_iid + ( pow( 2, $this->iid_counter - 1 ) - 1 );
 
-        $this->iid = $from_iid;
-        $this->iid_limit = $thru_iid;
+          $args = [ ':from' => $from_iid, ':thru' => $thru_iid, ':created_in' => $interaction_id ];
 
-        error_log( "allocated iid range: $from_iid - $thru_iid" );
+          $this->iid_insert = $this->iid_insert ?? $this->get_raw()->prepare( $sql_insert );
 
-        return $from_iid;
+          if ( $this->iid_insert->execute( $args ) ) {
 
+            $this->iid_insert->closeCursor();
+
+            $this->iid = $from_iid;
+            $this->iid_limit = $thru_iid;
+
+            error_log( "allocated iid range: $from_iid - $thru_iid" );
+
+            return $from_iid;
+
+          }
+        }
       }
       catch ( PDOException $ex ) {
 
         error_log( "iid allocation attempt $attempt failed: " . $ex->getMessage() );
+
+        if ( $this->iid_select ) { $this->iid_select->closeCursor(); }
+        if ( $this->iid_insert ) { $this->iid_insert->closeCursor(); }
 
         // 2026-05-28 jj5 - duplicate entry, try again.
         //
@@ -400,7 +418,87 @@ class MudDatabaseLite extends MudGadget {
       }
     }
 
+    $this->iid_select = null;
+    $this->iid_insert = null;
+
     mud_fail( MUD_ERR_MODEL_COULD_NOT_ALLOCATE_IID, [ 'attempts' => $attempt ] );
+
+  }
+
+  protected $xid_select = null;
+  protected $xid_insert = null;
+
+  public function get_xid( int $iid ) : int {
+
+    $interaction_id = $this->get_raw()->get_a_std_interaction_rid();
+
+    $sql_select = "select a_std_xid from t_ident__std_xid where a_std_iid = :iid";
+
+    $this->xid_select = $this->xid_select ?? $this->get_raw()->prepare( $sql_select );
+
+    $sql_insert = "
+      insert into t_ident__std_xid ( a_std_iid, a_std_xid, a_std_xid_created_in )
+      values ( :iid, :xid, :created_in )
+    ";
+
+    for ( $attempt = 1; $attempt < 50; $attempt++ ) {
+
+      try {
+
+        if ( $this->xid_select->execute( [ ':iid' => $iid ] ) ) {
+
+          $result = $this->xid_select->fetchAll( PDO::FETCH_ASSOC );
+
+          $this->xid_select->closeCursor();
+
+          if ( count( $result ) === 1 ) {
+
+            return intval( $result[ 0 ][ 'a_std_xid' ] );
+
+          }
+        }
+
+        $this->xid_select->closeCursor();
+
+        $xid = $this->external_id_generator->new_external_id_candidate();
+
+        $args = [ ':iid' => $iid, ':xid' => $xid, ':created_in' => $interaction_id ];
+
+        $this->xid_insert = $this->xid_insert ?? $this->get_raw()->prepare( $sql_insert );
+
+        $this->xid_insert->execute( $args );
+
+        $this->xid_insert->closeCursor();
+
+      }
+      catch ( PDOException $ex ) {
+
+        error_log( "xid allocation attempt $attempt failed: " . $ex->getMessage() );
+
+        if ( $this->xid_select ) { $this->xid_select->closeCursor(); }
+        if ( $this->xid_insert ) { $this->xid_insert->closeCursor(); }
+
+        // 2026-05-28 jj5 - duplicate entry, try again.
+        //
+        if ( $ex->errorInfo[ 1 ] === 1062 ) {
+
+          error_log( "duplicate entry detected during xid allocation, retrying..." );
+
+          $this->random_delay();
+
+          continue;
+
+        }
+
+        throw $ex;
+
+      }
+    }
+
+    $this->xid_select = null;
+    $this->xid_insert = null;
+
+    mud_fail( MUD_ERR_MODEL_COULD_NOT_ALLOCATE_XID, [ 'attempts' => $attempt ] );
 
   }
 

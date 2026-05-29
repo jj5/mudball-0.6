@@ -21,7 +21,8 @@ mud_define_error( 'MUD_ERR_MODEL_INVALID_TIMESTRING', 'invalid timestring.' );
 mud_define_error( 'MUD_ERR_MODEL_REVISION_FILE_MISSING', 'revision file not found.' );
 mud_define_error( 'MUD_ERR_MODEL_UNSUPPORTED_ELEMENT_ACCESSOR_STRATEGY', 'unsupported element accessor strategy.' );
 mud_define_error( 'MUD_ERR_MODEL_ELEMENT_NOT_FOUND', 'element not found.' );
-mud_define_error( 'MUD_ERR_MODEL_COULD_NOT_ALLOCATE_IID', 'could not allocate interaction ID.' );
+mud_define_error( 'MUD_ERR_MODEL_COULD_NOT_ALLOCATE_IID', 'could not allocate internal ID.' );
+mud_define_error( 'MUD_ERR_MODEL_COULD_NOT_ALLOCATE_XID', 'could not allocate external ID.' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,6 +227,12 @@ function mud_dba() : MudConnectionLite_DBA {
 function mud_new_iid() {
 
   return mud_database()->new_iid();
+
+}
+
+function mud_xid_from_iid( int $iid ) : string {
+
+  return mud_database()->get_xid( $iid );
 
 }
 

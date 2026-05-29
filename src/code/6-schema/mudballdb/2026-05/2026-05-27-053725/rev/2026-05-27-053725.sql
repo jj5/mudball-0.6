@@ -476,11 +476,16 @@ end;
 create view v_entity__std_user as
 select
   u.a_std_user_iid,
+  x.a_std_xid as a_std_user_xid,
+  u.a_std_user_rowversion,
   u.a_std_user_password_hash,
+  p.a_std_user_pii_rowversion,
   p.a_std_user_pii_username,
   p.a_std_user_pii_email
 from
   t_entity__std_user u
+left join
+  t_ident__std_xid x on x.a_std_iid = u.a_std_user_iid
 left join
   t_entity__std_user_pii p on p.a_std_user_pii_iid = u.a_std_user_iid;
 

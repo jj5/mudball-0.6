@@ -199,9 +199,9 @@ define( 'APP_ACTION_ADMIN_USER_CREATE',     'admin.user.create' );
 define( 'APP_ACTION_ADMIN_USER_UPDATE',     'admin.user.update' );
 define( 'APP_ACTION_ADMIN_USER_DELETE',     'admin.user.delete' );
 
-define( 'APP_ACTION_UTIL_USER_SIGNUP',          'util.user.signup' );
-define( 'APP_ACTION_UTIL_USER_LOGIN',           'util.user.login' );
-define( 'APP_ACTION_UTIL_USER_LOGOUT',          'util.user.logout' );
+define( 'APP_ACTION_UTIL_SIGNUP',          'util.signup' );
+define( 'APP_ACTION_UTIL_LOGIN',           'util.login' );
+define( 'APP_ACTION_UTIL_LOGOUT',          'util.logout' );
 
 define( 'APP_ACTION_UTIL_USER_CREDENTIAL_FORGOT', 'util.user.credential.forgot' );
 define( 'APP_ACTION_UTIL_USER_CREDENTIAL_RESET',  'util.user.credential.reset' );
