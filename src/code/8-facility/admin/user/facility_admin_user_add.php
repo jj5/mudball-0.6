@@ -91,11 +91,13 @@ class mud_facility_admin_user_add extends AppFacility {
       ]
     );
 
-      $this->render_input_text( $context, 'username', 'Username:', 'Username...' );
+      $this->render_input_text( $context, APP_INPUT_USERNAME, 'Username:', 'Username...' );
 
-      $this->render_input_password( $context, 'password', 'Password:', 'Password...' );
+      $this->render_input_text( $context, APP_INPUT_EMAIL_ADDRESS, 'Email:', 'Email...' );
 
-      $this->render_input_password( $context, 'password-confirm', 'Confirm Password:', 'Password...' );
+      $this->render_input_password( $context, APP_INPUT_PASSWORD, 'Password:', 'Password...' );
+
+      $this->render_input_password( $context, APP_INPUT_PASSWORD_CONFIRM, 'Confirm Password:', 'Password...' );
 
       tag_open( 'table', [ 'class' => 'nice-table' ] );
 
@@ -113,10 +115,10 @@ class mud_facility_admin_user_add extends AppFacility {
 
         tag_open( 'tbody' );
 
-          foreach ( $context->get_value( 'contact-method-id', [] ) as $index => $id ) {
+          foreach ( $context->get_value( APP_INPUT_CONTACT_METHOD_ID, [] ) as $index => $id ) {
 
-            $method = $context->get_list_value( 'contact-method-type', $index );
-            $detail = $context->get_list_value( 'contact-method-detail', $index );
+            $method = $context->get_list_value( APP_INPUT_CONTACT_METHOD_TYPE, $index );
+            $detail = $context->get_list_value( APP_INPUT_CONTACT_METHOD_DETAIL, $index );
 
             $this->render_contact_method_row( $context, $index, $id, $method, $detail );
 

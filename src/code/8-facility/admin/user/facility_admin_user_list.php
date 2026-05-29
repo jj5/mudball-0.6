@@ -4,95 +4,41 @@ class mud_facility_admin_user_list extends AppFacility {
 
   public function get_selector_spec() { return []; }
 
-  public function render( $context ) {
+  public function query( $context ) {
 
-    //var_dump( $context ); exit;
-
-    /*
-    // 2021-10-20 jj5 - TODO: log this context (the full context) and also the actual output
-    // (copy from output buffer); save all files with content-addressible names (not MD5, SHA512)
-    // and then sym-link to them from timestamped log dir.
-
-    $context = [
-      'POST' => $_POST ?? null,
-      'GET' => $_GET ?? null,
-      'FILES' => $_FILES ?? null,
-      'COOKIE' => $_COOKIE ?? null,
-      'ENV' => $_ENV ?? null,
-      'SESSION' => $_SESSION ?? null,
-      'SERVER' => $_SERVER ?? null,
+    return [
+      'contact-method-id' => [ mud_new_client_id(), ],
+      'contact-method-type' => [ 'email', ],
+      'contact-method-detail' => [ '' ],
     ];
-
-    header( 'Content-Type: text/plain' );
-
-    $json = mud_json_compact( $context );
-
-    echo 'json: ' . strlen( $json ) . '; ';
-
-    $data = mud_jzon_encode( $context );
-
-    echo 'data: ' . strlen( $data ) . ';';
-
-    mud_json_gzip_decode_pretty( $data, $json );
-
-    echo $json;
-    exit;
-
-    var_dump( $_ENV );
-
-    var_dump( $_SERVER ); exit;
-    */
-
-    //var_dump( app_request() ); exit;
-
-    $description = 'Add User';
-    $keywords = [ 'user', 'add', ];
-
-    $tabindex = 1;
-
-    $this->render_head(
-      $context,
-      [
-        'title' => $description,
-        'description' => $description,
-        'keywords' => $keywords,
-      ]
-    );
-
-      tag_bare( 'div', [ 'id' => 'logo' ] );
-
-      //$this->render_admin_menu();
-
-      tag_open( 'div', [ 'id' => 'content' ] );
-
-        tag_text( 'h1', 'New User' );
-
-        $this->render_form( $context );
-
-      tag_shut( 'div', [ 'id' => 'content' ] );
-
-    $this->render_foot( $context );
 
   }
 
-  protected function render_form( $context ) {
+  public function render( $context ) {
 
-    //$errors = $this->errors;
+    $description = 'User List';
+    $keywords = [ 'user', 'list', ];
 
-    tag_open(
-      'form',
-      [
-        'method' => 'POST',
-      ]
-    );
+    $tabindex = 1;
 
-      $this->render_input_text( $context, 'username', 'Username:', 'Username...' );
+    $args = [
+      'title' => $description,
+      'description' => $description,
+      'keywords' => $keywords,
+    ];
 
-      $this->render_input_password( $context, 'password', 'Password:', 'Password...' );
+    $this->render_head( $context, $args );
 
-      $this->render_button_submit( $context, ACTION_DEFAULT_ADMIN_USER_ADD::class );
+      $this->render_nav_header( $context );
 
-    tag_shut( 'form' );
+      tag_open( 'main' );
+
+        tag_text( 'h1', 'User List' );
+
+
+      tag_shut( 'main' );
+
+    $this->render_foot( $context );
 
   }
 }

@@ -168,6 +168,10 @@ define( 'APP_INPUT_PASSWORD', 'password' );
 define( 'APP_INPUT_PASSWORD_CONFIRM', 'password-confirm' );
 define( 'APP_INPUT_EMAIL_ADDRESS', 'email-address' );
 
+define( 'APP_INPUT_CONTACT_METHOD_ID', 'contact-method-id' );
+define( 'APP_INPUT_CONTACT_METHOD_TYPE', 'contact-method-type' );
+define( 'APP_INPUT_CONTACT_METHOD_DETAIL', 'contact-method-detail' );
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2022-04-10 jj5 - web categories are the first part of the facility or action path / name.

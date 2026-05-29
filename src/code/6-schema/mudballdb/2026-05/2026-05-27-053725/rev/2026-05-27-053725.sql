@@ -180,6 +180,31 @@ end;
 
 insert into t_ident__std_iid ( a_std_iid_from, a_std_iid_thru ) values ( 0, 0 );
 
+create table t_ident__std_xid (
+  a_std_iid int unsigned not null primary key,
+  a_std_xid bigint not null unique key,
+  a_std_xid_created_in int unsigned not null default ( @a_std_interaction_rid ),
+  a_std_xid_created_on datetime( 6 ) not null default current_timestamp( 6 ),
+  foreign key ( a_std_xid_created_in )
+    references t_abinitio__std_interaction ( a_std_interaction_aid )
+    on update restrict
+    on delete restrict
+);
+
+create trigger bu_t_ident__std_xid
+before update on t_ident__std_xid
+for each row
+begin
+  signal sqlstate '45000' set message_text = 'updates are not allowed.';
+end;
+
+create trigger bd_t_ident__std_xid
+before delete on t_ident__std_xid
+for each row
+begin
+  signal sqlstate '45000' set message_text = 'deletes are not allowed.';
+end;
+
 create table t_history__std_user (
   a_std_user_hid int unsigned not null auto_increment,
   a_std_user_iid int unsigned not null,
@@ -311,7 +336,8 @@ end;
 create table t_history__std_user_pii (
   a_std_user_pii_hid int unsigned not null auto_increment,
   a_std_user_pii_iid int unsigned not null,
-  a_std_user_pii_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_pii_username varchar( 255 ) collate ascii_general_ci not null,
+  a_std_user_pii_email varchar( 255 ) collate ascii_general_ci not null,
   a_std_user_pii_created_in int unsigned not null default ( @a_std_interaction_rid ),
   a_std_user_pii_created_on datetime( 6 ) not null default current_timestamp( 6 ),
   a_std_user_pii_updated_in int unsigned not null default ( @a_std_interaction_rid ),
@@ -332,7 +358,8 @@ create table t_history__std_user_pii (
 create table t_entity__std_user_pii (
   a_std_user_pii_iid int unsigned not null,
   a_std_user_pii_rowversion int unsigned not null,
-  a_std_user_pii_username varchar( 255 ) collate ascii_bin not null,
+  a_std_user_pii_username varchar( 255 ) collate ascii_general_ci not null,
+  a_std_user_pii_email varchar( 255 ) collate ascii_general_ci not null,
   a_std_user_pii_created_in int unsigned not null default ( @a_std_interaction_rid ),
   a_std_user_pii_created_on datetime( 6 ) not null default current_timestamp( 6 ),
   a_std_user_pii_updated_in int unsigned not null default ( @a_std_interaction_rid ),
@@ -340,6 +367,8 @@ create table t_entity__std_user_pii (
   a_std_user_pii_deleted_in int unsigned null default null,
   a_std_user_pii_deleted_on datetime( 6 ) null default null,
   primary key ( a_std_user_pii_iid ),
+  unique key ( a_std_user_pii_username ),
+  unique key ( a_std_user_pii_email ),
   foreign key ( a_std_user_pii_iid )
     references t_entity__std_user ( a_std_user_iid )
     on update restrict
@@ -366,6 +395,7 @@ begin
   insert into t_history__std_user_pii (
     a_std_user_pii_iid,
     a_std_user_pii_username,
+    a_std_user_pii_email,
     a_std_user_pii_created_in,
     a_std_user_pii_created_on,
     a_std_user_pii_updated_in,
@@ -374,6 +404,7 @@ begin
   values (
     new.a_std_user_pii_iid,
     new.a_std_user_pii_username,
+    new.a_std_user_pii_email,
     new.a_std_user_pii_created_in,
     new.a_std_user_pii_created_on,
     new.a_std_user_pii_updated_in,
@@ -392,6 +423,7 @@ begin
   insert into t_history__std_user_pii (
     a_std_user_pii_iid,
     a_std_user_pii_username,
+    a_std_user_pii_email,
     a_std_user_pii_created_in,
     a_std_user_pii_created_on,
     a_std_user_pii_updated_in,
@@ -400,6 +432,7 @@ begin
   values (
     new.a_std_user_pii_iid,
     new.a_std_user_pii_username,
+    new.a_std_user_pii_email,
     new.a_std_user_pii_created_in,
     new.a_std_user_pii_created_on,
     new.a_std_user_pii_updated_in,
@@ -418,6 +451,7 @@ begin
   insert into t_history__std_user_pii (
     a_std_user_pii_iid,
     a_std_user_pii_username,
+    a_std_user_pii_email,
     a_std_user_pii_created_in,
     a_std_user_pii_created_on,
     a_std_user_pii_updated_in,
@@ -428,6 +462,7 @@ begin
   values (
     old.a_std_user_pii_iid,
     old.a_std_user_pii_username,
+    old.a_std_user_pii_email,
     old.a_std_user_pii_created_in,
     old.a_std_user_pii_created_on,
     old.a_std_user_pii_updated_in,
@@ -437,3 +472,15 @@ begin
   );
 
 end;
+
+create view v_entity__std_user as
+select
+  u.a_std_user_iid,
+  u.a_std_user_password_hash,
+  p.a_std_user_pii_username,
+  p.a_std_user_pii_email
+from
+  t_entity__std_user u
+left join
+  t_entity__std_user_pii p on p.a_std_user_pii_iid = u.a_std_user_iid;
+

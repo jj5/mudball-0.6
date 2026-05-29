@@ -43,6 +43,7 @@ require_once __DIR__ . '/3-class/1-schema/2-MudRevisionLite.php';
 require_once __DIR__ . '/3-class/2-database/MudDatabaseLite.php';
 require_once __DIR__ . '/3-class/2-database/MudElementAccessorCached.php';
 require_once __DIR__ . '/3-class/2-database/MudElementAccessorDirect.php';
+require_once __DIR__ . '/3-class/2-database/MudExternalIdentityGenerator.php';
 
 require_once __DIR__ . '/3-class/3-connection/0-MudConnectionLite.php';
 require_once __DIR__ . '/3-class/3-connection/1-MudConnectionLite_RAW.php';

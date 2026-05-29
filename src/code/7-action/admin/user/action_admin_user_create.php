@@ -5,6 +5,7 @@ class mud_action_admin_user_create extends MudAction {
   public function process( $request, $response ) {
 
     $username = $request->get_input( APP_INPUT_USERNAME );
+    $email_address = $request->get_input( APP_INPUT_EMAIL_ADDRESS );
     $password = $request->get_input( APP_INPUT_PASSWORD );
     $password_confirm = $request->get_input( APP_INPUT_PASSWORD_CONFIRM );
 
@@ -23,18 +24,44 @@ class mud_action_admin_user_create extends MudAction {
 
     }
 
-    for ( $attempt = 0; $attempt < 100; $attempt++ ) {
+    $user_iid = mud_new_iid();
 
-      $user_iid = mud_new_iid();
-
-    }
-
-    var_dump( $user_iid ); exit;
+    $password_hash = password_hash( $password, PASSWORD_DEFAULT );
 
     $sql = "
-      insert into t_std_user ( a_std_user_username, a_std_user_password_hash )
-      values ( ?, ? )
+      insert into t_entity__std_user ( a_std_user_iid, a_std_user_password_hash )
+      values ( :iid, :password_hash )
     ";
+
+    mud_trn()->execute(
+      $sql,
+      [
+        ':iid' => $user_iid,
+        ':password_hash' => $password_hash,
+      ]
+    );
+
+    $sql = "
+      insert into t_entity__std_user_pii ( a_std_user_pii_iid, a_std_user_pii_username, a_std_user_pii_email )
+      values ( :iid, :username, :email )
+    ";
+
+    mud_trn()->execute(
+      $sql,
+      [
+        ':iid' => $user_iid,
+        ':username' => $username,
+        ':email' => $email_address,
+      ]
+    );
+
+    mud_trn()->commit();
+
+    $user_xid = mud_xid_from_iid( $user_iid );
+
+    $response->redirect( APP_URL_BASE . '/admin/user/list' );
+
+    return true;
 
   }
 }

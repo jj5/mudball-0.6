@@ -15,6 +15,7 @@ class MudDatabaseLite extends MudGadget {
 
   protected array $connection_map = [];
   protected IMudElementAccessor $element_accessor;
+  protected MudExternalIdentityGenerator $external_id_generator;
 
   public function __construct(
     array   $schema_list,
@@ -40,6 +41,8 @@ class MudDatabaseLite extends MudGadget {
     $this->db_pass = $db_pass;
     $this->db_user_dba = $db_user_dba;
     $this->db_pass_dba = $db_pass_dba;
+
+    $this->external_id_generator = new MudExternalIdentityGenerator();
 
     $this->set_element_accessor_strategy( MudElementAccessorStrategy::DIRECT );
 
