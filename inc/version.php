@@ -5,16 +5,16 @@
 define( 'MUDBALL_NAME', 'mudball-0.6' );
 define( 'MUDBALL_CODE', 'mudball' );
 
-//define( 'MUDBALL_VERSION', '0.6.2223' );
+//define( 'MUDBALL_VERSION', '0.6.2225' );
 define( 'MUDBALL_VERSION_MAJOR', 0 );
 define( 'MUDBALL_VERSION_MINOR', 6 );
-define( 'MUDBALL_VERSION_PATCH', 2223 );
+define( 'MUDBALL_VERSION_PATCH', 2225 );
 
 define(
   'MUDBALL_SVN_DATE',
-  '$Date: 2026-07-07 20:29:53 +1000 (Tue, 07 Jul 2026) $'
+  '$Date: 2026-07-07 20:33:24 +1000 (Tue, 07 Jul 2026) $'
 );
-define( 'MUDBALL_SVN_REVISION', '$Revision: 81209392 $' );
+define( 'MUDBALL_SVN_REVISION', '$Revision: 263477342 $' );
 define( 'MUDBALL_SVN_AUTHOR', '$Author: jj5 $' );
 
-define( 'MUDBALL_GIT_DATE', '2026-07-07 20:29:53 +1000 (Tue, 07 Jul 2026)' );
+define( 'MUDBALL_GIT_DATE', '2026-07-07 20:33:24 +1000 (Tue, 07 Jul 2026)' );
