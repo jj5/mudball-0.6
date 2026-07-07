@@ -183,13 +183,27 @@ class MudControllerWeb extends MudController {
         return true;
 
       }
-      catch ( MudDatabaseException $ex ) {
-
-        //var_dump( $ex->getMessage() ); exit;
-
-        while ( ob_get_level() ) { ob_end_clean(); }
+      catch ( PDOException $ex ) {
 
         $last_exception = $ex;
+
+        if ( $ex->getCode() === 'HY000' ) {
+
+          // 2026-05-29 jj5 - SQLSTATE[HY000]: General error: 2006 MySQL server has gone away
+
+          while ( ob_get_level() ) { ob_end_clean(); }
+
+          mud_trn()->rollback();
+
+          continue;
+
+        }
+      }
+      catch ( MudDatabaseException $ex ) {
+
+        $last_exception = $ex;
+
+        while ( ob_get_level() ) { ob_end_clean(); }
 
         mud_trn()->rollback();
 
