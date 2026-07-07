@@ -9,6 +9,23 @@ require_once __DIR__ . '/../../1-bootstrap/4-config.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2026-07-07 jj5 - check for special constants...
+//
+
+foreach ( [ 'DEBUG', 'DEV', 'BETA', 'PROD', 'TEST' ] as $constant ) {
+
+  // 2026-07-07 jj5 - these constants need to be defined before we load the mudball library; we conditionally load
+  // code based on whether we're in DEBUG mode, etc.
+
+  if ( ! defined( $constant ) ) {
+
+    throw new Exception( "Missing constant: {$constant}" );
+
+  }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2024-02-08 jj5 - include components...
 //
 
