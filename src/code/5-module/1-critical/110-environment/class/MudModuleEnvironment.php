@@ -125,4 +125,16 @@ class MudModuleEnvironment extends MudModuleCritical {
     return posix_getpwuid( posix_geteuid() )[ 'name' ] ?? null;
 
   }
+
+  public function is_developer() : bool {
+
+    $user = $this->get_username();
+
+    $owner_uid = fileowner( __DIR__ );
+
+    $owner = posix_getpwuid( $owner_uid )[ 'name' ] ?? null;
+
+    return $user === $owner;
+
+  }
 }

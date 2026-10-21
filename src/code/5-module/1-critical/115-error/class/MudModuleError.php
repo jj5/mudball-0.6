@@ -46,7 +46,7 @@ class MudModuleError extends MudModuleCritical {
 
   public function __destruct() {
 
-    if ( mud_is_dev() ) {
+    if ( mud_is_dev() && mud_is_developer() ) {
 
       $this->save_error_constants();
 
@@ -220,12 +220,7 @@ class MudModuleError extends MudModuleCritical {
 
   }
 
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2021-02-24 jj5 - protected methods...
-  //
-
-  protected function save_error_constants() {
+  public function save_error_constants() {
 
     $this->save_constant_map(
       $this->error_map,
@@ -233,6 +228,11 @@ class MudModuleError extends MudModuleCritical {
     );
 
   }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2021-02-24 jj5 - protected methods...
+  //
 
   protected function add_error(
     int $code,

@@ -25,7 +25,7 @@ class MudModuleExit extends MudModuleCritical {
 
   public function __destrcut() {
 
-    if ( mud_is_dev() ) {
+    if ( mud_is_dev() && mud_is_developer() ) {
 
       $this->save_exit_constants();
 
@@ -308,16 +308,16 @@ function my_exit( int|string|Throwable $argument = EXIT_SUCCESS, bool $print_err
 
   }
 
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 2024-02-09 jj5 - protected methods...
-  //
-
-  protected function save_exit_constants() {
+  public function save_exit_constants() {
 
     $this->save_constant_map( $this->exit_map );
 
   }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2024-02-09 jj5 - protected methods...
+  //
 
   protected function add_exit( string $name, int $code, string $category, string $description, string|null $hint ) {
 

@@ -55,6 +55,11 @@ function mud_get_username() : string|null {
 
 }
 
+function mud_is_developer() : bool {
+
+  return mud_module_environment()->is_developer();
+
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2024-02-08 jj5 - service locator...
