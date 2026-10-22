@@ -37,6 +37,12 @@ function mud_is_web() : bool {
 
 }
 
+function mud_is_post() : bool {
+
+  return mud_module_environment()->is_post();
+
+}
+
 function mud_is_posix() : bool {
 
   return mud_module_environment()->is_posix();
