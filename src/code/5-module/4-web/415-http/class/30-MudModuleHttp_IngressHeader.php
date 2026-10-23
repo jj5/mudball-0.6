@@ -2,10 +2,21 @@
 
 class MudModuleHttp_IngressHeader extends MudModuleHttp_IngressNormalization {
 
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2026-10-24 jj5 - protected fields...
+  //
+
   protected ?string $client_ip = null;
+  protected ?string $referrer = null;
   protected ?string $user_agent = null;
   protected ?bool $is_mobile = null;
   protected ?array $trusted_proxy_list = null;
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2026-10-24 jj5 - public methods....
+  //
 
   public function get_client_ip() : string {
 
@@ -19,7 +30,59 @@ class MudModuleHttp_IngressHeader extends MudModuleHttp_IngressNormalization {
 
   }
 
-  public function get_canonical_ip(
+  public function get_referrer() : ?string {
+
+    if ( $this->referrer === null ) {
+
+      $this->referrer = mud_http_get_server( 'HTTP_REFERER' );
+
+      if ( $this->referrer === null ) {
+
+        $this->referrer = mud_http_get_server( 'HTTP_REFERRER' );
+
+      }
+    }
+
+    return $this->referrer;
+
+  }
+
+  public function get_user_agent() : ?string {
+
+    if ( $this->user_agent === null ) {
+
+      $this->user_agent = mud_http_get_server( 'HTTP_USER_AGENT' );
+
+    }
+
+    return $this->user_agent;
+
+  }
+
+  public function is_mobile() : bool {
+
+    if ( $this->is_mobile === null ) {
+
+      $browser = (string) $this->get_user_agent();
+
+      $this->is_mobile =
+        stripos( $browser, 'ipad' ) !== false ||
+        stripos( $browser, 'iphone' ) !== false ||
+        stripos( $browser, 'android' ) !== false ||
+        stripos( $browser, 'windows mobile' ) !== false;
+
+    }
+
+    return $this->is_mobile;
+
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // 2026-10-24 jj5 - protected methods...
+  //
+
+  protected function get_canonical_ip(
     ?string $input,
     &$IPv4 = null, &$IPv4_int = null, &$IPv4_bin = null,
     &$IPv6 = null, &$IPv6_bin = null
@@ -106,36 +169,6 @@ class MudModuleHttp_IngressHeader extends MudModuleHttp_IngressNormalization {
     }
 
     return false;
-
-  }
-
-  public function get_user_agent() : ?string {
-
-    if ( $this->user_agent === null ) {
-
-      $this->user_agent = mud_http_get_server( 'HTTP_USER_AGENT' );
-
-    }
-
-    return $this->user_agent;
-
-  }
-
-  public function is_mobile() : bool {
-
-    if ( $this->is_mobile === null ) {
-
-      $browser = (string) $this->get_user_agent();
-
-      $this->is_mobile =
-        stripos( $browser, 'ipad' ) !== false ||
-        stripos( $browser, 'iphone' ) !== false ||
-        stripos( $browser, 'android' ) !== false ||
-        stripos( $browser, 'windows mobile' ) !== false;
-
-    }
-
-    return $this->is_mobile;
 
   }
 

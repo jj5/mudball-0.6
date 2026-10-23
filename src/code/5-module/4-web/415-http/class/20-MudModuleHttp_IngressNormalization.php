@@ -1,12 +1,6 @@
 <?php declare(strict_types=1);
 
-class MudModuleHttp_IngressNormalization extends MudModuleWeb {
-
-  public function get_raw_input() {
-
-    return file_get_contents( 'php://input' );
-
-  }
+class MudModuleHttp_IngressNormalization extends MudModuleHttp_Ingress {
 
   /**
   * Normalise an untrusted UTF-8 string.
@@ -20,10 +14,7 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
   * - Collapse horizontal whitespace.
   * - Trim leading and trailing whitespace.
   */
-  function normalize_input(
-    string $value,
-    bool $allow_newlines = false
-  ): string {
+  public function normalize_string( string $value, bool $allow_newlines = false ): string {
 
     // Check size before expensive Unicode processing.
     if (strlen($value) > MUD_HTTP_MAX_STRING_BYTES) {
@@ -141,7 +132,7 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
   * @throws InvalidArgumentException
   * @throws RuntimeException
   */
-  function normalize_input_array(
+  public function normalize_array(
     array $values,
     bool $allow_newlines = false
   ): array {
@@ -150,7 +141,7 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
     $input_bytes = 0;
     $output_bytes = 0;
 
-    return $this->normalize_input_array_recursive(
+    return $this->normalize_array_recursive(
       $values,
       $allow_newlines,
       1,
@@ -165,7 +156,7 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
   *
   * All counters are shared across recursive calls.
   */
-  function normalize_input_array_recursive(
+  protected function normalize_array_recursive(
     array $values,
     bool $allow_newlines,
     int $depth,
@@ -216,7 +207,7 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
 
         // Normalise the string.
         // This also enforces the individual output length.
-        $normalized = $this->normalize_input(
+        $normalized = $this->normalize_string(
           $value,
           $allow_newlines
         );
@@ -240,7 +231,7 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
       }
       elseif (is_array($value)) {
 
-        $result[$key] = $this->normalize_input_array_recursive(
+        $result[$key] = $this->normalize_array_recursive(
           $value,
           $allow_newlines,
           $depth + 1,
@@ -282,7 +273,32 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
       );
     }
 
-    return $this->normalize_input(
+    return $this->normalize_string(
+      $_GET[$name],
+      $allow_newlines
+    );
+  }
+
+  /**
+  * Retrieve and normalise an array GET parameter.
+  */
+  function get_query_array(
+    string $name,
+    ?array $default = null,
+    bool $allow_newlines = false
+  ): ?array {
+
+    if (!array_key_exists($name, $_GET)) {
+      return $default;
+    }
+
+    if (!is_array($_GET[$name])) {
+      throw new InvalidArgumentException(
+        "Expected array for GET parameter: $name"
+      );
+    }
+
+    return $this->normalize_array(
       $_GET[$name],
       $allow_newlines
     );
@@ -307,7 +323,32 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
       );
     }
 
-    return $this->normalize_input(
+    return $this->normalize_string(
+      $_POST[$name],
+      $allow_newlines
+    );
+  }
+
+  /**
+  * Retrieve and normalise an array POST parameter.
+  */
+  function get_input_array(
+    string $name,
+    ?array $default = null,
+    bool $allow_newlines = false
+  ): ?array {
+
+    if (!array_key_exists($name, $_POST)) {
+      return $default;
+    }
+
+    if (!is_array($_POST[$name])) {
+      throw new InvalidArgumentException(
+        "Expected array for POST parameter: $name"
+      );
+    }
+
+    return $this->normalize_array(
       $_POST[$name],
       $allow_newlines
     );
@@ -332,58 +373,8 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
       );
     }
 
-    return $this->normalize_input(
+    return $this->normalize_string(
       $_SERVER[$name],
-      $allow_newlines
-    );
-  }
-
-  /**
-  * Retrieve and normalise an array GET parameter.
-  */
-  function get_query_array(
-    string $name,
-    ?array $default = null,
-    bool $allow_newlines = false
-  ): ?array {
-
-    if (!array_key_exists($name, $_GET)) {
-      return $default;
-    }
-
-    if (!is_array($_GET[$name])) {
-      throw new InvalidArgumentException(
-        "Expected array for GET parameter: $name"
-      );
-    }
-
-    return $this->normalize_input_array(
-      $_GET[$name],
-      $allow_newlines
-    );
-  }
-
-  /**
-  * Retrieve and normalise an array POST parameter.
-  */
-  function get_input_array(
-    string $name,
-    ?array $default = null,
-    bool $allow_newlines = false
-  ): ?array {
-
-    if (!array_key_exists($name, $_POST)) {
-      return $default;
-    }
-
-    if (!is_array($_POST[$name])) {
-      throw new InvalidArgumentException(
-        "Expected array for POST parameter: $name"
-      );
-    }
-
-    return $this->normalize_input_array(
-      $_POST[$name],
       $allow_newlines
     );
   }
@@ -407,7 +398,7 @@ class MudModuleHttp_IngressNormalization extends MudModuleWeb {
       );
     }
 
-    return $this->normalize_input_array(
+    return $this->normalize_array(
       $_SERVER[$name],
       $allow_newlines
     );

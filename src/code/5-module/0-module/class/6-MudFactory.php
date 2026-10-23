@@ -28,7 +28,7 @@ class MudFactory extends MudService {
 
   }
 
-  public function create_object( string $class ) {
+  public function create_object( string $class, array $args = [] ) {
 
     // 2024-02-15 jj5 - we might relax this requirement in future, but for now it seems like this might be a good idea...
     //
@@ -43,15 +43,15 @@ class MudFactory extends MudService {
 
       $app_class = 'App' . $name;
 
-      if ( class_exists( $app_class ) ) { return new $app_class(); }
+      if ( class_exists( $app_class ) ) { return new $app_class(...$args); }
 
       $mud_class = 'Mud' . $name;
 
-      if ( class_exists( $mud_class ) ) { return new $mud_class(); }
+      if ( class_exists( $mud_class ) ) { return new $mud_class(...$args); }
 
     }
 
-    return new $class();
+    return new $class(...$args);
 
   }
 
