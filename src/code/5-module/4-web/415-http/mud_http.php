@@ -9,33 +9,41 @@ require_once __DIR__ . '/../400-web/mud_web.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2022-02-23 jj5 - include components...
+// 2026-10-24 jj5 - include components...
 //
 
 require_once __DIR__ . '/trait/MudHttpInputNormalization.php';
 require_once __DIR__ . '/trait/MudHttpInputValue.php';
+require_once __DIR__ . '/trait/MudHttpInputCookie.php';
+require_once __DIR__ . '/trait/MudHttpOutputCache.php';
 require_once __DIR__ . '/class/MudModuleHttp.php';
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 2021-08-24 jj5 - functional interface...
+// 2026-10-24 jj5 - functional interface...
 //
 
-function mud_is_http_query() {
+function mud_http_is_secure() {
 
-  return mud_module_http()->is_http_query();
-
-}
-
-function mud_is_http_submission() {
-
-  return mud_module_http()->is_http_submission();
+  return mud_module_http()->is_secure();
 
 }
 
-function mud_get_http_verb() {
+function mud_http_is_query() {
 
-  return mud_module_http()->get_http_verb();
+  return mud_module_http()->is_query();
+
+}
+
+function mud_http_is_submission() {
+
+  return mud_module_http()->is_submission();
+
+}
+
+function mud_http_get_verb() {
+
+  return mud_module_http()->get_verb();
 
 }
 
