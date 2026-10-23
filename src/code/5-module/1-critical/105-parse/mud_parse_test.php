@@ -753,7 +753,7 @@ mud_declare_tests([
     * Run normal cases.
     */
 
-    echo "Testing boolean values...\n";
+    //echo "Testing boolean values...\n";
 
     foreach ($bool_valid as [$input, $expected]) {
 
@@ -778,7 +778,7 @@ mud_declare_tests([
 
     }
 
-    echo "Testing integer values...\n";
+    //echo "Testing integer values...\n";
 
     foreach ($int_valid as [$input, $expected]) {
 
@@ -803,7 +803,7 @@ mud_declare_tests([
 
     }
 
-    echo "Testing floating-point values...\n";
+    //echo "Testing floating-point values...\n";
 
     foreach ($float_valid as [$input, $expected]) {
 
@@ -837,7 +837,7 @@ mud_declare_tests([
     * even in strict mode.
     */
 
-    echo "Testing typed defaults...\n";
+    //echo "Testing typed defaults...\n";
 
     // Each parser's own type (bool/int) is a legitimate default for itself,
     // so it's excluded from that parser's own wrong-type list. Float also
@@ -937,7 +937,7 @@ mud_declare_tests([
     * declared type or null.
     */
 
-    echo "Testing typed output references...\n";
+    //echo "Testing typed output references...\n";
 
     test_throws(
       function (): void {
@@ -976,7 +976,7 @@ mud_declare_tests([
     * Reference reuse.
     */
 
-    echo "Testing reference reuse...\n";
+    //echo "Testing reference reuse...\n";
 
     $result = null;
 
@@ -1060,7 +1060,7 @@ mud_declare_tests([
     * Floating-point precision edge cases.
     */
 
-    echo "Testing IEEE 754 precision...\n";
+    //echo "Testing IEEE 754 precision...\n";
 
     $precision_cases = [
       ['0.1', 0.1],
@@ -1096,7 +1096,7 @@ mud_declare_tests([
     * Explicit numeric syntax tests.
     */
 
-    echo "Testing numeric syntax...\n";
+    //echo "Testing numeric syntax...\n";
 
     $syntax_invalid = [
       '0xFF',
@@ -1146,7 +1146,7 @@ mud_declare_tests([
     * even if their numeric syntax would otherwise be valid.
     */
 
-    echo "Testing resource limits...\n";
+    //echo "Testing resource limits...\n";
 
     $large_invalid_inputs = [
       str_repeat('x', 1000),
@@ -1276,7 +1276,7 @@ mud_declare_tests([
 
     }
 
-    echo "Testing performance budgets...\n";
+    //echo "Testing performance budgets...\n";
 
     $stress_input = str_repeat('9', 100000);
 
