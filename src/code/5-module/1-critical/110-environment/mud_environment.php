@@ -37,9 +37,9 @@ function mud_is_web() : bool {
 
 }
 
-function mud_is_post() : bool {
+function mud_is_test() : bool {
 
-  return mud_module_environment()->is_post();
+  return mud_module_environment()->is_test();
 
 }
 

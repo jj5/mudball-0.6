@@ -92,6 +92,20 @@ class MudModuleEnvironment extends MudModuleCritical {
 
   }
 
+  public function is_test() : bool {
+
+    static $is_test = null;
+
+    if ( $is_test === null ) {
+
+      $is_test = (bool)( defined( 'TEST' ) && TEST );
+
+    }
+
+    return $is_test;
+
+  }
+
   public function is_posix() : bool {
 
     static $is_posix = null;
