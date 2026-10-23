@@ -1,16 +1,6 @@
 <?php declare(strict_types=1);
 
-// Resource limits for untrusted HTTP input.
-const MUD_HTTP_MAX_TOTAL_STRING_BYTES = 4 * 1024 * 1024;
-
-const MUD_HTTP_MAX_STRING_BYTES = 1024 * 1024;
-const MUD_HTTP_MAX_ARRAY_DEPTH = 8;
-const MUD_HTTP_MAX_ARRAY_ELEMENTS = 1000;
-
-const MUD_HTTP_MAX_TOTAL_INPUT_BYTES = 4 * 1024 * 1024;
-const MUD_HTTP_MAX_TOTAL_OUTPUT_BYTES = 4 * 1024 * 1024;
-
-trait MudHttpInputNormalization {
+class MudModuleHttp_IngressNormalization extends MudModuleWeb {
 
   public function get_raw_input() {
 

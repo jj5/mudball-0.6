@@ -85,6 +85,22 @@ define(
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 2026-10-24 jj5 - constants for HTTP module...
+//
+
+// 2026-10-24 jj5 - trusted proxy list for HTTP module.
+const MUD_HTTP_TRUSTED_PROXY_LIST = [ '127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16', '::1' ];
+
+// 2026-10-24 jj5 - default resource limits for untrusted HTTP input.
+const MUD_HTTP_MAX_TOTAL_STRING_BYTES = 4 * 1024 * 1024;
+const MUD_HTTP_MAX_STRING_BYTES = 1024 * 1024;
+const MUD_HTTP_MAX_ARRAY_DEPTH = 8;
+const MUD_HTTP_MAX_ARRAY_ELEMENTS = 1000;
+const MUD_HTTP_MAX_TOTAL_INPUT_BYTES = 4 * 1024 * 1024;
+const MUD_HTTP_MAX_TOTAL_OUTPUT_BYTES = 4 * 1024 * 1024;
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2023-02-22 jj5 - external ID range...
 //
 

@@ -12,10 +12,11 @@ require_once __DIR__ . '/../400-web/mud_web.php';
 // 2026-10-24 jj5 - include components...
 //
 
-require_once __DIR__ . '/trait/MudHttpInputNormalization.php';
-require_once __DIR__ . '/trait/MudHttpInputValue.php';
-require_once __DIR__ . '/trait/MudHttpInputCookie.php';
-require_once __DIR__ . '/trait/MudHttpOutputCache.php';
+require_once __DIR__ . '/class/10-MudModuleHttp_IngressNormalization.php';
+require_once __DIR__ . '/class/20-MudModuleHttp_IngressHeader.php';
+require_once __DIR__ . '/class/30-MudModuleHttp_IngressCookie.php';
+require_once __DIR__ . '/class/40-MudModuleHttp_IngressValue.php';
+require_once __DIR__ . '/class/50-MudModuleHttp_EgressHeader.php';
 require_once __DIR__ . '/class/MudModuleHttp.php';
 
 
@@ -72,6 +73,24 @@ function mud_http_normalize_input(string $value, bool $allow_newlines = false): 
 function mud_http_normalize_input_array(array $values, bool $allow_newlines = false): array {
 
   return mud_module_http()->normalize_input_array($values, $allow_newlines);
+
+}
+
+function mud_http_has_query(string $name): bool {
+
+  return mud_module_http()->has_query($name);
+
+}
+
+function mud_http_has_input(string $name): bool {
+
+  return mud_module_http()->has_input($name);
+
+}
+
+function mud_http_has_server(string $name): bool {
+
+  return mud_module_http()->has_server($name);
 
 }
 

@@ -1,6 +1,16 @@
 <?php declare(strict_types=1);
 
-trait MudHttpInputValue {
+class MudModuleHttp_IngressValue extends MudModuleHttp_IngressCookie {
+
+  public function has_query(string $name): bool {
+    return array_key_exists($name, $_GET);
+  }
+  public function has_input(string $name): bool {
+    return array_key_exists($name, $_POST);
+  }
+  public function has_server(string $name): bool {
+    return array_key_exists($name, $_SERVER);
+  }
 
   public function parse_bool(string $value): bool {
     return mud_parse_bool($value);

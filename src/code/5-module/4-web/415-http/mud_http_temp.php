@@ -15,9 +15,6 @@ define( 'SAFE_HOST', '[a-z0-9]+[a-z0-9-]*(\.[a-z0-9-]+)*' );
 
 class BomUtilHttp {
 
-  private $client_ip = null;
-  private $user_agent = null;
-  private $is_mobile = null;
   private $referrer = null;
 
   private $cookie_path = null;
@@ -26,42 +23,6 @@ class BomUtilHttp {
 
   private $headers = [];
   private $response_code = null;
-
-  function is_get( $set = null ) {
-
-    if ( $set === true ) { $this->request_method( 'GET' ); }
-
-    return $this->request_method() === 'GET';
-
-  }
-
-  function is_post( $set = null ) {
-
-    if ( $set === true ) { $this->request_method( 'POST' ); }
-
-    return $this->request_method() === 'POST';
-
-  }
-
-  function request_method( $override = null ) {
-
-    static $method = null;
-
-    if ( $method === null ) { $method = getenv( 'REQUEST_METHOD' ); }
-
-    if ( $override !== null ) { $method = $override; }
-
-    return $method;
-
-  }
-
-  function is_https( $set = null ) {
-
-    if ( $set === true ) { $this->request_scheme( 'https' ); }
-
-    return $this->request_scheme() === 'https';
-
-  }
 
   function request_scheme( $override = null ) {
 
@@ -72,72 +33,6 @@ class BomUtilHttp {
     if ( $override !== null ) { $scheme = $override; }
 
     return $scheme;
-
-  }
-
-  function set_client_ip( $ip ) {
-
-    $this->client_ip = $ip;
-
-  }
-
-  function get_client_ip() {
-
-    if ( $this->client_ip === null ) {
-
-      $xff = read_sd( 'HTTP_X_FORWARDED_FOR' );
-
-      if ( $xff ) {
-
-        $xff = explode( ',', $xff );
-
-        $this->client_ip = get_canonical_ip( trim( $xff[ 0 ] ) );
-
-      }
-      else {
-
-        $this->client_ip = get_canonical_ip( read_sds( 'REMOTE_ADDR' ) );
-
-      }
-    }
-
-    return $this->client_ip;
-
-  }
-
-  function set_user_agent( $user_agent ) {
-
-    $this->user_agent = $user_agent;
-
-  }
-
-  function get_user_agent() {
-
-    if ( $this->user_agent === null ) {
-
-      $this->user_agent = $this->read_server( 'HTTP_USER_AGENT' );
-
-    }
-
-    return $this->user_agent;
-
-  }
-
-  function is_mobile() {
-
-    if ( $this->is_mobile === null ) {
-
-      $browser = $this->get_user_agent();
-
-      $this->is_mobile =
-        strpos( $browser, 'IPAD' ) ||
-        strpos( $browser, 'IPHONE' ) ||
-        strpos( $browser, 'ANDROID' ) ||
-        strpos( $browser, 'WINDOWS MOBILE' ) ? true : false;
-
-    }
-
-    return $this->is_mobile;
 
   }
 
@@ -153,7 +48,7 @@ class BomUtilHttp {
 
     if ( $this->referrer === null ) {
 
-      $this->referrer = $this->read_server( 'HTTP_REFERER' );
+      $this->referrer = mud_http_get_server( 'HTTP_REFERER' );
 
     }
 

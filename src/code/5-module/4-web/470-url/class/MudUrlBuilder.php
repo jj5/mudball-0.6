@@ -44,7 +44,7 @@ class MudUrlBuilder extends MudService {
 
     parent::__construct();
 
-    $cdn = defined( 'APP_CDN' ) ? APP_CDN : null;
+    $cdn = APP_CDN;
 
     $rel_base = $request->get_controller_path();
     $abs_base = $request->get_controller_url();

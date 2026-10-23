@@ -12,6 +12,23 @@ class MudModuleDefine extends MudModuleBasic {
   // 2021-10-18 jj5 - public functions...
   //
 
+  public function define_config_constants() {
+
+    define( 'APP_CDN', defined( 'CFG_CDN' ) ? CFG_CDN : null );
+
+    define( 'APP_URL_BASE', defined( 'CFG_URL_BASE' ) ? CFG_URL_BASE : null );
+
+    define( 'APP_HTTP_TRUSTED_PROXY_LIST', defined( 'CFG_HTTP_TRUSTED_PROXY_LIST' ) ? CFG_HTTP_TRUSTED_PROXY_LIST : MUD_HTTP_TRUSTED_PROXY_LIST );
+
+    define( 'APP_HTTP_MAX_TOTAL_STRING_BYTES', defined( 'CFG_HTTP_MAX_TOTAL_STRING_BYTES' ) ? CFG_HTTP_MAX_TOTAL_STRING_BYTES : MUD_HTTP_MAX_TOTAL_STRING_BYTES );
+    define( 'APP_HTTP_MAX_STRING_BYTES', defined( 'CFG_HTTP_MAX_STRING_BYTES' ) ? CFG_HTTP_MAX_STRING_BYTES : MUD_HTTP_MAX_STRING_BYTES );
+    define( 'APP_HTTP_MAX_ARRAY_DEPTH', defined( 'CFG_HTTP_MAX_ARRAY_DEPTH' ) ? CFG_HTTP_MAX_ARRAY_DEPTH : MUD_HTTP_MAX_ARRAY_DEPTH );
+    define( 'APP_HTTP_MAX_ARRAY_ELEMENTS', defined( 'CFG_HTTP_MAX_ARRAY_ELEMENTS' ) ? CFG_HTTP_MAX_ARRAY_ELEMENTS : MUD_HTTP_MAX_ARRAY_ELEMENTS );
+    define( 'APP_HTTP_MAX_TOTAL_INPUT_BYTES', defined( 'CFG_HTTP_MAX_TOTAL_INPUT_BYTES' ) ? CFG_HTTP_MAX_TOTAL_INPUT_BYTES : MUD_HTTP_MAX_TOTAL_INPUT_BYTES );
+    define( 'APP_HTTP_MAX_TOTAL_OUTPUT_BYTES', defined( 'CFG_HTTP_MAX_TOTAL_OUTPUT_BYTES' ) ? CFG_HTTP_MAX_TOTAL_OUTPUT_BYTES : MUD_HTTP_MAX_TOTAL_OUTPUT_BYTES );
+
+  }
+
   public function get_constants( string $prefix = '' ) : array {
 
     $result = [];
@@ -162,7 +179,11 @@ class MudModuleDefine extends MudModuleBasic {
 
   public function define_app( string $const_prefix ) {
 
-    return $this->define_list( $const_prefix, 'APP' );
+    $result = $this->define_list( $const_prefix, 'APP' );
+
+    $this->define_config_constants();
+
+    return $result;
 
   }
 

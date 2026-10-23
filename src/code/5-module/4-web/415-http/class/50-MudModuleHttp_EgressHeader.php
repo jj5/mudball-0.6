@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-trait MudHttpOutputCache {
+class MudModuleHttp_EgressHeader extends MudModuleHttp_IngressValue {
 
   public function cache_forever() {
 
