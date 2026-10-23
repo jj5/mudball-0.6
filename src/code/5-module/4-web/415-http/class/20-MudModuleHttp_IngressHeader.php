@@ -89,9 +89,15 @@ class MudModuleHttp_IngressHeader extends MudModuleHttp_IngressNormalization {
 
   public function is_trusted_proxy( string $ip ) : bool {
 
+    // 2026-10-24 jj5 - blank input would canonicalize to 0.0.0.0, which isn't an address we should ever trust by accident...
+    //
+    if ( trim( $ip ) === '' ) { return false; }
+
     if ( $this->get_canonical_ip( $ip, $IPv4, $IPv4_int, $IPv4_bin, $IPv6, $IPv6_bin ) === null ) { return false; }
 
     $ip_bin = $IPv4_bin ?? $IPv6_bin;
+
+    if ( $ip_bin === null ) { return false; }
 
     foreach ( $this->get_trusted_proxy_list() as [ $net_bin, $prefix ] ) {
 
@@ -177,6 +183,12 @@ class MudModuleHttp_IngressHeader extends MudModuleHttp_IngressNormalization {
 
       $this->trusted_proxy_list = [];
 
+      if ( ! is_array( APP_HTTP_TRUSTED_PROXY_LIST ) ) {
+
+        mud_fail( 'trusted proxy list must be an array.', [ 'type' => gettype( APP_HTTP_TRUSTED_PROXY_LIST ) ] );
+
+      }
+
       foreach ( APP_HTTP_TRUSTED_PROXY_LIST as $entry ) {
 
         $this->trusted_proxy_list[] = $this->parse_network( (string) $entry );
@@ -199,17 +211,40 @@ class MudModuleHttp_IngressHeader extends MudModuleHttp_IngressNormalization {
     }
 
     $net_bin = $IPv4_bin ?? $IPv6_bin;
-    $max_prefix = strlen( $net_bin ) * 8;
+    $max_prefix = strlen( (string) $net_bin ) * 8;
 
     if ( ! isset( $parts[ 1 ] ) ) { return [ $net_bin, $max_prefix ]; }
 
-    if ( ! ctype_digit( $parts[ 1 ] ) || (int) $parts[ 1 ] > $max_prefix ) {
+    if ( ! ctype_digit( $parts[ 1 ] ) ) {
 
       mud_fail( 'invalid trusted proxy prefix length.', [ 'entry' => $entry ] );
 
     }
 
-    return [ $net_bin, (int) $parts[ 1 ] ];
+    $prefix = (int) $parts[ 1 ];
+
+    // 2026-10-24 jj5 - an IPv4-mapped IPv6 network (e.g. '::ffff:10.0.0.0/104') was canonicalized to IPv4 above, so its
+    // prefix length needs to be adjusted from 128 bit space to 32 bit space; the first 96 bits are the fixed mapping...
+    //
+    if ( $IPv4_bin !== null && strpos( $parts[ 0 ], ':' ) !== false ) {
+
+      if ( $prefix < 96 ) {
+
+        mud_fail( 'invalid trusted proxy prefix length for IPv4-mapped address.', [ 'entry' => $entry ] );
+
+      }
+
+      $prefix -= 96;
+
+    }
+
+    if ( $prefix > $max_prefix ) {
+
+      mud_fail( 'invalid trusted proxy prefix length.', [ 'entry' => $entry ] );
+
+    }
+
+    return [ $net_bin, $prefix ];
 
   }
 
