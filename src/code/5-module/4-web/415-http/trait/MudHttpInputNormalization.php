@@ -12,7 +12,7 @@ const MUD_HTTP_MAX_TOTAL_OUTPUT_BYTES = 4 * 1024 * 1024;
 
 trait MudHttpInputNormalization {
 
-  public function get_http_input() {
+  public function get_raw_input() {
 
     return file_get_contents( 'php://input' );
 
@@ -324,6 +324,31 @@ trait MudHttpInputNormalization {
   }
 
   /**
+  * Retrieve and normalise a scalar SERVER parameter.
+  */
+  function get_server(
+    string $name,
+    ?string $default = null,
+    bool $allow_newlines = false
+  ): ?string {
+
+    if (!array_key_exists($name, $_SERVER)) {
+      return $default;
+    }
+
+    if (!is_string($_SERVER[$name])) {
+      throw new InvalidArgumentException(
+        "Expected string for SERVER parameter: $name"
+      );
+    }
+
+    return $this->normalize_input(
+      $_SERVER[$name],
+      $allow_newlines
+    );
+  }
+
+  /**
   * Retrieve and normalise an array GET parameter.
   */
   function get_query_array(
@@ -369,6 +394,31 @@ trait MudHttpInputNormalization {
 
     return $this->normalize_input_array(
       $_POST[$name],
+      $allow_newlines
+    );
+  }
+
+  /**
+  * Retrieve and normalise an array SERVER parameter.
+  */
+  function get_server_array(
+    string $name,
+    ?array $default = null,
+    bool $allow_newlines = false
+  ): ?array {
+
+    if (!array_key_exists($name, $_SERVER)) {
+      return $default;
+    }
+
+    if (!is_array($_SERVER[$name])) {
+      throw new InvalidArgumentException(
+        "Expected array for SERVER parameter: $name"
+      );
+    }
+
+    return $this->normalize_input_array(
+      $_SERVER[$name],
       $allow_newlines
     );
   }
