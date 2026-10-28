@@ -20,12 +20,20 @@ require_once __DIR__ . '/class/MudModuleString.php';
 //
 
 mud_define_error( 'MUD_ERR_STRING_NORMALIZATION_FAILED', 'normalization failed.' );
+mud_define_error( 'MUD_ERR_STRING_REPLACEMENT_INVALID', 'string replacement invalid.' );
+mud_define_error( 'MUD_ERR_STRING_LENGTH_INCREASED', 'string length increased.' );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 2019-07-14 jj5 - functional interface...
 //
 //
+
+function mud_str_replace_all( string $search, string $replace, string $subject ) : string {
+
+  return mud_module_string()->str_replace_all( $search, $replace, $subject );
+
+}
 
 function mud_utf8_strlen( $input ) {
 

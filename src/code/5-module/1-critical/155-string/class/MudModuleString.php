@@ -15,6 +15,43 @@ class MudModuleString extends MudModuleCritical {
   // 2021-10-18 jj5 - public functions...
   //
 
+  public function str_replace_all( string $search, string $replace, string $subject ) {
+
+    if ( $search === '' ) { return $subject; }
+
+    if ( strpos( $replace, $search ) !== false ) {
+
+      mud_fail( MUD_ERR_STRING_REPLACEMENT_INVALID, [ '$search' => $search, '$replace' => $replace ]);
+
+    }
+
+    $prev_len = -1;
+
+    for ( ;; ) {
+
+      $subject = str_replace( $search, $replace, $subject );
+
+      $len = strlen( $subject );
+
+      if ( $len === $prev_len ) { break; }
+
+      if ( $prev_len !== -1 && $len > $prev_len ) {
+
+        mud_fail(
+          MUD_ERR_STRING_LENGTH_INCREASED,
+          [ '$search' => $search, '$replace' => $replace, '$subject' => $subject ]
+        );
+
+      }
+
+      $prev_len = $len;
+
+    }
+
+    return $subject;
+
+  }
+
   public function utf8_strlen( $input ) : int {
 
     return mb_strlen( strval( $input ), MUD_UTF8 );
