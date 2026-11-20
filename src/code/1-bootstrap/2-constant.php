@@ -32,6 +32,8 @@ define( 'MUDBALL_CONFIG_PATH', MUDBALL_PATH . '/' . MUDBALL_CONFIG_FILE );
 
 (function() {
 
+  if ( defined( 'DEBUG' ) ) return;
+
   if ( file_exists( MUDBALL_DEBUG_PATH ) ) { require_once MUDBALL_DEBUG_PATH; }
 
 })();
