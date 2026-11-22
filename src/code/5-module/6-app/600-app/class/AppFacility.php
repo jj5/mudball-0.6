@@ -14,25 +14,25 @@ abstract class AppFacility extends MudFacility {
 
           tag_open( 'li' );
 
-            tag_text( 'a', 'Home', [ 'href' => APP_URL_BASE . '/test' ] );
+            tag_text( 'a', 'Home', [ 'href' => APP_URL_BASE . 'test' ] );
 
           tag_shut( 'li' );
 
           tag_open( 'li' );
 
-            tag_text( 'a', 'Add User', [ 'href' => APP_URL_BASE . '/admin/user/add' ] );
+            tag_text( 'a', 'Add User', [ 'href' => APP_URL_BASE . 'admin/user/add' ] );
 
           tag_shut( 'li' );
 
           tag_open( 'li' );
 
-            tag_text( 'a', 'User List', [ 'href' => APP_URL_BASE . '/admin/user/list' ] );
+            tag_text( 'a', 'User List', [ 'href' => APP_URL_BASE . 'admin/user/list' ] );
 
           tag_shut( 'li' );
 
           tag_open( 'li' );
 
-            tag_text( 'a', 'Login', [ 'href' => APP_URL_BASE . '/util/login' ] );
+            tag_text( 'a', 'Login', [ 'href' => APP_URL_BASE . 'util/login' ] );
 
           tag_shut( 'li' );
 

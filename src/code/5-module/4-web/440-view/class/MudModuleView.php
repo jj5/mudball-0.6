@@ -392,7 +392,7 @@ class MudModuleView extends MudModuleWeb {
 
     }
 
-    tag_link( 'text/css', 'stylesheet', APP_URL_BASE . '/res/' . $path . '?v=' . $md5 );
+    tag_link( 'text/css', 'stylesheet', APP_URL_BASE . 'res/' . $path . '?v=' . $md5 );
 
   }
 
@@ -417,7 +417,7 @@ class MudModuleView extends MudModuleWeb {
 
     }
 
-    tag_bare( 'script', [ 'src' => APP_URL_BASE . '/res/' . $path . '?v=' . $md5 ] );
+    tag_bare( 'script', [ 'src' => APP_URL_BASE . 'res/' . $path . '?v=' . $md5 ] );
 
   }
 

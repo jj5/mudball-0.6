@@ -391,7 +391,7 @@ class MudControllerWeb extends MudController {
 
   protected function redirect( $path, $query = null ) {
 
-    $url = APP_URL_BASE . $path . ( $query ? '?' . http_build_query( $query ) : '' );
+    $url = APP_URL_BASE . ltrim( $path, '/' ) . ( $query ? '?' . http_build_query( $query ) : '' );
 
     return mud_response()->redirect( $url );
 

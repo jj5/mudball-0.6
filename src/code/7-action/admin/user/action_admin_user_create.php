@@ -59,7 +59,7 @@ class mud_action_admin_user_create extends MudAction {
 
     $user_xid = mud_xid_from_iid( $user_iid );
 
-    $response->redirect( APP_URL_BASE . '/admin/user/list' );
+    $response->redirect( APP_URL_BASE . 'admin/user/list' );
 
     return true;
 

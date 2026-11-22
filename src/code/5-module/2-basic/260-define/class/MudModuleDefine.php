@@ -16,7 +16,8 @@ class MudModuleDefine extends MudModuleBasic {
 
     define( 'APP_CDN', defined( 'CFG_CDN' ) ? CFG_CDN : null );
 
-    define( 'APP_URL_BASE', defined( 'CFG_URL_BASE' ) ? CFG_URL_BASE : null );
+    // 2026-11-22 claude - APP_URL_BASE always ends with a slash, so don't add an extra slash when using it.
+    define( 'APP_URL_BASE', defined( 'CFG_URL_BASE' ) && CFG_URL_BASE ? rtrim( CFG_URL_BASE, '/' ) . '/' : null );
 
     define( 'APP_HTTP_TRUSTED_PROXY_LIST', defined( 'CFG_HTTP_TRUSTED_PROXY_LIST' ) ? CFG_HTTP_TRUSTED_PROXY_LIST : MUD_HTTP_TRUSTED_PROXY_LIST );
 
